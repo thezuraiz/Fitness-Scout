@@ -18,6 +18,9 @@ dependencies:
   iconsax: any
   cupertino_icons: ^1.0.6
 
+  # --- STATE-MANAGEMENT
+  get: any
+
   # --- DEV DEPENDENCIES
 
 dev_dependencies:

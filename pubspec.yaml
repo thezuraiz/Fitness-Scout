@@ -21,6 +21,10 @@ dependencies:
   # --- STATE-MANAGEMENT
   get: any
 
+  #  --- UTILITY PACKAGES
+  shared_preferences: any
+  intl: any
+
   # --- DEV DEPENDENCIES
 
 dev_dependencies:

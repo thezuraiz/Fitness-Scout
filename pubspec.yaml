@@ -24,6 +24,7 @@ dependencies:
   #  --- UTILITY PACKAGES
   shared_preferences: any
   intl: any
+  smooth_page_indicator: ^1.1.0
 
   # --- DEV DEPENDENCIES
 
@@ -32,6 +33,7 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^3.0.0
+  flutter_native_splash:
 
   #  FOR CONSOLE ERRORS
   logger: any
@@ -46,8 +48,11 @@ flutter:
      - assets/fonts/
      - assets/icons/
      - assets/images/
+     - assets/images/on_boarding_images/
+     - assets/images/animations/
      - assets/logo/
-     - assets/user_profile
+     - assets/user_profile/
+     - assets/splash_screen_logo/
 
   #---------------- LOCAL FONTS ----------------
 

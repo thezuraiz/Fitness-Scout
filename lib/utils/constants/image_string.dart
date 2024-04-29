@@ -4,17 +4,17 @@ class ZImages{
   ZImages._();
 
   // --- APP LOGO
-  static const String darkAppLogo = "assets/logos/zk-logo-dark.png";
-  static const String lightAppLogo = "assets/logos/zk-logo.png";
+  static const String darkAppLogo = "assets/logo/fitness_scout_logo_dark.png";
+  static const String lightAppLogo = "assets/logo/fitness_scout_logo.png";
 
   // --- SOCIAL LOGO
-  static const String google = "assets/logos/google-logo.png";
-  static const String facebook = "assets/logos/facebook-logo.png";
+  static const String google = "assets/logo/google-logo.png";
+  static const String facebook = "assets/logo/facebook-logo.png";
 
   // --- ONBOARDING GIF
   static const String onBoardingImage1 = "assets/images/on_boarding_images/sammy-line-delivering.gif";
-  static const String onBoardingImage2 = "assets/images/on_boarding_images/sammy-line-searching.gif";
-  static const String onBoardingImage3 = "assets/images/on_boarding_images/sammy-line-shopping.gif";
+  static const String onBoardingImage2 = "assets/images/on_boarding_images/network-fitness-app-and-healthy-lifestyle.gif";
+  static const String onBoardingImage3 = "assets/images/on_boarding_images/simplistic-woman-with-smartwatches-standing-on-mat-in-tree-pose.gif";
 
   // --- Animations
   static const String productsIllustration = "";

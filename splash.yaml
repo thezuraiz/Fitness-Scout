@@ -1,0 +1,17 @@
+flutter_native_splash:
+  color: "#FFFFFF"
+  color_dark: "#272727"
+  image: assets/splash_screen_logo/splash_logo_light.png
+  image_dark: assets/splash_screen_logo/splash_logo_dark.png
+  fullscreen: true
+
+  android_12:
+    color: "#FFFFFF"
+    color_dark: "#272727"
+    image: assets/splash_screen_logo/splash_logo_light.png
+    image_dark: assets/splash_screen_logo/splash_logo_dark.png
+    fullscreen: true
+
+  web: true
+  # --- flutter pub run flutter_native_splash:create --path=splash.yaml
+  # --- flutter pub run flutter_native_splash:remove

@@ -4,9 +4,11 @@ class ZColor{
   ZColor._();
 
   // --- APP BASIC COLORS
-  static const primary = Color(0xff4b68ff);
-  static const secondary = Color(0xffffe24b);
-  static const accent = Color(0xffb0c7ff);
+  static const primary = Color(0xFFff8d61);
+  // static const primary = Color(0xff4b68ff);
+  static const secondary = Color(0xffa1d8f1);
+  // static const secondary = Color(0xffffe24b);
+  static const accent = Color(0xFFff8d61);
 
   // -- GRADIENT COLOR
   static const Gradient linearGradient = LinearGradient(
@@ -33,8 +35,8 @@ class ZColor{
   static Color darkContainer = ZColor.white.withOpacity(0.1);
 
   // --- BUTTON COLORS
-  static const Color buttonPrimary = Color(0xFF4B68FF);
-  static const Color buttonSecondary = Color(0xFF6c757D);
+  static const Color buttonPrimary = Color(0xFFff8d61);
+  static const Color buttonSecondary = Color(0xFFa1d8f1);
   static const Color buttonDisabled = Color(0xFFc4c4c4);
 
   // --- BORDER COLORS

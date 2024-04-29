@@ -1,3 +1,4 @@
+import 'package:fitness_scout/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class ZCheckBoxTheme {
@@ -15,7 +16,7 @@ class ZCheckBoxTheme {
     }),
     fillColor: MaterialStateProperty.resolveWith((states) {
       if (states.contains(MaterialState.selected)) {
-        return Colors.blue;
+        return ZColor.primary;
       } else {
         return Colors.transparent;
       }
@@ -34,7 +35,7 @@ class ZCheckBoxTheme {
       }),
       fillColor: MaterialStateProperty.resolveWith((states) {
         if (states.contains(MaterialState.selected)) {
-          return Colors.blue;
+          return ZColor.primary;
         } else {
           return Colors.transparent;
         }

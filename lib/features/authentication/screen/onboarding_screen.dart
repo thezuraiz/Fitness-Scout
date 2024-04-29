@@ -105,7 +105,9 @@ class NextButtonWidget extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
             shape: const CircleBorder(),
-            backgroundColor: dark ? ZColor.primary : ZColor.dark),
+            backgroundColor: dark ? ZColor.primary : ZColor.dark,
+          side: const BorderSide(color: Colors.transparent)
+        ),
         onPressed: () => OnBoardController.instance.nextPage(),
         child: const Icon(
           Iconsax.arrow_right_3,

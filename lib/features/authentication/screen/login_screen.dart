@@ -141,7 +141,7 @@ class LoginScreenHeader extends StatelessWidget {
           height: ZSizes.lg,
         ),
         Image.asset(
-            height: 140, dark ? ZImages.darkAppLogo : ZImages.lightAppLogo),
+            height: 100, dark ? ZImages.darkAppLogo : ZImages.lightAppLogo),
         const SizedBox(
           height: ZSizes.sm,
         ),

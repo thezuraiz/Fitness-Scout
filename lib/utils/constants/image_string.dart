@@ -39,5 +39,5 @@ class ZImages{
 
 
   // --- USER PROFILE
-  static const String userProfile = "assets/user/user_profile.png";
+  static const String userProfile = "assets/user_profile/user_profile.png";
 }

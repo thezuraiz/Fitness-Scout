@@ -1,4 +1,7 @@
+import 'package:fitness_scout/features/authentication/screen/login_screen/login_controller.dart';
+import 'package:fitness_scout/features/authentication/screen/signup_screen/signup_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../utils/constants/colors.dart';
 import '../../utils/constants/image_string.dart';
@@ -11,6 +14,7 @@ class ZSocialButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SignupController controller = Get.put(SignupController());
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -19,7 +23,7 @@ class ZSocialButtons extends StatelessWidget {
               borderRadius: BorderRadius.circular(100),
               border: Border.all(color: ZColor.grey)),
           child: IconButton(
-            onPressed: () {},
+            onPressed: () => controller.signupWithGoogle(),
             icon: const Image(
               height: ZSizes.iconMd,
               width: ZSizes.iconMd,
@@ -35,7 +39,7 @@ class ZSocialButtons extends StatelessWidget {
               borderRadius: BorderRadius.circular(100),
               border: Border.all(color: ZColor.grey)),
           child: IconButton(
-            onPressed: () {},
+            onPressed: () => controller.signupWithFacebook(),
             icon: const Image(
               height: ZSizes.iconMd,
               width: ZSizes.iconMd,

@@ -1,4 +1,4 @@
-import 'package:fitness_scout/features/authentication/screen/login_screen.dart';
+import 'package:fitness_scout/features/authentication/screen/login_screen/login_screen.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';

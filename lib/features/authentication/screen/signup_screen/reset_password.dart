@@ -1,4 +1,5 @@
-import 'package:fitness_scout/features/authentication/screen/login_screen.dart';
+import 'package:fitness_scout/features/authentication/screen/login_screen/login_screen.dart';
+import 'package:fitness_scout/features/authentication/screen/signup_screen/signup_controller.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ class ResetPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SignupController controller = Get.put(SignupController());
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -66,7 +68,7 @@ class ResetPassword extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: TextButton(
-                  onPressed: (){},
+                  onPressed: controller.resendEmailButton,
                   child: const Text(ZText.resendEmail),
                 ),
               ),

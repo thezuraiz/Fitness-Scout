@@ -1,3 +1,4 @@
+import 'package:fitness_scout/utils/constants/colors.dart';
 import 'package:fitness_scout/utils/theme/custom_themes/appbar_theme.dart';
 import 'package:fitness_scout/utils/theme/custom_themes/bottom_sheet_theme.dart';
 import 'package:fitness_scout/utils/theme/custom_themes/check_box_theme.dart';
@@ -35,9 +36,9 @@ class AppTheme {
       fontFamily: 'Poppins',
       brightness: Brightness.dark,
       primaryColor: const Color(0xff005B5B),
-      scaffoldBackgroundColor: Colors.black,
+      scaffoldBackgroundColor: ZColor.black,
       textTheme: ZTextTheme.darkTextTheme,
-      chipTheme: ZChipTheme.darkChopThemeData,
+      chipTheme: ZChipTheme.darkChipThemeData,
       appBarTheme: ZAppBarTheme.darkAppBarTheme,
       checkboxTheme: ZCheckBoxTheme.darkCheckBoxTheme,
       bottomSheetTheme: ZBottomSheetTheme.darkBottomSheetTheme,

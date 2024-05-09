@@ -13,7 +13,7 @@ class ZChipTheme{
   );
 
   // --- DARK MODE
-  static ChipThemeData darkChopThemeData = const ChipThemeData(
+  static ChipThemeData darkChipThemeData = const ChipThemeData(
     disabledColor: Colors.grey,
     labelStyle: TextStyle(color: Colors.white),
     selectedColor: Colors.blue,

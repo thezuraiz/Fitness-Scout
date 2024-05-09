@@ -21,14 +21,14 @@ class ZUserProfileTile extends StatelessWidget {
         padding: 0,
       ),
       title: Text(
-        "Coding With Z",
+        "Zuraiz Khan",
         style: Theme.of(context)
             .textTheme
             .headlineSmall!
             .copyWith(color: Colors.white),
       ),
       subtitle: Text(
-        "support@codingwithZ.com",
+        "thezuraiz@fitness_scout.com",
         style: Theme.of(context)
             .textTheme
             .bodyMedium!

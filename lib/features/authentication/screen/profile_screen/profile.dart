@@ -3,6 +3,7 @@ import 'package:fitness_scout/common/widgets/custom_shapes/primary_header_contai
 import 'package:fitness_scout/common/widgets/list_tiles/settings_menue_title.dart';
 import 'package:fitness_scout/common/widgets/list_tiles/user_profile.dart';
 import 'package:fitness_scout/common/widgets/section_heading.dart';
+import 'package:fitness_scout/features/authentication/screen/profile_screen/profile_settings.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,7 @@ class ProfileScreen extends StatelessWidget {
                   /// AppBar
                   ZCustomAppBar(
                     title: Text(
-                      "Accounts",
+                      "Profile",
                       style: Theme.of(context)
                           .textTheme
                           .headlineMedium!
@@ -33,7 +34,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
 
                   /// User Profile Card
-                  ZUserProfileTile(onPressed: ()=> Get.to(()=>const ProfileScreen()),),
+                  ZUserProfileTile(onPressed: ()=> Get.to(()=>const SettingScreen()),),
                   const SizedBox(
                     height: ZSizes.spaceBtwSections,
                   ),
@@ -54,25 +55,19 @@ class ProfileScreen extends StatelessWidget {
                   ZSettingsMenueTitle(
                     icon: Iconsax.safe_home,
                     title: "My Addresses",
-                    subTitle: "Set Shopping Delivery Address",
-                    onPressed: () {},
-                  ),
-                  ZSettingsMenueTitle(
-                    icon: Iconsax.shopping_cart,
-                    title: "My Cart",
-                    subTitle: "Add, move products and move to checkout",
+                    subTitle: "Set our location",
                     onPressed: () {},
                   ),
                   ZSettingsMenueTitle(
                     icon: Iconsax.bag_tick,
-                    title: "My Order",
-                    subTitle: "In Progress and Completed Order",
+                    title: "My BMI",
+                    subTitle: "Your BMI, Monitor your health",
                     onPressed: () {},
                   ),
                   ZSettingsMenueTitle(
                     icon: Iconsax.bank,
                     title: "Bank Account",
-                    subTitle: "Withdraw balance to register bank account",
+                    subTitle: "Buy Package through Bank",
                     onPressed: () {},
                   ),
                   ZSettingsMenueTitle(
@@ -106,14 +101,9 @@ class ProfileScreen extends StatelessWidget {
                     height: ZSizes.spaceBtwItems,
                   ),
                   ZSettingsMenueTitle(
-                      icon: Iconsax.document_upload,
-                      title: "Load Data",
-                      subTitle: "Upload data to your Cloud Firebase",
-                      onPressed: () {}),
-                  ZSettingsMenueTitle(
                     icon: Iconsax.location,
                     title: "Geolocation",
-                    subTitle: "Set recommendations based on your location",
+                    subTitle: "Find GYM based on your location",
                     onPressed: () {},
                     trailing: Switch(
                       value: true,

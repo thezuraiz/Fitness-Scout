@@ -7,16 +7,16 @@ import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+class SettingScreen extends StatelessWidget {
+  const SettingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: const ZCustomAppBar(
+      appBar: ZCustomAppBar(
         showArrows: true,
-        title: Text("Profile"),
+        title: Text("Profile",style: Theme.of(context).textTheme.headlineMedium,),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -53,10 +53,10 @@ class SettingsScreen extends StatelessWidget {
                 height: ZSizes.spaceBtwItems,
               ),
               ProfileMenu(
-                  title: "Name", subTitle: "Coding With Z", onPressed: () {}),
+                  title: "Name", subTitle: "Zuraiz Khan", onPressed: () {}),
               ProfileMenu(
                   title: "Username",
-                  subTitle: "Coding With Z",
+                  subTitle: "thezuraiz",
                   onPressed: () {}),
               ProfileMenu(
                   title: "GYM Package",
@@ -85,7 +85,7 @@ class SettingsScreen extends StatelessWidget {
                   icon: Iconsax.copy,
                   onPressed: () {}),
               ProfileMenu(
-                  title: "Email", subTitle: 'coding_with_z', onPressed: () {}),
+                  title: "Email", subTitle: 'thezuraiz@fitness_scout.com', onPressed: () {}),
               ProfileMenu(
                   title: "Phone Number",
                   subTitle: '0300-1234029',

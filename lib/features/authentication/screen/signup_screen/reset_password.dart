@@ -1,5 +1,5 @@
 import 'package:fitness_scout/features/authentication/screen/login_screen/login_screen.dart';
-import 'package:fitness_scout/features/authentication/screen/signup_screen/signup_controller.dart';
+import 'package:fitness_scout/features/authentication/controller/signup_controller.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

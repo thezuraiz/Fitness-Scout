@@ -1,6 +1,6 @@
 import 'package:fitness_scout/common/styles/AppbarPadding.dart';
 import 'package:fitness_scout/features/authentication/screen/login_screen/login_screen.dart';
-import 'package:fitness_scout/features/authentication/screen/signup_screen/signup_controller.dart';
+import 'package:fitness_scout/features/authentication/controller/signup_controller.dart';
 import 'package:fitness_scout/features/authentication/screen/successScreens.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';

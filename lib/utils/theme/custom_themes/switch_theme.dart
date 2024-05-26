@@ -6,14 +6,14 @@ class ZSwitchTheme {
 
   // --- LIGHT MODE
   static SwitchThemeData lightSwitchThemeData = SwitchThemeData(
-    thumbColor: MaterialStateProperty.resolveWith((states) {
-      if (states.contains(MaterialState.disabled)) {
+    thumbColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.disabled)) {
         return Colors.grey.withOpacity(0.4);
       }
       return ZColor.primary; // Use primary color for the thumb
     }),
-    trackColor: MaterialStateProperty.resolveWith((states) {
-      if (states.contains(MaterialState.disabled)) {
+    trackColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.disabled)) {
         return Colors.grey.withOpacity(0.4);
       }
       return ZColor.primary.withOpacity(0.2);
@@ -23,14 +23,14 @@ class ZSwitchTheme {
 
   // --- DARK MODE
   static SwitchThemeData darkSwitchThemeData = SwitchThemeData(
-    thumbColor: MaterialStateProperty.resolveWith((states) {
-      if (states.contains(MaterialState.disabled)) {
+    thumbColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.disabled)) {
         return ZColor.primary.withOpacity(0.4);
       }
       return ZColor.primary; // Use primary color for the thumb
     }),
-    trackColor: MaterialStateProperty.resolveWith((states) {
-      if (states.contains(MaterialState.disabled)) {
+    trackColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.disabled)) {
         return ZColor.primary.withOpacity(0.4);
       }
       return Colors.grey.withOpacity(0.2);

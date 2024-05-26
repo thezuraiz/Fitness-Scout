@@ -1,3 +1,4 @@
+import 'package:fitness_scout/bindings/general_bindings.dart';
 import 'package:fitness_scout/features/authentication/screen/onboarding_screen.dart';
 import 'package:fitness_scout/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class FitnessScout extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
+      initialBinding: GeneralBindings(),
       home: const OnBoardingScreen(),
     );
   }

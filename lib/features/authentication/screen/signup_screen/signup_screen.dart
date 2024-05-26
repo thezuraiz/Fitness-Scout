@@ -45,7 +45,7 @@ class SignupScreen extends StatelessWidget {
                             labelText: ZText.firstName,
                             prefixIcon: Icon(Iconsax.user)),
                         controller: controller.firstNameController,
-                        validator: controller.nameValidator,
+                        validator: controller.nameValidator.call,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                       ),
                     ),
@@ -58,7 +58,7 @@ class SignupScreen extends StatelessWidget {
                             labelText: ZText.lastName,
                             prefixIcon: Icon(Iconsax.user)),
                         controller: controller.lastNameController,
-                        validator: controller.nameValidator,
+                        validator: controller.nameValidator.call,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                       ),
                     ),
@@ -72,7 +72,7 @@ class SignupScreen extends StatelessWidget {
                       labelText: ZText.userName,
                       prefixIcon: Icon(Iconsax.user_edit)),
                   controller: controller.userNameController,
-                  validator: controller.usernameValidator,
+                  validator: controller.usernameValidator.call,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(
@@ -83,8 +83,36 @@ class SignupScreen extends StatelessWidget {
                       labelText: ZText.email,
                       prefixIcon: Icon(Iconsax.activity)),
                   controller: controller.emailController,
-                  validator: controller.emailValidator,
+                  validator: controller.emailValidator.call,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
+                ),
+                const SizedBox(
+                  height: ZSizes.spaceBtwInputFields,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        decoration: const InputDecoration(labelText: ZText.height,
+                          prefixIcon: Icon(Icons.height)
+                        ),
+                        controller: controller.heightController,
+                        validator: controller.heightValidator.call,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: ZSizes.spaceBtwInputFields,
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        decoration: const InputDecoration(labelText: ZText.weight,prefixIcon: Icon(Iconsax.weight)),
+                        controller: controller.weightController,
+                        validator: controller.weightValidator.call,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: ZSizes.spaceBtwInputFields,
@@ -95,7 +123,7 @@ class SignupScreen extends StatelessWidget {
                     prefixIcon: Icon(Iconsax.call),
                   ),
                   controller: controller.phoneNumberController,
-                  validator: controller.phoneNumberValidator,
+                  validator: controller.phoneNumberValidator.call,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(
@@ -104,19 +132,19 @@ class SignupScreen extends StatelessWidget {
                 Obx(() => TextFormField(
                       decoration: InputDecoration(
                         labelText: ZText.password,
-                        prefixIcon: Icon(Iconsax.password_check),
+                        prefixIcon: const Icon(Iconsax.password_check),
                         suffixIcon: IconButton(
-                          onPressed: () => controller.showPassword.value =
-                              !controller.showPassword.value,
-                          icon: Icon(controller.showPassword.value
+                          onPressed: () => controller.hidePassword.value =
+                              !controller.hidePassword.value,
+                          icon: Icon(controller.hidePassword.value
                               ? Iconsax.eye
                               : Iconsax.eye_slash),
                         ),
                       ),
                       controller: controller.passwordController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: controller.passwordValidator,
-                      obscureText: controller.showPassword.value,
+                      validator: controller.passwordValidator.call,
+                      obscureText: controller.hidePassword.value,
                     )),
                 const SizedBox(
                   height: ZSizes.spaceBtwSections,
@@ -129,9 +157,9 @@ class SignupScreen extends StatelessWidget {
                       width: 24,
                       child: Obx(
                         () => Checkbox(
-                          value: controller.iAgreeTo.value,
+                          value: controller.privacyPolicy.value,
                           onChanged: (value) =>
-                              controller.iAgreeTo.value = value!,
+                              controller.privacyPolicy.value = value!,
                         ),
                       ),
                     ),
@@ -174,7 +202,7 @@ class SignupScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: controller.createAccountButton,
+                    onPressed: controller.signup,
                     child: const Text(ZText.createAccount),
                   ),
                 ),
@@ -185,7 +213,10 @@ class SignupScreen extends StatelessWidget {
                 const SizedBox(
                   height: ZSizes.spaceBtwSections,
                 ),
-                const ZSocialButtons()
+                const ZSocialButtons(),
+                const SizedBox(
+                  height: ZSizes.defaultSpace,
+                )
               ],
             ),
           ),

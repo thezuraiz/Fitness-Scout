@@ -1,5 +1,4 @@
 import 'package:fitness_scout/features/authentication/screen/profile_screen/profile.dart';
-import 'package:fitness_scout/features/authentication/screen/profile_screen/profile_settings.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
 import 'package:fitness_scout/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';

@@ -34,7 +34,7 @@ class LoginScreenFormField extends StatelessWidget {
                   prefixIcon: Icon(Iconsax.direct_right),
                 ),
                 controller: controller.emailController,
-                validator: controller.emailValidation,
+                validator: controller.emailValidation.call,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
               const SizedBox(
@@ -46,7 +46,7 @@ class LoginScreenFormField extends StatelessWidget {
                     prefixIcon: Icon(Iconsax.password_check),
                     labelText: ZText.password),
                 controller: controller.passwordController,
-                validator: controller.passwordValidation,
+                validator: controller.passwordValidation.call,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
 

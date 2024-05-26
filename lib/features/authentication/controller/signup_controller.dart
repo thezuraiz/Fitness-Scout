@@ -131,7 +131,7 @@ class SignupController extends GetxController {
         'phoneNo': phoneNumberController.text.trim().toString(),
         'profilePictue': ''
       };
-      userRepository.saveUserData(newUser);
+      userRepository.saveUserRecord(newUser);
 
       /// Remove Loader
       ZFullScreenLoader.stopLoading();

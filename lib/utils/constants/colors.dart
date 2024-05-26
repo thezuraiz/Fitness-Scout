@@ -4,7 +4,7 @@ class ZColor{
   ZColor._();
 
   // --- APP BASIC COLORS
-  static const primary = Color(0xFFff8d61);
+  static const primary = Color(0xFFF77B00);
   // static const primary = Color(0xff4b68ff);
   static const secondary = Color(0xffa1d8f1);
   // static const secondary = Color(0xffffe24b);

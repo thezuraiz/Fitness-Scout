@@ -40,4 +40,8 @@ class ZImages{
 
   // --- USER PROFILE
   static const String userProfile = "assets/user_profile/user_profile.png";
+
+  // --- ANIMATIONS
+  static const String docerAnimation = "assets/animation/document_loading.json";
+  static const String fileAnimation = "assets/animation/files_falling.json";
 }

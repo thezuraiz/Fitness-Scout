@@ -1,4 +1,3 @@
-import 'package:fitness_scout/features/authentication/controller/login_controller.dart';
 import 'package:fitness_scout/features/authentication/controller/signup_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

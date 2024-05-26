@@ -26,6 +26,8 @@ class ZText {
   static const String newPassword = "New Password";
   static const String userName = "User Name";
   static const String phoneNo = "Phone Number";
+  static const String height = "Height (mm)";
+  static const String weight = "Weight (kg)";
   static const String rememberMe = "Remember Me";
   static const String forgetPassword = "Forget Password?";
   static const String signIn = "Sign In";

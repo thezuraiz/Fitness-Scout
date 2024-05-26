@@ -26,6 +26,12 @@ dependencies:
   intl: any
   smooth_page_indicator: ^1.1.0
   form_field_validator: ^1.1.0
+  lottie: ^3.1.2
+  connectivity_plus: ^2.3.4
+  firebase_core: ^2.31.1
+  firebase_auth: ^4.19.6
+  cloud_firestore: ^4.17.4
+  get_storage: ^2.1.1
 
   # --- DEV DEPENDENCIES
 
@@ -54,6 +60,7 @@ flutter:
      - assets/logo/
      - assets/user_profile/
      - assets/splash_screen_logo/
+     - assets/animation/
 
   #---------------- LOCAL FONTS ----------------
 

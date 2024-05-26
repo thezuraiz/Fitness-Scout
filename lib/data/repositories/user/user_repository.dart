@@ -9,7 +9,7 @@ class UserRepository extends GetxController{
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   /// --- Function to save user data to Firestore
-  saveUserData( Map<String,String> user)async{
+  saveUserRecord( Map<String,String> user)async{
     try{
       await _db.collection('users').doc(user.values.first).set(user);
     }on FirebaseAuth catch(e){

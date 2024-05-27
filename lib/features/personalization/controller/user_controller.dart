@@ -10,28 +10,25 @@ class UserController extends GetxController{
   Future<void> saveUserRecord (UserCredential? userCredentials)async{
     try{}catch(e){
       ZLoaders.warningSnackBar(title: 'Data Not Saved',message: 'Something went wrong while saving your information. You can re-save your data in your profile.');
-      if(UserCredential != null){
+      // Schema
+      final newUser = {
+        'id': userCredentials?.user!.uid ?? '',
+        'name':
+        userCredentials?.user!.displayName ?? '',
+        'username': userCredentials?.user!.email ?? '',
+        'email': userCredentials?.user!.email ?? '',
+        'height': '',
+        'weight': '',
+        'phoneNo': userCredentials?.user!.phoneNumber ?? '',
+        'profilePictue': userCredentials?.user!.photoURL ?? ''
+      };
 
-        // Schema
-        final newUser = {
-          'id': userCredentials?.user!.uid ?? '',
-          'name':
-          '${userCredentials?.user!.displayName ?? ''}',
-          'username': userCredentials?.user!.email ?? '',
-          'email': userCredentials?.user!.email ?? '',
-          'height': '',
-          'weight': '',
-          'phoneNo': userCredentials?.user!.phoneNumber ?? '',
-          'profilePictue': userCredentials?.user!.photoURL ?? ''
-        };
-
-        // - Save User Record
-        UserRepository.instance.saveUserRecord(newUser);
+      // - Save User Record
+      UserRepository.instance.saveUserRecord(newUser);
 
 
 
-      }
-    }
+        }
   }
 
 }

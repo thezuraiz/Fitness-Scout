@@ -5,7 +5,6 @@ import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:fitness_scout/utils/constants/text_strings.dart';
 import 'package:fitness_scout/utils/helpers/helper_functions.dart';
-import 'package:fitness_scout/utils/navigation_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:iconsax/iconsax.dart';
@@ -33,7 +32,7 @@ class LoginScreenFormField extends StatelessWidget {
                   prefixIcon: Icon(Iconsax.direct_right),
                 ),
                 controller: controller.email,
-                validator: controller.emailValidation,
+                validator: controller.emailValidation.call,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
               const SizedBox(
@@ -49,11 +48,11 @@ class LoginScreenFormField extends StatelessWidget {
                           icon: Icon(controller.hidePassword.value
                               ? Iconsax.eye
                               : Iconsax.eye_slash)),
-                      prefixIcon: Icon(Iconsax.password_check),
+                      prefixIcon: const Icon(Iconsax.password_check),
                       labelText: ZText.password),
                   obscureText: controller.hidePassword.value,
                   controller: controller.password,
-                  validator: RequiredValidator(errorText: 'Required'),
+                  validator: RequiredValidator(errorText: 'Required').call,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
               ),

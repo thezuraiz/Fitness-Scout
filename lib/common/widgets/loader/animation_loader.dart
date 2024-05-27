@@ -36,7 +36,7 @@ class ZAnimationLoaderWidget extends StatelessWidget {
                     style:
                         OutlinedButton.styleFrom(backgroundColor: ZColor.dark),
                     child: Text(
-                      text!,
+                      text,
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium!

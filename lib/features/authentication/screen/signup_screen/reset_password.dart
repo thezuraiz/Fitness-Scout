@@ -1,6 +1,5 @@
-import 'package:fitness_scout/features/authentication/controller/forgert_password/forget_password_controller.dart';
+import 'package:fitness_scout/features/authentication/controller/forget_password/forget_password_controller.dart';
 import 'package:fitness_scout/features/authentication/screen/login_screen/login_screen.dart';
-import 'package:fitness_scout/features/authentication/controller/signup/signup_controller.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +14,6 @@ class ResetPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SignupController controller = Get.put(SignupController());
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,

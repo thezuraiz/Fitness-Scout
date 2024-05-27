@@ -6,11 +6,13 @@ import 'package:fitness_scout/utils/exceptions/firebase_auth_exception.dart';
 import 'package:fitness_scout/utils/exceptions/firebase_exception.dart';
 import 'package:fitness_scout/utils/exceptions/format_exception.dart';
 import 'package:fitness_scout/utils/exceptions/plaform_exception.dart';
+import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:fitness_scout/utils/navigation_menu.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
@@ -28,8 +30,8 @@ class AuthenticationRepository extends GetxController {
 
   /// --- Function to show relevant Screen
   screenRedirect() async {
-    _auth.signOut();
-    _auth.currentUser!.reload();
+    // _auth.signOut();
+    // _auth.currentUser!.reload();
 
     if (_auth.currentUser != null) {
       if (_auth.currentUser!.emailVerified) {
@@ -40,6 +42,7 @@ class AuthenticationRepository extends GetxController {
             ));
       }
     } else {
+      ZLogger.debug(deviceStorage.read('isFirstTime').toString());
       /// Local Storage
       deviceStorage.writeIfNull('isFirstTime', true);
       deviceStorage.read('isFirstTime') != true
@@ -51,10 +54,12 @@ class AuthenticationRepository extends GetxController {
   // ------------------ Email & Password Sign-in -----------------------
 
   ///  [Email Authentication] - Sign-in
-  Future<UserCredential> loginWithEmailAndPassword(String email,String password)async{
-    try{
-     return await _auth.signInWithEmailAndPassword(email: email, password: password);
-    }on FirebaseAuthException catch (e) {
+  Future<UserCredential> loginWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      return await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (e) {
       throw ZFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
       throw ZFirebaseException(e.code).message;
@@ -66,7 +71,6 @@ class AuthenticationRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
-
 
   ///  [Email Authentication] - Register
   Future<UserCredential> registerWithEmailAndPassword(
@@ -105,11 +109,43 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
+  ///  [Social Authentication] - Google
+  Future<UserCredential?> signInWithGoogle() async {
+    try {
+      /// --- Trigger the authentication flow
+      final GoogleSignInAccount? userAccount = await GoogleSignIn().signIn();
+
+      /// --- Obtain the auth detail from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await userAccount?.authentication;
+
+      /// --- Create new credentials
+      final credentials = GoogleAuthProvider.credential(
+          idToken: googleAuth?.idToken, accessToken: googleAuth?.accessToken);
+
+      /// --- Once Sign in, return the user credentials
+      return await _auth.signInWithCredential(credentials);
+
+    } on FirebaseAuthException catch (e) {
+      throw ZFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw ZFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw ZFormatException();
+    } on PlatformException catch (e) {
+      throw ZPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
   ///  [Email Authentication] - Logout
 
   Future<void> logout() async {
     try {
+      await GoogleSignIn().signOut();
       await _auth.signOut();
+      Get.offAll(() => const LoginScreen());
     } on FirebaseAuthException catch (e) {
       throw ZFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {

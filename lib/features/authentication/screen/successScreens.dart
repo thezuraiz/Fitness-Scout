@@ -3,11 +3,17 @@ import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:fitness_scout/utils/constants/text_strings.dart';
 import 'package:fitness_scout/utils/device/deviceUtilities.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class SuccessScreen extends StatelessWidget {
-  const SuccessScreen({super.key, required this.image, required this.title, required this.subTitle, required this.onPressed});
+  const SuccessScreen(
+      {super.key,
+      required this.image,
+      required this.title,
+      required this.subTitle,
+      required this.onPressed});
 
-  final String image,title, subTitle;
+  final String image, title, subTitle;
   final VoidCallback? onPressed;
 
   @override
@@ -19,9 +25,9 @@ class SuccessScreen extends StatelessWidget {
           child: Column(
             children: [
               // --- TODO: Image
-              Image.asset(
+              Lottie.asset(
                 image,
-                width: ZDeviceUtils.getScreenWidth() * 0.6,
+                width: ZDeviceUtils.getScreenWidth() * 0.7,
               ),
 
               const SizedBox(

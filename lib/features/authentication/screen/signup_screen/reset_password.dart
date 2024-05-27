@@ -1,5 +1,5 @@
 import 'package:fitness_scout/features/authentication/screen/login_screen/login_screen.dart';
-import 'package:fitness_scout/features/authentication/controller/signup_controller.dart';
+import 'package:fitness_scout/features/authentication/controller/signup/signup_controller.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -68,7 +68,7 @@ class ResetPassword extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: TextButton(
-                  onPressed: controller.resendEmailButton,
+                  onPressed: (){},
                   child: const Text(ZText.resendEmail),
                 ),
               ),

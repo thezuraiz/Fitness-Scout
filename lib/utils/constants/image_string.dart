@@ -44,4 +44,5 @@ class ZImages{
   // --- ANIMATIONS
   static const String docerAnimation = "assets/animation/document_loading.json";
   static const String fileAnimation = "assets/animation/files_falling.json";
+  static const String successScreenAnimation = "assets/animation/success_registration_animation.json";
 }

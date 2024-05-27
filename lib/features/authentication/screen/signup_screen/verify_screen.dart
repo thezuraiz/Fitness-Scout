@@ -1,6 +1,8 @@
 import 'package:fitness_scout/common/styles/AppbarPadding.dart';
+import 'package:fitness_scout/data/repositories/authentication/authentication_repository.dart';
+import 'package:fitness_scout/features/authentication/controller/signup/verify_email_controller.dart';
 import 'package:fitness_scout/features/authentication/screen/login_screen/login_screen.dart';
-import 'package:fitness_scout/features/authentication/controller/signup_controller.dart';
+import 'package:fitness_scout/features/authentication/controller/signup/signup_controller.dart';
 import 'package:fitness_scout/features/authentication/screen/successScreens.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
@@ -11,16 +13,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class VerifyScreen extends StatelessWidget {
-  const VerifyScreen({super.key});
+  const VerifyScreen({super.key, this.email});
+
+  final String? email;
 
   @override
   Widget build(BuildContext context) {
-    SignupController controller = Get.put(SignupController());
+    final controller = Get.put(VerifyEmailController());
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         actions: [
-          IconButton(onPressed: () => Get.offAll(const LoginScreen()), icon: const Icon(CupertinoIcons.clear))
+          IconButton(
+              onPressed: () => AuthenticationRepository.instance.logout(),
+              icon: const Icon(CupertinoIcons.clear))
         ],
       ),
       body: SingleChildScrollView(
@@ -47,7 +53,7 @@ class VerifyScreen extends StatelessWidget {
                 height: ZSizes.spaceBtwItems,
               ),
               Text(
-                "support@codingwitht.com",
+                email ?? '',
                 style: Theme.of(context).textTheme.labelLarge,
                 textAlign: TextAlign.center,
               ),
@@ -64,15 +70,11 @@ class VerifyScreen extends StatelessWidget {
               ),
 
               // --- TODO: Buttons
+              /// Success Screen
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => Get.off(SuccessScreen(
-                    image: ZImages.staticSuccessIllustration,
-                    title: ZText.yourAccountCreatedTitle,
-                    subTitle: ZText.yourAccountCreatedSubTitle,
-                    onPressed: () => Get.off(const LoginScreen()),
-                  )),
+                  onPressed: () => controller.checkEmailVerificationStatus,
                   child: const Text(ZText.Continue),
                 ),
               ),
@@ -82,7 +84,7 @@ class VerifyScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: TextButton(
-                  onPressed: controller.resendEmailButton,
+                  onPressed: () => controller.sendEmailVerification(),
                   child: const Text(ZText.resendEmail),
                 ),
               )

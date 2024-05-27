@@ -3,7 +3,7 @@ import 'package:fitness_scout/data/repositories/authentication/authentication_re
 import 'package:fitness_scout/features/authentication/controller/signup/verify_email_controller.dart';
 import 'package:fitness_scout/features/authentication/screen/login_screen/login_screen.dart';
 import 'package:fitness_scout/features/authentication/controller/signup/signup_controller.dart';
-import 'package:fitness_scout/features/authentication/screen/successScreens.dart';
+import 'package:fitness_scout/features/authentication/screen/success_screen/successScreens.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:fitness_scout/utils/constants/text_strings.dart';

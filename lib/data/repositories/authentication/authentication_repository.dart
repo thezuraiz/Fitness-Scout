@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_scout/features/authentication/screen/login_screen/login_screen.dart';
-import 'package:fitness_scout/features/authentication/screen/onboarding_screen.dart';
+import 'package:fitness_scout/features/authentication/screen/onboard_screen/onboarding_screen.dart';
 import 'package:fitness_scout/features/authentication/screen/signup_screen/verify_screen.dart';
 import 'package:fitness_scout/utils/exceptions/firebase_auth_exception.dart';
 import 'package:fitness_scout/utils/exceptions/firebase_exception.dart';
@@ -43,6 +43,7 @@ class AuthenticationRepository extends GetxController {
       }
     } else {
       ZLogger.debug(deviceStorage.read('isFirstTime').toString());
+
       /// Local Storage
       deviceStorage.writeIfNull('isFirstTime', true);
       deviceStorage.read('isFirstTime') != true
@@ -91,11 +92,28 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  ///  [Email Authentication] - Email
+  ///  [Email Authentication] - Send Email
 
   Future<void> sendEmailVerification() async {
     try {
       await _auth.currentUser!.sendEmailVerification();
+    } on FirebaseAuthException catch (e) {
+      throw ZFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw ZFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw ZFormatException();
+    } on PlatformException catch (e) {
+      throw ZPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  /// [Email Authentication] - Forget Password;
+  Future<void> sendPasswordResentEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
       throw ZFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
@@ -125,7 +143,6 @@ class AuthenticationRepository extends GetxController {
 
       /// --- Once Sign in, return the user credentials
       return await _auth.signInWithCredential(credentials);
-
     } on FirebaseAuthException catch (e) {
       throw ZFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {

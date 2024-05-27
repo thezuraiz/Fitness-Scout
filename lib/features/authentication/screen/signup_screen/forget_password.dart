@@ -1,22 +1,25 @@
+import 'package:fitness_scout/features/authentication/controller/forgert_password/forget_password_controller.dart';
 import 'package:fitness_scout/features/authentication/controller/signup/signup_controller.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:fitness_scout/utils/constants/text_strings.dart';
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ForgetPassword extends StatelessWidget {
   const ForgetPassword({super.key});
 
+
   @override
   Widget build(BuildContext context) {
-    SignupController controller = Get.put(SignupController());
+    final controller = Get.put(ForgetPasswordController());
     return Scaffold(
         appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(ZSizes.defaultSpace),
         child: Form(
-          key: controller.forgetFormKey,
+          key: controller.forgetKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -34,7 +37,7 @@ class ForgetPassword extends StatelessWidget {
                   labelText: ZText.email,
                   prefixIcon: Icon(Iconsax.direct_right)
                 ),
-                validator: controller.emailValidator.call,
+                validator: controller.emailValidation(),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
               const SizedBox(
@@ -43,7 +46,7 @@ class ForgetPassword extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: controller.forgetPasswordButton,
+                  onPressed: controller.sendPasswordResendEmail(),
                   child: const Text(ZText.submit),
                 ),
               )

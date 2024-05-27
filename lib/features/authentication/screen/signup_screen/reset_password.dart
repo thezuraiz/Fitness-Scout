@@ -1,3 +1,4 @@
+import 'package:fitness_scout/features/authentication/controller/forgert_password/forget_password_controller.dart';
 import 'package:fitness_scout/features/authentication/screen/login_screen/login_screen.dart';
 import 'package:fitness_scout/features/authentication/controller/signup/signup_controller.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
@@ -8,7 +9,9 @@ import '../../../../utils/constants/text_strings.dart';
 import '../../../../utils/device/deviceUtilities.dart';
 
 class ResetPassword extends StatelessWidget {
-  const ResetPassword({super.key});
+  const ResetPassword({super.key, required this.email});
+
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +61,7 @@ class ResetPassword extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => Get.to(const LoginScreen()),
+                  onPressed: () => Get.offAll(const LoginScreen()),
                   child: const Text(ZText.done),
                 ),
               ),
@@ -68,7 +71,7 @@ class ResetPassword extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: TextButton(
-                  onPressed: (){},
+                  onPressed: ()=> ForgetPasswordController.instance.resendPasswordResendEmail(email),
                   child: const Text(ZText.resendEmail),
                 ),
               ),

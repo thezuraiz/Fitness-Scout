@@ -159,13 +159,5 @@ class SignupController extends GetxController {
     ZLoaders.warningSnackBar(title: 'Error',message: 'Facebook Authentication is under development');
   }
 
-  // Forget Screen Things
-  final forgetFormKey = GlobalKey<FormState>();
 
-  void forgetPasswordButton() {
-    FocusManager.instance.primaryFocus!.unfocus();
-    if (forgetFormKey.currentState!.validate()) {
-      Get.to(() => const ResetPassword());
-    }
-  }
 }

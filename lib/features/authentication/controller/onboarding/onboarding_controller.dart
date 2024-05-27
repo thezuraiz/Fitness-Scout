@@ -2,9 +2,11 @@ import 'package:fitness_scout/features/authentication/screen/login_screen/login_
 import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class OnBoardController extends GetxController {
   static OnBoardController get instance => Get.find();
+  final deviceStorage = GetStorage();
 
   // --- VARIABLE
   final pageController = PageController();
@@ -23,6 +25,8 @@ class OnBoardController extends GetxController {
   // --- UPDATE CORRECT INDEX & JUMP TO NEXT PAGE
   void nextPage() {
     if (currentPageIndex.value == 2) {
+      deviceStorage.write('isFirstTime', false);
+      ZLogger.debug(deviceStorage.read('isFirstTime').toString());
       Get.offAll(const LoginScreen());
       // currentPageIndex.value = 0;
       // pageController.jumpToPage(0);

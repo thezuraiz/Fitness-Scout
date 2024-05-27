@@ -25,7 +25,7 @@ class SignupController extends GetxController {
   TextEditingController heightController = TextEditingController();
   TextEditingController weightController = TextEditingController();
 
-  RxBool hidePassword = false.obs;
+  RxBool hidePassword = true.obs;
   RxBool privacyPolicy = false.obs;
 
   final nameValidator = MultiValidator([
@@ -154,34 +154,9 @@ class SignupController extends GetxController {
     }
   }
 
-  void signupWithGoogle() {
-    Get.showSnackbar(
-      const GetSnackBar(
-        title: "Error",
-        message: "Google Authentication is under development!",
-        duration: Duration(seconds: 3),
-        isDismissible: true,
-        icon: Icon(
-          Icons.dangerous,
-          color: Colors.red,
-        ),
-      ),
-    );
-  }
 
   void signupWithFacebook() {
-    Get.showSnackbar(
-      const GetSnackBar(
-        title: "Error",
-        message: "Facebook Authentication is under development!",
-        duration: Duration(seconds: 3),
-        isDismissible: true,
-        icon: Icon(
-          Icons.dangerous,
-          color: Colors.red,
-        ),
-      ),
-    );
+    ZLoaders.warningSnackBar(title: 'Error',message: 'Facebook Authentication is under development');
   }
 
   // Forget Screen Things

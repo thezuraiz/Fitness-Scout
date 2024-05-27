@@ -1,3 +1,4 @@
+import 'package:fitness_scout/features/authentication/controller/login/login_controller.dart';
 import 'package:fitness_scout/features/authentication/controller/signup/signup_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,7 +23,7 @@ class ZSocialButtons extends StatelessWidget {
               borderRadius: BorderRadius.circular(100),
               border: Border.all(color: ZColor.grey)),
           child: IconButton(
-            onPressed: () => controller.signupWithGoogle(),
+            onPressed: () => LoginController.instance.googleSignIn(),
             icon: const Image(
               height: ZSizes.iconMd,
               width: ZSizes.iconMd,

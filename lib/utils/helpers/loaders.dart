@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-class Zloaders {
+class ZLoaders {
+  ZLoaders._();
+
   static successSnackBar({required title, message = '', duration = 3}) {
     Get.snackbar(
       title,

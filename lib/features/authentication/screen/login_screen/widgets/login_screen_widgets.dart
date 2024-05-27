@@ -1,4 +1,4 @@
-import 'package:fitness_scout/features/authentication/controller/login_controller.dart';
+import 'package:fitness_scout/features/authentication/controller/login/login_controller.dart';
 import 'package:fitness_scout/features/authentication/screen/signup_screen/forget_password.dart';
 import 'package:fitness_scout/features/authentication/screen/signup_screen/signup_screen.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
@@ -7,9 +7,9 @@ import 'package:fitness_scout/utils/constants/text_strings.dart';
 import 'package:fitness_scout/utils/helpers/helper_functions.dart';
 import 'package:fitness_scout/utils/navigation_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:get/get.dart';
-
 
 class LoginScreenFormField extends StatelessWidget {
   const LoginScreenFormField({
@@ -18,14 +18,13 @@ class LoginScreenFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LoginController controller = Get.put(LoginController());
+    final controller = Get.put(LoginController());
 
-    final formKey = GlobalKey<FormState>();
     return Form(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: ZSizes.spaceBtwSections),
         child: Form(
-          key: formKey,
+          key: controller.loginKey,
           child: Column(
             children: [
               TextFormField(
@@ -33,21 +32,30 @@ class LoginScreenFormField extends StatelessWidget {
                   labelText: ZText.email,
                   prefixIcon: Icon(Iconsax.direct_right),
                 ),
-                controller: controller.emailController,
-                validator: controller.emailValidation.call,
+                controller: controller.email,
+                validator: controller.emailValidation,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
               const SizedBox(
                 height: ZSizes.spaceBtwInputFields,
               ),
-              TextFormField(
-                decoration: const InputDecoration(
-                    suffixIcon: Icon(Iconsax.eye),
-                    prefixIcon: Icon(Iconsax.password_check),
-                    labelText: ZText.password),
-                controller: controller.passwordController,
-                validator: controller.passwordValidation.call,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+              Obx(
+                () => TextFormField(
+                  decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                          onPressed: () =>
+                              controller.hidePassword.value =!
+                              controller.hidePassword.value,
+                          icon: Icon(controller.hidePassword.value
+                              ? Iconsax.eye
+                              : Iconsax.eye_slash)),
+                      prefixIcon: Icon(Iconsax.password_check),
+                      labelText: ZText.password),
+                  obscureText: controller.hidePassword.value,
+                  controller: controller.password,
+                  validator: RequiredValidator(errorText: 'Required'),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                ),
               ),
 
               const SizedBox(
@@ -60,10 +68,11 @@ class LoginScreenFormField extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Obx(() => Checkbox(
-                          value: controller.rememberMe.value,
-                          onChanged: (value) =>
-                          controller.rememberMe.value = value!),
+                      Obx(
+                        () => Checkbox(
+                            value: controller.rememberMe.value,
+                            onChanged: (value) =>
+                                controller.rememberMe.value = value!),
                       ),
                       const Text(ZText.rememberMe)
                     ],
@@ -84,12 +93,7 @@ class LoginScreenFormField extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      FocusManager.instance.primaryFocus!.unfocus();
-                      Get.to(() => const NavigationMenu());
-                    }
-                  },
+                  onPressed: () => controller.emailAndPasswordSignIn(),
                   child: const Text(ZText.signIn),
                 ),
               ),

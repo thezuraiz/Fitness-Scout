@@ -1,4 +1,4 @@
-import 'package:fitness_scout/features/authentication/controller/onboarding_controller.dart';
+import 'package:fitness_scout/features/authentication/controller/onboarding/onboarding_controller.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';

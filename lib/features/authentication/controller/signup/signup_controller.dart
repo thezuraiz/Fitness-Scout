@@ -105,7 +105,7 @@ class SignupController extends GetxController {
         // Remove Loader
         ZFullScreenLoader.stopLoading();
 
-        Zloaders.warningSnackBar(
+        ZLoaders.warningSnackBar(
             title: 'Accept Privacy Policy',
             message:
                 'In Order to Create Account, you must have to read and accept the Privacy Policy & Terms of use.!');
@@ -137,15 +137,19 @@ class SignupController extends GetxController {
       ZFullScreenLoader.stopLoading();
 
       // Show Successor Message
-      Zloaders.successSnackBar(
+      ZLoaders.successSnackBar(
           title: 'Congratulations',
           message: 'Your account has been created! Verify email to continue');
 
       // Move To Verify Email Screen
-      Get.to(() => const VerifyScreen());
+      Get.to(
+        () => VerifyScreen(
+          email: emailController.text.trim().toString(),
+        ),
+      );
     } catch (e) {
       //  Show some generic error to the user
-      Zloaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+      ZLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
       ZFullScreenLoader.stopLoading();
     }
   }
@@ -188,10 +192,5 @@ class SignupController extends GetxController {
     if (forgetFormKey.currentState!.validate()) {
       Get.to(() => const ResetPassword());
     }
-  }
-
-  // Password Reset
-  void resendEmailButton() {
-    Get.snackbar("Email Resend", "Check Email!");
   }
 }

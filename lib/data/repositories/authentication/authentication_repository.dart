@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_scout/features/authentication/screen/login_screen/login_screen.dart';
 import 'package:fitness_scout/features/authentication/screen/onboard_screen/onboarding_screen.dart';
 import 'package:fitness_scout/features/authentication/screen/signup_screen/verify_screen.dart';
+import 'package:fitness_scout/features/personalization/screen/packages/landing_package_screen.dart';
 import 'package:fitness_scout/utils/exceptions/firebase_auth_exception.dart';
 import 'package:fitness_scout/utils/exceptions/firebase_exception.dart';
 import 'package:fitness_scout/utils/exceptions/format_exception.dart';
 import 'package:fitness_scout/utils/exceptions/plaform_exception.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
-import 'package:fitness_scout/utils/navigation_menu.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
@@ -33,9 +33,11 @@ class AuthenticationRepository extends GetxController {
     // _auth.signOut();
     // _auth.currentUser!.reload();
 
+
     if (_auth.currentUser != null) {
       if (_auth.currentUser!.emailVerified) {
-        Get.offAll(() => const NavigationMenu());
+        // Get.offAll(() => const NavigationMenu());
+        Get.offAll(()=>const LandingPackageScreen());
       } else {
         Get.offAll(() => VerifyScreen(
               email: _auth.currentUser?.email,

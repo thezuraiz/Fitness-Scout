@@ -45,4 +45,10 @@ class ZImages{
   static const String docerAnimation = "assets/animation/document_loading.json";
   static const String fileAnimation = "assets/animation/files_falling.json";
   static const String successScreenAnimation = "assets/animation/success_registration_animation.json";
+
+
+  // --- PACKAGE DETAILS
+  static const String basic_plain_illustration = 'assets/animation/basic_package.gif';
+  static const String medium_plain_illustration = 'assets/animation/medium_package.gif';
+  static const String premium_plain_illustration = 'assets/animation/premium_package.gif';
 }

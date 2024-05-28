@@ -1,7 +1,7 @@
 import 'package:fitness_scout/common/widgets/circular_image.dart';
 import 'package:fitness_scout/common/widgets/custom_appbar.dart';
 import 'package:fitness_scout/common/widgets/section_heading.dart';
-import 'package:fitness_scout/features/personalization/screen/widgets/profile_menu.dart';
+import 'package:fitness_scout/features/personalization/screen/profile/widgets/profile_menu.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';

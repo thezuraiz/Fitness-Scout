@@ -36,6 +36,7 @@ dependencies:
   google_sign_in: ^6.2.1
   shared_preferences: ^2.2.3
   flutter_markdown: ^0.7.1
+  google_maps_flutter: ^2.6.1
 
   # --- DEV DEPENDENCIES
 

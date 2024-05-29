@@ -1,5 +1,6 @@
 import 'package:fitness_scout/common/widgets/custom_appbar.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
+import 'package:fitness_scout/utils/navigation_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,8 @@ class PackageDetailPage extends StatelessWidget {
       {super.key,
       required this.title,
       required this.price,
-      required this.description, required this.illustration});
+      required this.description,
+      required this.illustration});
 
   final String title;
   final String price;
@@ -34,7 +36,10 @@ class PackageDetailPage extends StatelessWidget {
               const SizedBox(
                 height: ZSizes.spaceBtwSections,
               ),
-              Image(image: AssetImage(illustration),width: Get.width * 0.7,),
+              Image(
+                image: AssetImage(illustration),
+                width: Get.width * 0.7,
+              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -52,7 +57,10 @@ class PackageDetailPage extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(ZSizes.sm),
-        child: ElevatedButton(onPressed: (){},child: Text("Pay Now $price"),),
+        child: ElevatedButton(
+          onPressed: () => Get.offAll(const NavigationMenu()),
+          child: Text("Pay Now $price"),
+        ),
       ),
     );
   }

@@ -3,6 +3,8 @@
         android:label="fitness_scout"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB1siTxaxLYCBrsM5cT0aARkV7zMkDtwuQ"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

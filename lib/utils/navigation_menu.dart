@@ -1,3 +1,4 @@
+import 'package:fitness_scout/features/gym_pool/screen/gym_pool.dart';
 import 'package:fitness_scout/features/personalization/screen/profile/profile.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
 import 'package:fitness_scout/utils/helpers/helper_functions.dart';
@@ -44,11 +45,9 @@ class NavigationController extends GetxController {
 
   final screens = [
     Container(
-      color: ZColor.grey,
+      color: ZColor.white,
     ),
-    Container(
-      color: ZColor.primary,
-    ),
+    const GymPool(),
     Container(color: ZColor.secondary),
     const ProfileScreen()
   ];

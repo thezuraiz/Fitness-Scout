@@ -1,4 +1,5 @@
 import 'package:fitness_scout/utils/constants/colors.dart';
+import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
 class ZSettingsMenueTitle extends StatelessWidget {
@@ -33,6 +34,7 @@ class ZSettingsMenueTitle extends StatelessWidget {
       ),
       trailing: trailing,
       onTap: onPressed,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(ZSizes.md)),
     );
   }
 }

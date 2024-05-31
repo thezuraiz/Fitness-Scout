@@ -11,12 +11,12 @@ class GymPool extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(GymPoolController());
-    Completer<GoogleMapController> _controller = Completer();
+    Completer<GoogleMapController> controller0 = Completer();
 
     return GoogleMap(
       initialCameraPosition: controller.kGooglePlex,
       onMapCreated: (GoogleMapController controller) {
-        _controller.complete(controller);
+        controller0.complete(controller);
       },
       myLocationEnabled: true,
     );

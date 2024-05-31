@@ -30,7 +30,8 @@ class SignupController extends GetxController {
   final nameValidator = MultiValidator([
     RequiredValidator(errorText: "Required"),
     MinLengthValidator(3, errorText: "Minimum 3 Words"),
-    MaxLengthValidator(7, errorText: "Maximum 6 Words")
+    MaxLengthValidator(7, errorText: "Maximum 6 Words"),
+    AlphabeticValidator(errorText: "Only alphabets are allowed"),
   ]);
 
   final usernameValidator = MultiValidator([
@@ -159,4 +160,15 @@ class SignupController extends GetxController {
   }
 
 
+}
+
+class AlphabeticValidator extends TextFieldValidator {
+  // Pass the error text to the super constructor
+  AlphabeticValidator({String errorText = 'Only alphabets are allowed'}) : super(errorText);
+
+  @override
+  bool isValid(String? value) {
+    // Return true if the value consists of only alphabets
+    return hasMatch(r'^[a-zA-Z]+$', value!);
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:fitness_scout/features/gym/screen/home/home.dart';
 import 'package:fitness_scout/features/gym_pool/screen/gym_pool.dart';
 import 'package:fitness_scout/features/personalization/screen/profile/profile.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
@@ -41,12 +42,12 @@ class NavigationMenu extends StatelessWidget {
 }
 
 class NavigationController extends GetxController {
+  static NavigationController get instance => Get.find();
+
   RxInt selectedIndex = 0.obs;
 
   final screens = [
-    Container(
-      color: ZColor.white,
-    ),
+    const HomePage(),
     const GymPool(),
     Container(color: ZColor.secondary),
     const ProfileScreen()

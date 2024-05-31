@@ -69,6 +69,9 @@ class LoginController extends GetxController {
       await AuthenticationRepository.instance
           .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
 
+      // Todo: Welcome Message
+      ZLoaders.successSnackBar(title: 'Welcome!', message: 'You are Login.');
+
       // Todo: Remove Loader
       ZFullScreenLoader.stopLoading();
 

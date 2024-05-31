@@ -15,7 +15,7 @@ class ZText {
   static const String onBoardingSubTitle3 = "Start Your Health Journey with Quick, Safe, and Healthy Exercise";
 
   // --- HOME
-  static const String homeAppbarTitle = "Good day for shopping";
+  static const String homeAppbarTitle = "Good day for Exercise";
   static const String homeAppbarSubTitle = "The Zuraiz";
 
   // Authentication Form Text

@@ -50,23 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBmy9ytXM6mI_qBZJBb5vjZhAzSO0aVQiE',
-    appId: '1:660328340901:android:473db12114c25663335c4c',
-    messagingSenderId: '660328340901',
-    projectId: 'ecommerceapp-853cf',
-    databaseURL: 'https://ecommerceapp-853cf-default-rtdb.firebaseio.com',
-    storageBucket: 'ecommerceapp-853cf.appspot.com',
+    apiKey: 'AIzaSyBGez9d0IrWfgbW6GFGRJRiRWlP1uAuTHg',
+    appId: '1:634407037380:android:44c3e2b56c3d9fd02f9c91',
+    messagingSenderId: '634407037380',
+    projectId: 'fitness-scout-912b1',
+    storageBucket: 'fitness-scout-912b1.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDEq8qnIRfv2b3tlrCm8lHy9JKcb3crY-g',
-    appId: '1:660328340901:ios:86c57928a47f2c37335c4c',
-    messagingSenderId: '660328340901',
-    projectId: 'ecommerceapp-853cf',
-    databaseURL: 'https://ecommerceapp-853cf-default-rtdb.firebaseio.com',
-    storageBucket: 'ecommerceapp-853cf.appspot.com',
-    androidClientId: '660328340901-ub8aiajkcpvguojh89hd69p9qs74cc2b.apps.googleusercontent.com',
-    iosClientId: '660328340901-bf6gq95ebmdvrqep8h1oaso65lbb7cft.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAv1kG_teXv0qBbmJ1bnMbtv6mFNHFTAB0',
+    appId: '1:634407037380:ios:7adb8438f6a094452f9c91',
+    messagingSenderId: '634407037380',
+    projectId: 'fitness-scout-912b1',
+    storageBucket: 'fitness-scout-912b1.appspot.com',
+    iosClientId: '634407037380-m3v8ssnono2g6fjik7cgknh0nb62abn6.apps.googleusercontent.com',
     iosBundleId: 'com.example.fitnessScout',
   );
+
 }

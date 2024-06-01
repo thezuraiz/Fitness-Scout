@@ -1,3 +1,4 @@
+import 'package:fitness_scout/features/gym/screen/diet_plan/diet_plan.dart';
 import 'package:fitness_scout/features/gym/screen/home/home.dart';
 import 'package:fitness_scout/features/gym_pool/screen/gym_pool.dart';
 import 'package:fitness_scout/features/personalization/screen/profile/profile.dart';
@@ -49,7 +50,7 @@ class NavigationController extends GetxController {
   final screens = [
     const HomePage(),
     const GymPool(),
-    Container(color: ZColor.secondary),
+    const DietPlan(),
     const ProfileScreen()
   ];
 }

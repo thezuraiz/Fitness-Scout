@@ -51,4 +51,9 @@ class ZImages{
   static const String basic_plain_illustration = 'assets/animation/basic_package.gif';
   static const String medium_plain_illustration = 'assets/animation/medium_package.gif';
   static const String premium_plain_illustration = 'assets/animation/premium_package.gif';
+
+  /// --- FOOD PICTURES
+  static const String foodSandwich  = 'assets/images/food/sanwichs.jpeg';
+  static const String potatoFries  = 'assets/images/food/potato_fries.jpeg';
+  static const String peanutSalad  = 'assets/images/food/peanut_salad.jpeg';
 }

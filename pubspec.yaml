@@ -28,6 +28,7 @@ dependencies:
   form_field_validator: ^1.1.0
   lottie: ^3.1.2
   connectivity_plus: ^2.3.4
+  syncfusion_flutter_charts: ^25.2.6
 
   #  --- FIREBASE
   firebase_core: ^2.31.1
@@ -67,6 +68,7 @@ flutter:
     - assets/splash_screen_logo/
     - assets/animation/
     - assets/icon/
+    - assets/images/food/
 
   #---------------- LOCAL FONTS ----------------
 

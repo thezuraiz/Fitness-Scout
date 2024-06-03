@@ -22,7 +22,7 @@ class CustomPackageContainer extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              height: 160,
+              height: 120,
               width: 300,
               padding: const EdgeInsets.all(ZSizes.md),
               decoration: BoxDecoration(
@@ -34,7 +34,7 @@ class CustomPackageContainer extends StatelessWidget {
                 children: [
                   Text(
                     packageName,
-                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       fontWeight: FontWeight.normal,
                       color: ZColor.white,
                     ),
@@ -42,7 +42,7 @@ class CustomPackageContainer extends StatelessWidget {
                   const Spacer(),
                   Text(
                     'Rs/- $packagePrice',
-                    style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                       color: ZColor.white,
                     ),
                   ),
@@ -59,7 +59,7 @@ class CustomPackageContainer extends StatelessWidget {
             ),
             Positioned(
               right: 5,
-              top: 57,
+              top: 37,
               child: Container(
                 height: 50,
                 width: 50,

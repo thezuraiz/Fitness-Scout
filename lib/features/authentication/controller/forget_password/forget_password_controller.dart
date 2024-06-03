@@ -13,10 +13,10 @@ class ForgetPasswordController extends GetxController {
 
   /// --- VARIABLES
   final email = TextEditingController();
-  GlobalKey<FormState> forgetKey = GlobalKey<FormState>();
+  final forgetKey = GlobalKey<FormState>();
 
   /// --- Form Validation
-  emailValidation() => MultiValidator([
+  final emailValidation =  MultiValidator([
         RequiredValidator(errorText: 'Required'),
         EmailValidator(errorText: 'Invalid Email')
       ]);

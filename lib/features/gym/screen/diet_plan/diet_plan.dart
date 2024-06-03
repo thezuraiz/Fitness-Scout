@@ -26,12 +26,15 @@ class DietPlan extends StatelessWidget {
 
             // TOdo: Current Food
             Padding(
-                padding: EdgeInsets.all(ZSizes.defaultSpace),
+                padding: EdgeInsets.symmetric(horizontal: ZSizes.defaultSpace),
                 child: Column(
                   children: [
                     ZSectionHeading(
                       title: "Current Food",
                       showActionButton: false,
+                    ),
+                    SizedBox(
+                      height: ZSizes.sm,
                     ),
                     DietPlanTile(
                       image: ZImages.foodSandwich,
@@ -41,11 +44,14 @@ class DietPlan extends StatelessWidget {
                       carbs: '450',
                     ),
                     SizedBox(
-                      height: ZSizes.spaceBtwItems,
+                      height: ZSizes.spaceBtwSections,
                     ),
                     ZSectionHeading(
                       title: "Suitable Food",
                       showActionButton: false,
+                    ),
+                    SizedBox(
+                      height: ZSizes.sm,
                     ),
                     DietPlanTile(
                       image: ZImages.peanutSalad,
@@ -54,12 +60,28 @@ class DietPlan extends StatelessWidget {
                       fat: '20',
                       carbs: '450',
                     ),
+                    SizedBox(
+                      height: ZSizes.sm,
+                    ),
                     DietPlanTile(
                       image: ZImages.potatoFries,
                       textTitle: 'Potato Fries',
                       protein: '250',
                       fat: '20',
                       carbs: '450',
+                    ),
+                    SizedBox(
+                      height: ZSizes.sm,
+                    ),
+                    DietPlanTile(
+                      image: ZImages.peanutSalad,
+                      textTitle: 'Peanut Salad',
+                      protein: '250',
+                      fat: '20',
+                      carbs: '450',
+                    ),
+                    SizedBox(
+                      height: ZSizes.sm,
                     ),
                   ],
                 )),

@@ -1,3 +1,4 @@
+import 'package:fitness_scout/utils/constants/colors.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -28,7 +29,7 @@ class RadicalChart extends StatelessWidget {
                     dataSource: [
                       ChartData('Carbs', carbs, Colors.pink),
                       ChartData('Fat', fat, Colors.purple),
-                      ChartData('Protein', protiens, Colors.orange),
+                      ChartData('Protein', protiens, ZColor.primary),
                     ],
                     pointRadiusMapper: (ChartData data, _) => '100%',
                     xValueMapper: (ChartData data, _) => data.x,

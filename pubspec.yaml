@@ -69,6 +69,7 @@ flutter:
     - assets/animation/
     - assets/icon/
     - assets/images/food/
+    - assets/artworks/
 
   #---------------- LOCAL FONTS ----------------
 

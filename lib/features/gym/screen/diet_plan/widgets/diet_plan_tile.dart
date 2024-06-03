@@ -1,4 +1,6 @@
+import 'package:fitness_scout/utils/constants/colors.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
+import 'package:fitness_scout/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
 class DietPlanTile extends StatelessWidget {
@@ -15,8 +17,15 @@ class DietPlanTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = ZHelperFunction.isDarkMode(context);
     return ListTile(
-      contentPadding: const EdgeInsets.only(left: ZSizes.md,right: ZSizes.md,top: ZSizes.md),
+      tileColor: dark
+          ? ZColor.white.withOpacity(0.1)
+          : ZColor.grey.withOpacity(0.5),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(ZSizes.md)),
+      contentPadding: const EdgeInsets.only(
+          left: ZSizes.md, right: ZSizes.md, top: ZSizes.sm),
       leading: CircleAvatar(
         backgroundColor: Colors.transparent,
         radius: 33,
@@ -85,7 +94,10 @@ class Colories_Column extends StatelessWidget {
                   color: circleColor, borderRadius: BorderRadius.circular(100)),
             ),
             const SizedBox(width: 5),
-            Text(text,style: Theme.of(context).textTheme.labelSmall,),
+            Text(
+              text,
+              style: Theme.of(context).textTheme.labelSmall,
+            ),
           ],
         ),
         Text(

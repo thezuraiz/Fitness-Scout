@@ -35,7 +35,7 @@ class ForgetPassword extends StatelessWidget {
                   labelText: ZText.email,
                   prefixIcon: Icon(Iconsax.direct_right)
                 ),
-                validator: controller.emailValidation(),
+                validator: controller.emailValidation,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
               const SizedBox(
@@ -44,7 +44,7 @@ class ForgetPassword extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: controller.sendPasswordResendEmail(),
+                  onPressed: controller.sendPasswordResendEmail,
                   child: const Text(ZText.submit),
                 ),
               )

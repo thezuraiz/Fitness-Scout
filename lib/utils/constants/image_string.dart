@@ -47,7 +47,9 @@ class ZImages{
   static const String successScreenAnimation = "assets/animation/success_registration_animation.json";
 
 
-  // --- PACKAGE DETAILS
+  /// --- PACKAGE DETAILS
+  static const String gym_plan_images = 'assets/artworks/gym_packages.png';
+  static const String gym_plan_images1 = 'assets/artworks/Subscription.png';
   static const String basic_plain_illustration = 'assets/animation/basic_package.gif';
   static const String medium_plain_illustration = 'assets/animation/medium_package.gif';
   static const String premium_plain_illustration = 'assets/animation/premium_package.gif';

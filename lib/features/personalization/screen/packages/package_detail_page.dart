@@ -1,6 +1,6 @@
 import 'package:fitness_scout/common/widgets/custom_appbar.dart';
+import 'package:fitness_scout/features/authentication/screen/subscription/subscription.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
-import 'package:fitness_scout/utils/navigation_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
@@ -58,7 +58,7 @@ class PackageDetailPage extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(ZSizes.sm),
         child: ElevatedButton(
-          onPressed: () => Get.offAll(const NavigationMenu()),
+          onPressed: () => Get.off( SubscriptionScreen(toPay: price,)),
           child: Text("Pay Now $price"),
         ),
       ),

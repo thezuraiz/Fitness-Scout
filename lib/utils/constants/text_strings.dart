@@ -68,4 +68,11 @@ class ZText {
   static const String changeYourPasswordSubTitle =
       "Your Account Security is our priority! We've Sent You a Secure Link to Safely Change Your Password and Keep Your Account Protected";
   static const String done = "Done";
+
+
+  /// --- Order Review
+  static const String orderReviewAppbarTitle = "Order Review";
+  static const String orderReviewReferenceFieldTitle = "Reference ID";
+  static const String fitnessScoutBankIBAN = 'PK39SADA0000003001234029';
+
 }

@@ -6,7 +6,6 @@ import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 
 class LandingPackageScreen extends StatelessWidget {
   const LandingPackageScreen({super.key});
@@ -28,14 +27,14 @@ class LandingPackageScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: ZSizes.spaceBtwItems,
               ),
               SizedBox(
                 width: Get.width * 0.6,
-                child: Image(image: AssetImage(ZImages.gym_plan_images1),),
+                child: const Image(image: AssetImage(ZImages.gym_plan_images1),),
               ),
-              SizedBox(
+              const SizedBox(
                 height: ZSizes.spaceBtwSections * 2,
               ),
               CustomPackageContainer(

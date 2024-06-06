@@ -33,11 +33,10 @@ class AuthenticationRepository extends GetxController {
     // _auth.signOut();
     // _auth.currentUser!.reload();
 
-
     if (_auth.currentUser != null) {
       if (_auth.currentUser!.emailVerified) {
         // Get.offAll(() => const NavigationMenu());
-        Get.offAll(()=>const LandingPackageScreen());
+        Get.offAll(() => const LandingPackageScreen());
       } else {
         Get.offAll(() => VerifyScreen(
               email: _auth.currentUser?.email,

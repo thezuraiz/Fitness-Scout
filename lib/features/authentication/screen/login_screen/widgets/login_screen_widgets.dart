@@ -79,7 +79,7 @@ class LoginScreenFormField extends StatelessWidget {
 
                   // TODO: Forget Password
                   TextButton(
-                    onPressed: ()=> Get.to(() => ForgetPassword()),
+                    onPressed: ()=> Get.to(() => const ForgetPassword()),
                     child: const Text(ZText.forgetPassword),
                   )
                 ],

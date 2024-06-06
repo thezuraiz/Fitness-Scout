@@ -36,8 +36,8 @@ class ZTextTheme{
     bodyMedium: const TextStyle().copyWith(fontSize: 14.0, fontWeight: FontWeight.w500, color: Colors.white),
     bodySmall: const TextStyle().copyWith(fontSize: 14.0, fontWeight: FontWeight.w600, color: Colors.white.withOpacity(0.5)),
 
-    labelLarge: const TextStyle().copyWith(fontSize: 12.0, fontWeight: FontWeight.bold,color: Colors.black.withOpacity(0.6)),
-    labelMedium: const TextStyle().copyWith(fontSize: 12.0, fontWeight: FontWeight.w700, color: Colors.white.withOpacity(0.3))
+    labelLarge: const TextStyle().copyWith(fontSize: 12.0, fontWeight: FontWeight.bold,color: Colors.white.withOpacity(0.6)),
+    labelMedium: const TextStyle().copyWith(fontSize: 12.0, fontWeight: FontWeight.w700, color: Colors.white.withOpacity(0.5))
   );
 
 }

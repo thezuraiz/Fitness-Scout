@@ -33,7 +33,7 @@ class HomeHeader extends StatelessWidget {
                       .apply(color: ZColor.white),
                 ),
                 Text(
-                  'BMI: 30',
+                  'BMI: 20',
                   style: Theme.of(context)
                       .textTheme
                       .headlineSmall!

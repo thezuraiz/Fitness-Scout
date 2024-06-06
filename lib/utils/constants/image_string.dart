@@ -58,4 +58,9 @@ class ZImages{
   static const String foodSandwich  = 'assets/images/food/sanwichs.jpeg';
   static const String potatoFries  = 'assets/images/food/potato_fries.jpeg';
   static const String peanutSalad  = 'assets/images/food/peanut_salad.jpeg';
+
+  /// --- SUBSCRIPTION QR CODE
+  static const String fitnessScoutBankQRCode = 'assets/images/qr_code/qr_code.png';
+
+
 }

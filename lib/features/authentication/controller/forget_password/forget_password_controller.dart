@@ -2,6 +2,7 @@ import 'package:fitness_scout/data/repositories/authentication/authentication_re
 import 'package:fitness_scout/features/authentication/screen/signup_screen/reset_password.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:fitness_scout/utils/helpers/loaders.dart';
+import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:fitness_scout/utils/helpers/network_manager.dart';
 import 'package:fitness_scout/utils/popups/full_screen_loader.dart';
 import 'package:flutter/material.dart';
@@ -45,15 +46,13 @@ class ForgetPasswordController extends GetxController {
       }
 
       // Todo: Send Email
-      await AuthenticationRepository.instance.sendEmailVerification();
+      await AuthenticationRepository.instance.sendEmailVerification;
 
       // Todo: Stop Loader
       ZFullScreenLoader.stopLoading();
 
       // Todo: Show Success Screen
-      ZLoaders.successSnackBar(
-          title: 'Email Sent',
-          message: 'Email Link Sent To Reset Your Password');
+      await ZLoaders.successSnackBar( title: 'Email Sent', message: 'Email Link Sent To Reset Your Password');
 
       // Todo: Redirect
       Get.to(() => ResetPassword(email: email.text.trim()));
@@ -69,8 +68,8 @@ class ForgetPasswordController extends GetxController {
       FocusManager.instance.primaryFocus!.unfocus();
 
       // Todo: Start Loader
-      ZFullScreenLoader.openLoadingDialogy(
-          'Processing your request...', ZImages.fileAnimation);
+      ZFullScreenLoader.openLoadingDialogy('Processing your request...', ZImages.fileAnimation);
+
 
       // Todo: Check Internet
       final isConnected = await NetworkManager.instance.isConnected();
@@ -80,15 +79,16 @@ class ForgetPasswordController extends GetxController {
       }
 
       // Todo: Send Email
-      await AuthenticationRepository.instance.sendEmailVerification();
+      await AuthenticationRepository.instance.sendEmailVerification;
 
       // Todo: Stop Loader
       ZFullScreenLoader.stopLoading();
 
       // Todo: Show Success Screen
-      ZLoaders.successSnackBar(
+      await ZLoaders.successSnackBar(
           title: 'Email Sent',
           message: 'Email Link Sent To Reset Your Password');
+
     } catch (e) {
       ZFullScreenLoader.stopLoading();
       ZLoaders.errorSnackBar(title: 'Uh Snap!', message: e.toString());

@@ -4,6 +4,7 @@ import 'package:fitness_scout/common/widgets/list_tiles/settings_menue_title.dar
 import 'package:fitness_scout/common/widgets/list_tiles/user_profile.dart';
 import 'package:fitness_scout/common/widgets/section_heading.dart';
 import 'package:fitness_scout/data/repositories/authentication/authentication_repository.dart';
+import 'package:fitness_scout/features/gym/screen/bmi/bmi_calculator.dart';
 import 'package:fitness_scout/features/personalization/screen/profile/profile_settings.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +64,7 @@ class ProfileScreen extends StatelessWidget {
                     icon: Iconsax.bag_tick,
                     title: "My BMI",
                     subTitle: "Your BMI, Monitor your health",
-                    onPressed: () {},
+                    onPressed: () => Get.to(BmiCalculator()),
                   ),
                   ZSettingsMenueTitle(
                     icon: Iconsax.bank,

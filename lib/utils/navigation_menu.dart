@@ -1,3 +1,4 @@
+import 'package:fitness_scout/data/repositories/user/user_repository.dart';
 import 'package:fitness_scout/features/gym/screen/diet_plan/diet_plan.dart';
 import 'package:fitness_scout/features/gym/screen/home/home.dart';
 import 'package:fitness_scout/features/gym_pool/screen/gym_pool.dart';
@@ -44,6 +45,8 @@ class NavigationMenu extends StatelessWidget {
 
 class NavigationController extends GetxController {
   static NavigationController get instance => Get.find();
+
+
 
   RxInt selectedIndex = 0.obs;
 

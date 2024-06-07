@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_scout/data/repositories/user/user_repository.dart';
 import 'package:fitness_scout/utils/helpers/loaders.dart';
+import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:get/get.dart';
 
 class UserController extends GetxController{
@@ -25,8 +26,6 @@ class UserController extends GetxController{
 
       // - Save User Record
       UserRepository.instance.saveUserRecord(newUser);
-
-
 
         }
   }

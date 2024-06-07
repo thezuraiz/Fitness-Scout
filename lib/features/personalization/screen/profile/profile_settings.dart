@@ -85,7 +85,7 @@ class SettingScreen extends StatelessWidget {
                   icon: Iconsax.copy,
                   onPressed: () {}),
               ProfileMenu(
-                  title: "Email", subTitle: 'thezuraiz@fitness_scout.com', onPressed: () {}),
+                  title: "Email", subTitle: 'thezuraiz@gmail.com', onPressed: () {}),
               ProfileMenu(
                   title: "Phone Number",
                   subTitle: '0300-1234029',

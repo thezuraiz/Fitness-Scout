@@ -62,5 +62,7 @@ class ZImages{
   /// --- SUBSCRIPTION QR CODE
   static const String fitnessScoutBankQRCode = 'assets/images/qr_code/qr_code.png';
 
+  /// --- BMI CALCULATOR
+  static const String bmiAnimation = "assets/animation/bmi_animation.json";
 
 }

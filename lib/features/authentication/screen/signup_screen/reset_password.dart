@@ -14,6 +14,7 @@ class ResetPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -69,7 +70,7 @@ class ResetPassword extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: TextButton(
-                  onPressed: ()=> ForgetPasswordController.instance.resendPasswordResendEmail(email),
+                  onPressed: () => ForgetPasswordController.instance.resendPasswordResendEmail(email),
                   child: const Text(ZText.resendEmail),
                 ),
               ),

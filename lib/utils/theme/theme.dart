@@ -4,12 +4,12 @@ import 'package:fitness_scout/utils/theme/custom_themes/bottom_sheet_theme.dart'
 import 'package:fitness_scout/utils/theme/custom_themes/check_box_theme.dart';
 import 'package:fitness_scout/utils/theme/custom_themes/chip_theme.dart';
 import 'package:fitness_scout/utils/theme/custom_themes/elevated_button_theme.dart';
+import 'package:fitness_scout/utils/theme/custom_themes/icon_theme.dart';
 import 'package:fitness_scout/utils/theme/custom_themes/outlined_button.dart';
 import 'package:fitness_scout/utils/theme/custom_themes/switch_theme.dart';
 import 'package:fitness_scout/utils/theme/custom_themes/textTheme.dart';
 import 'package:fitness_scout/utils/theme/custom_themes/textformfield_theme.dart';
 import 'package:flutter/material.dart';
-
 
 class AppTheme {
   AppTheme._();
@@ -29,8 +29,8 @@ class AppTheme {
       elevatedButtonTheme: ZElevatedButtonTheme.lightElevatedButtonTheme,
       outlinedButtonTheme: ZOutlinedButton.lightOutlinedButtonTheme,
       inputDecorationTheme: ZTextFormFieldTheme.lightTextFormField,
-    switchTheme: ZSwitchTheme.lightSwitchThemeData
-  );
+      switchTheme: ZSwitchTheme.lightSwitchThemeData,
+      iconTheme: ZIconTheme.lightIconTheme);
 
   // --- Dark Theme
   static ThemeData darkTheme = ThemeData(
@@ -47,6 +47,6 @@ class AppTheme {
       elevatedButtonTheme: ZElevatedButtonTheme.darkElevatedButtonTheme,
       outlinedButtonTheme: ZOutlinedButton.darkOutlinedButtonTheme,
       inputDecorationTheme: ZTextFormFieldTheme.darkTextFormField,
-      switchTheme: ZSwitchTheme.darkSwitchThemeData
-  );
+      switchTheme: ZSwitchTheme.darkSwitchThemeData,
+      iconTheme: ZIconTheme.darkIconTheme);
 }

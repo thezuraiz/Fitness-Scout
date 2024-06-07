@@ -28,7 +28,7 @@ class ZUserProfileTile extends StatelessWidget {
             .copyWith(color: Colors.white),
       ),
       subtitle: Text(
-        "thezuraiz@fitness_scout.com",
+        "thezuraiz@gmail.com",
         style: Theme.of(context)
             .textTheme
             .bodyMedium!

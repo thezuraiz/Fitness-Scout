@@ -1,11 +1,13 @@
 import 'package:fitness_scout/common/widgets/grid_custom_widgets.dart';
 import 'package:fitness_scout/common/widgets/list_tiles/settings_menue_title.dart';
 import 'package:fitness_scout/common/widgets/section_heading.dart';
+import 'package:fitness_scout/features/gym/screen/bmi/bmi_calculator.dart';
 import 'package:fitness_scout/features/gym/screen/home/widgets/home_grid.dart';
 import 'package:fitness_scout/features/gym/screen/home/widgets/home_header.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:fitness_scout/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:iconsax/iconsax.dart';
 
 class HomePage extends StatelessWidget {
@@ -13,7 +15,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = ZHelperFunction.isDarkMode(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -47,22 +48,22 @@ class HomePage extends StatelessWidget {
                       GridCustomWidget(
                         icon: Iconsax.airdrop4,
                         onPressed: () {},
-                        buttonTitle: 'Exercises',
+                        buttonTitle: 'Nearby GYMS',
                       ),
                       GridCustomWidget(
                         icon: Iconsax.d_cube_scan,
                         onPressed: () {},
-                        buttonTitle: 'Exercises',
+                        buttonTitle: 'Diet Plan',
                       ),
                       GridCustomWidget(
                         icon: Iconsax.fatrows,
-                        onPressed: () {},
-                        buttonTitle: 'Exercises',
+                        onPressed: () => Get.to(const BmiCalculator()),
+                        buttonTitle: 'BMI',
                       ),
                       GridCustomWidget(
                         icon: Iconsax.wallet,
                         onPressed: () {},
-                        buttonTitle: 'Exercises',
+                        buttonTitle: 'My Package',
                       ),
                     ],
                   ),

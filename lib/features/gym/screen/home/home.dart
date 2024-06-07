@@ -5,7 +5,6 @@ import 'package:fitness_scout/features/gym/screen/bmi/bmi_calculator.dart';
 import 'package:fitness_scout/features/gym/screen/home/widgets/home_grid.dart';
 import 'package:fitness_scout/features/gym/screen/home/widgets/home_header.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
-import 'package:fitness_scout/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:iconsax/iconsax.dart';

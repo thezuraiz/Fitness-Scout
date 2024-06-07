@@ -8,7 +8,6 @@ import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 
@@ -39,11 +38,11 @@ class BmiCalculator extends StatelessWidget {
                     : RadicalMeter(
                         bmiMessage: controller.bmiMessage.value,
                         bmi: controller.bmi.value)),
-                SizedBox(
+                const SizedBox(
                   height: ZSizes.spaceBtwSections,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: "Weight (In KG's)",
                     prefixIcon: Icon(
                       CupertinoIcons.heart_fill,
@@ -51,14 +50,14 @@ class BmiCalculator extends StatelessWidget {
                     ),
                   ),
                   controller: controller.weight,
-                  validator: controller.weightValidator,
+                  validator: controller.weightValidator.call,
                   keyboardType: TextInputType.number,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: ZSizes.spaceBtwInputFields,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     prefixIcon: Icon(
                       Iconsax.align_vertically,
                       color: ZColor.primary,
@@ -66,17 +65,17 @@ class BmiCalculator extends StatelessWidget {
                     labelText: "Height (In Feets)",
                   ),
                   controller: controller.height,
-                  validator: controller.heightValidator,
+                  validator: controller.heightValidator.call,
                   keyboardType: TextInputType.number,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: ZSizes.spaceBtwSections,
                 ),
                 SizedBox(
                   width: Get.width,
                   child: ElevatedButton(
                     onPressed: () => controller.calculateBMI(),
-                    child: Text(
+                    child: const Text(
                       "Calculate",
                     ),
                   ),

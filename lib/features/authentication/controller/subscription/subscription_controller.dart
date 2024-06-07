@@ -15,7 +15,7 @@ class SubscriptionController extends GetxController {
 
 
   /// --- VARIABLES
-  late XFile? photo = null;
+  late XFile? photo;
   final orderFormKey = GlobalKey<FormState>();
 
   /// Functions

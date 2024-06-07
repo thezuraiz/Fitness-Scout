@@ -4,11 +4,11 @@ import 'package:flutter/cupertino.dart';
 class ZIconTheme {
   ZIconTheme._();
 
-  static final IconThemeData darkIconTheme = IconThemeData(
+  static const IconThemeData darkIconTheme = IconThemeData(
     color: ZColor.primary,
   );
 
-  static final IconThemeData lightIconTheme = IconThemeData(
+  static const IconThemeData lightIconTheme = IconThemeData(
     color: ZColor.primary,
   );
 }

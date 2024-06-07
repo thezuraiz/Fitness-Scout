@@ -64,7 +64,7 @@ class ProfileScreen extends StatelessWidget {
                     icon: Iconsax.bag_tick,
                     title: "My BMI",
                     subTitle: "Your BMI, Monitor your health",
-                    onPressed: () => Get.to(BmiCalculator()),
+                    onPressed: () => Get.to(const BmiCalculator()),
                   ),
                   ZSettingsMenueTitle(
                     icon: Iconsax.bank,

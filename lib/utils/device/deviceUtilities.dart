@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -100,6 +101,19 @@ class ZDeviceUtils {
 
   static bool isAndriod(){
     return Platform.isAndroid;
+  }
+
+  /// --- FOR PLAY AUDIO
+
+  static Future<void> playSound(String soundAssetAddress) async {
+    try {
+      AudioPlayer player = AudioPlayer();
+      debugPrint('Audio Playing');
+      await player.setSource(AssetSource(soundAssetAddress));
+      await player.resume();
+    } catch (e) {
+      debugPrint('Error playing audio: $e');
+    }
   }
 
   // static void launchUrl(String url)async{

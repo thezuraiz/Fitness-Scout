@@ -30,6 +30,7 @@ dependencies:
   connectivity_plus: ^2.3.4
   syncfusion_flutter_charts: ^25.2.6
   image_picker: ^1.1.2
+  audioplayers: ^6.0.0
 
   #  --- FIREBASE
   firebase_core: ^2.31.1
@@ -72,6 +73,7 @@ flutter:
     - assets/images/food/
     - assets/artworks/
     - assets/images/qr_code/
+    - assets/sounds/
 
   #---------------- LOCAL FONTS ----------------
 

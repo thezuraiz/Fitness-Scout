@@ -1,6 +1,7 @@
 import 'package:fitness_scout/data/repositories/authentication/authentication_repository.dart';
 import 'package:fitness_scout/features/authentication/screen/signup_screen/reset_password.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
+import 'package:fitness_scout/utils/device/deviceUtilities.dart';
 import 'package:fitness_scout/utils/helpers/loaders.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:fitness_scout/utils/helpers/network_manager.dart';
@@ -22,7 +23,7 @@ class ForgetPasswordController extends GetxController {
         EmailValidator(errorText: 'Invalid Email')
       ]);
 
-  /// --- Sent Resent Password Email
+  /// --- SENT RESENT PASSWORD EMAIL
   sendPasswordResendEmail() async {
     try {
       // Todo: Remove Keyboard
@@ -48,6 +49,8 @@ class ForgetPasswordController extends GetxController {
       // Todo: Send Email
       await AuthenticationRepository.instance.sendEmailVerification;
 
+      await ZDeviceUtils.playSound('sounds/email_send_notification.mp3');
+
       // Todo: Stop Loader
       ZFullScreenLoader.stopLoading();
 
@@ -62,6 +65,7 @@ class ForgetPasswordController extends GetxController {
     }
   }
 
+  /// --- RESEND PASSWORD RESET EMAIL
   resendPasswordResendEmail(String email) async {
     try {
       // Todo: Remove Keyboard
@@ -80,6 +84,7 @@ class ForgetPasswordController extends GetxController {
 
       // Todo: Send Email
       await AuthenticationRepository.instance.sendEmailVerification;
+      await ZDeviceUtils.playSound('sounds/email_send_notification.mp3');
 
       // Todo: Stop Loader
       ZFullScreenLoader.stopLoading();

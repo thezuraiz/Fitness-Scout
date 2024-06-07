@@ -5,7 +5,8 @@ import 'package:fitness_scout/utils/device/deviceUtilities.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class SuccessScreen extends StatelessWidget {
+class SuccessScreen extends StatefulWidget {
+
   const SuccessScreen(
       {super.key,
       required this.image,
@@ -17,6 +18,17 @@ class SuccessScreen extends StatelessWidget {
   final VoidCallback? onPressed;
 
   @override
+  State<SuccessScreen> createState() => _SuccessScreenState();
+}
+
+class _SuccessScreenState extends State<SuccessScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    ZDeviceUtils.playSound('sounds/success_notification.mp3');
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -26,7 +38,7 @@ class SuccessScreen extends StatelessWidget {
             children: [
               // --- TODO: Image
               Lottie.asset(
-                image,
+                widget.image,
                 width: ZDeviceUtils.getScreenWidth() * 0.7,
               ),
 
@@ -35,7 +47,7 @@ class SuccessScreen extends StatelessWidget {
               ),
               // --- TODO: Title & Subtitle
               Text(
-                title,
+                widget.title,
                 style: Theme.of(context)
                     .textTheme
                     .headlineMedium!
@@ -46,7 +58,7 @@ class SuccessScreen extends StatelessWidget {
                 height: ZSizes.spaceBtwItems,
               ),
               Text(
-                subTitle,
+                widget.subTitle,
                 style: Theme.of(context).textTheme.labelMedium,
                 textAlign: TextAlign.center,
               ),
@@ -58,7 +70,7 @@ class SuccessScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: onPressed,
+                  onPressed: widget.onPressed,
                   child: const Text(ZText.Continue),
                 ),
               ),

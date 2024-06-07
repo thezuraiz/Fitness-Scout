@@ -40,7 +40,7 @@ class HomeHeader extends StatelessWidget {
                         .textTheme
                         .headlineSmall!
                         .apply(color: ZColor.grey),),
-                  onPressed: ()=> Get.to(BmiCalculator()),
+                  onPressed: ()=> Get.to(const BmiCalculator()),
                 ),
               ],
             ),

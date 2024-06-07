@@ -1,5 +1,4 @@
 import 'package:fitness_scout/data/repositories/authentication/authentication_repository.dart';
-import 'package:fitness_scout/data/repositories/user/user_repository.dart';
 import 'package:fitness_scout/features/personalization/controller/user_controller.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:fitness_scout/utils/helpers/loaders.dart';

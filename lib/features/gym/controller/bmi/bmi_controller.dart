@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 
 class BmiController extends GetxController {
   static BmiController get instance => Get.find();

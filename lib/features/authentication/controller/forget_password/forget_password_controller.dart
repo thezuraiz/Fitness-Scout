@@ -3,7 +3,6 @@ import 'package:fitness_scout/features/authentication/screen/signup_screen/reset
 import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:fitness_scout/utils/device/deviceUtilities.dart';
 import 'package:fitness_scout/utils/helpers/loaders.dart';
-import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:fitness_scout/utils/helpers/network_manager.dart';
 import 'package:fitness_scout/utils/popups/full_screen_loader.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +46,7 @@ class ForgetPasswordController extends GetxController {
       }
 
       // Todo: Send Email
-      await AuthenticationRepository.instance.sendEmailVerification;
+      AuthenticationRepository.instance.sendEmailVerification;
 
       await ZDeviceUtils.playSound('sounds/email_send_notification.mp3');
 
@@ -83,7 +82,7 @@ class ForgetPasswordController extends GetxController {
       }
 
       // Todo: Send Email
-      await AuthenticationRepository.instance.sendEmailVerification;
+      AuthenticationRepository.instance.sendEmailVerification;
       await ZDeviceUtils.playSound('sounds/email_send_notification.mp3');
 
       // Todo: Stop Loader

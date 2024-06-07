@@ -43,7 +43,7 @@ class RadicalMeter extends StatelessWidget{
           annotations: [
             GaugeAnnotation(
               widget: Text(
-                " ${bmi.toStringAsFixed(3)}\n${bmiMessage}",
+                " ${bmi.toStringAsFixed(3)}\n$bmiMessage",
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               positionFactor: 0.5,

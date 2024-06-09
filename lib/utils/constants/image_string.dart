@@ -17,25 +17,11 @@ class ZImages{
   static const String onBoardingImage3 = "assets/images/on_boarding_images/simplistic-woman-with-smartwatches-standing-on-mat-in-tree-pose.gif";
 
   // --- Animations
-  static const String productsIllustration = "";
-  static const String productsSalesIllustration = "";
+
   static const String staticSuccessIllustration = "assets/images/animations/sammy-line-man-and-woman-high-fiving-each-other.png";
   static const String deliveredInPlainIllustration = "";
   static const String deliveredEmailIllustration = "assets/images/animations/sammy-line-man-receives-a-mail.png";
   static const String verifyIllustration = "";
-
-  // --- SCROLL HEADER IMAGES
-  static const String showIcon = "assets/icons/showIcon.png";
-
-  // --- SLIDING BANNERS
-  static const String banner_1 = 'assets/images/banner/banner_1.jpeg';
-  static const String banner_2 = 'assets/images/banner/banner_2.jpeg';
-  static const String banner_3 = 'assets/images/banner/banner_3.jpeg';
-
-  // --- PRODUCTS
-  static const String productImage1 = "assets/images/products/product1.png";
-  static const String productImage2 = "assets/images/products/productImage3.png";
-  static const String clothIcon = "assets/images/products/cloth_icon.png";
 
 
   // --- USER PROFILE
@@ -50,9 +36,9 @@ class ZImages{
   /// --- PACKAGE DETAILS
   static const String gym_plan_images = 'assets/artworks/gym_packages.png';
   static const String gym_plan_images1 = 'assets/artworks/Subscription.png';
-  static const String basic_plain_illustration = 'assets/animation/basic_package.gif';
-  static const String medium_plain_illustration = 'assets/animation/medium_package.gif';
-  static const String premium_plain_illustration = 'assets/animation/premium_package.gif';
+  static const String basic_plain_illustration = 'assets/animation/basic_plain_animation.json';
+  static const String medium_plain_illustration = 'assets/animation/silver_package.json';
+  static const String premium_plain_illustration = 'assets/animation/diamond_package.json';
 
   /// --- FOOD PICTURES
   static const String foodSandwich  = 'assets/images/food/sanwichs.jpeg';

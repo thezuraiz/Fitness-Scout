@@ -4,6 +4,7 @@ import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class PackageDetailPage extends StatelessWidget {
   const PackageDetailPage(
@@ -36,10 +37,7 @@ class PackageDetailPage extends StatelessWidget {
               const SizedBox(
                 height: ZSizes.spaceBtwSections,
               ),
-              Image(
-                image: AssetImage(illustration),
-                width: Get.width * 0.7,
-              ),
+              Lottie.asset(illustration),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -58,7 +56,9 @@ class PackageDetailPage extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(ZSizes.sm),
         child: ElevatedButton(
-          onPressed: () => Get.off( SubscriptionScreen(toPay: price,)),
+          onPressed: () => Get.off(SubscriptionScreen(
+            toPay: price,
+          )),
           child: Text("Pay Now $price"),
         ),
       ),

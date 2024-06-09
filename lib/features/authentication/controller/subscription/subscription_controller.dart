@@ -15,7 +15,7 @@ class SubscriptionController extends GetxController {
 
 
   /// --- VARIABLES
-  late XFile? photo;
+  late XFile? photo = null;
   final orderFormKey = GlobalKey<FormState>();
 
   /// Functions
@@ -27,7 +27,7 @@ class SubscriptionController extends GetxController {
     // Todo: Copy Text
     Clipboard.setData(const ClipboardData(text: ZText.fitnessScoutBankIBAN));
 
-    // Todo: Send Snackbar
+    // Todo: Send Snack bar
     ZLoaders.successSnackBar(title: "Copied", message: "IBAN Copied");
   }
 

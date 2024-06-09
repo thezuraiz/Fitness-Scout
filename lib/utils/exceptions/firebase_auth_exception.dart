@@ -1,6 +1,4 @@
-
-class ZFirebaseAuthException implements Exception{
-
+class ZFirebaseAuthException implements Exception {
   /// The error code associated with exception.
   final String code;
 
@@ -34,5 +32,4 @@ class ZFirebaseAuthException implements Exception{
         return 'An unknown error occurred. Please try again.';
     }
   }
-
 }

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_scout/common/widgets/success_screen/successScreens.dart';
 import 'package:fitness_scout/data/repositories/authentication/authentication_repository.dart';
-import 'package:fitness_scout/features/authentication/screen/success_screen/successScreens.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:fitness_scout/utils/constants/text_strings.dart';
 import 'package:fitness_scout/utils/helpers/loaders.dart';

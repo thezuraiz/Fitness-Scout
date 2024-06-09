@@ -1,3 +1,4 @@
+import 'package:fitness_scout/common/widgets/blank_screen.dart';
 import 'package:fitness_scout/common/widgets/grid_custom_widgets.dart';
 import 'package:fitness_scout/common/widgets/list_tiles/settings_menue_title.dart';
 import 'package:fitness_scout/common/widgets/section_heading.dart';
@@ -76,19 +77,19 @@ class HomePage extends StatelessWidget {
                     icon: Iconsax.weight,
                     title: "Over Weight",
                     subTitle: "Check your Diet Plain Again",
-                    onPressed: () {},
+                    onPressed: () => Get.to(() => const BlankScreen()),
                   ),
                   ZSettingsMenueTitle(
                     icon: Iconsax.cup,
                     title: "Achievements",
                     subTitle: "See Your Achievements",
-                    onPressed: () {},
+                    onPressed: () => Get.to(() => const BlankScreen()),
                   ),
                   ZSettingsMenueTitle(
                     icon: Iconsax.warning_2,
                     title: "Package",
                     subTitle: "Package Expire Soon",
-                    onPressed: () {},
+                    onPressed: () => Get.to(() => const BlankScreen()),
                   ),
                 ],
               ),

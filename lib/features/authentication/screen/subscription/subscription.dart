@@ -88,7 +88,7 @@ class SubscriptionScreen extends StatelessWidget {
                   OutlinedButton(
                     onPressed: controller.bankScreenshotTransfer,
                     style: OutlinedButton.styleFrom(
-                        backgroundColor: controller.photo == null
+                        backgroundColor: controller.photo != null
                             ? Colors.blue
                             : Colors.transparent),
                     child: const Text('Bank Transfer Screenshot'),

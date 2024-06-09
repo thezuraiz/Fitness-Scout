@@ -8,6 +8,7 @@ import 'package:fitness_scout/utils/theme/custom_themes/icon_theme.dart';
 import 'package:fitness_scout/utils/theme/custom_themes/outlined_button.dart';
 import 'package:fitness_scout/utils/theme/custom_themes/switch_theme.dart';
 import 'package:fitness_scout/utils/theme/custom_themes/textTheme.dart';
+import 'package:fitness_scout/utils/theme/custom_themes/text_button_theme.dart';
 import 'package:fitness_scout/utils/theme/custom_themes/textformfield_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +31,7 @@ class AppTheme {
       outlinedButtonTheme: ZOutlinedButton.lightOutlinedButtonTheme,
       inputDecorationTheme: ZTextFormFieldTheme.lightTextFormField,
       switchTheme: ZSwitchTheme.lightSwitchThemeData,
+      textButtonTheme: ZTextThemeButton.lightTextButtonTheme,
       iconTheme: ZIconTheme.lightIconTheme);
 
   // --- Dark Theme
@@ -48,5 +50,6 @@ class AppTheme {
       outlinedButtonTheme: ZOutlinedButton.darkOutlinedButtonTheme,
       inputDecorationTheme: ZTextFormFieldTheme.darkTextFormField,
       switchTheme: ZSwitchTheme.darkSwitchThemeData,
+      textButtonTheme: ZTextThemeButton.darkTextButtonTheme,
       iconTheme: ZIconTheme.darkIconTheme);
 }

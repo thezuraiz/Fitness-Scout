@@ -7,12 +7,11 @@ class PackageDetailController extends GetxController {
 
   basicPlan() {
     Get.to(
-          () =>
-          const PackageDetailPage(
-            title: 'Basic Package',
-            price: 'Rs-/ 2,000',
-            illustration: ZImages.basic_plain_illustration,
-            description: '''
+      () => const PackageDetailPage(
+        title: 'Basic Package',
+        price: 'Rs-/ 2,000',
+        illustration: ZImages.basic_plain_illustration,
+        description: '''
   ## Features:
   - **Unlimited Gym Access**: Enjoy full access to all gym equipment and basic amenities anytime.
   - **Group Fitness Classes**: Join any of our energizing group fitness classes like yoga, Zumba, and spin.
@@ -25,18 +24,17 @@ class PackageDetailController extends GetxController {
   ## Additional Benefits:
   - **Welcome Kit**: Kickstart your journey with a complimentary water bottle and gym bag.
   ''',
-          ),
+      ),
     );
   }
 
   silverPlan() {
     Get.to(
-          () =>
-          const PackageDetailPage(
-            title: 'Silver Package',
-            price: 'Rs-/ 4,000',
-            illustration: ZImages.medium_plain_illustration,
-            description: '''
+      () => const PackageDetailPage(
+        title: 'Silver Package',
+        price: 'Rs-/ 4,000',
+        illustration: ZImages.medium_plain_illustration,
+        description: '''
   ## Features:
 - **Unlimited Gym Access**: Enjoy full access to all gym equipment and basic amenities anytime.
 - **Group Fitness Classes**: Join any of our energizing group fitness classes like yoga, Zumba, and spin.
@@ -52,18 +50,17 @@ class PackageDetailController extends GetxController {
 - **Premium App Content**: Access to premium video content and workout plans on the app.
 - **Priority Booking**: Early access to class bookings and events.
   ''',
-          ),
+      ),
     );
   }
 
   premiumPlan() {
     Get.to(
-          () =>
-          const PackageDetailPage(
-            title: 'Silver Package',
-            price: 'Rs-/ 6,000',
-            illustration: ZImages.premium_plain_illustration,
-            description: '''
+      () => const PackageDetailPage(
+        title: 'Diamond Package',
+        price: 'Rs-/ 6,000',
+        illustration: ZImages.premium_plain_illustration,
+        description: '''
   ## Features:
 - **Unlimited Gym Access**: Enjoy full access to all gym equipment and basic amenities anytime.
 - **Group Fitness Classes**: Join any of our energizing group fitness classes like yoga, Zumba, and spin.
@@ -79,7 +76,7 @@ class PackageDetailController extends GetxController {
 - **Premium App Content**: Access to premium video content and workout plans on the app.
 - **Priority Booking**: Early access to class bookings and events.\n\n\n
   ''',
-          ),
+      ),
     );
   }
 }

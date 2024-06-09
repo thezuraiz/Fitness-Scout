@@ -25,10 +25,9 @@ class ZImages{
 
 
   // --- USER PROFILE
-  static const String userProfile = "assets/user_profile/user_profile.png";
+  static const String userProfile = "assets/user_profile/user_profile_compressed.png";
 
   // --- ANIMATIONS
-  static const String docerAnimation = "assets/animation/document_loading.json";
   static const String fileAnimation = "assets/animation/files_falling.json";
   static const String successScreenAnimation = "assets/animation/success_registration_animation.json";
 

@@ -40,6 +40,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
               Lottie.asset(
                 widget.image,
                 width: ZDeviceUtils.getScreenWidth() * 0.7,
+                repeat: false,
               ),
 
               const SizedBox(

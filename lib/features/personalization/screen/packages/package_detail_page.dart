@@ -34,9 +34,6 @@ class PackageDetailPage extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           child: Column(
             children: [
-              const SizedBox(
-                height: ZSizes.spaceBtwSections,
-              ),
               Lottie.asset(illustration),
               Expanded(
                 child: Padding(

@@ -25,18 +25,18 @@ class ZCircularImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool dark = ZHelperFunction.isDarkMode(context);
     return Container(
       height: height,
       width: width,
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
-        color: dark ? ZColor.black : ZColor.white,
+        color: ZColor.white,
         borderRadius: BorderRadius.circular(100),
       ),
       child: Image(
         image: isNetworkImage ? NetworkImage(image) : AssetImage(image) as ImageProvider,
         color: overlayColor,
+        fit: fit,
       ),
     );
   }

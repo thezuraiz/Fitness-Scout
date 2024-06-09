@@ -4,15 +4,17 @@ import 'package:fitness_scout/common/widgets/section_heading.dart';
 import 'package:fitness_scout/features/personalization/screen/profile/widgets/profile_menu.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
+import 'package:fitness_scout/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:lottie/lottie.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    
+    final dark = ZHelperFunction.isDarkMode(context);
     return Scaffold(
       appBar: ZCustomAppBar(
         showArrows: true,
@@ -28,7 +30,7 @@ class SettingScreen extends StatelessWidget {
                 width: double.infinity,
                 child: Column(
                   children: [
-                    const ZCircularImage(image: ZImages.userProfile,height: 100,width: 100,),
+                    ZCircularImage(image: ZImages.userProfile,height: 100,width: 100,fit: BoxFit.contain,),
                     TextButton(
                         onPressed: () {}, child: const Text("Change Profile Picture"))
                   ],

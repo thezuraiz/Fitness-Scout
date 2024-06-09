@@ -1,4 +1,4 @@
-import 'package:fitness_scout/features/authentication/screen/success_screen/successScreens.dart';
+import 'package:fitness_scout/common/widgets/success_screen/successScreens.dart';
 import 'package:fitness_scout/utils/navigation_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';

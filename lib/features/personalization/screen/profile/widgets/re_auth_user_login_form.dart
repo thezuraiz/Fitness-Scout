@@ -30,7 +30,7 @@ class ReAuthUserLoginForm extends StatelessWidget {
               children: [
                 /// Email
                 TextFormField(
-                  validator: EmailValidator(errorText: 'Email Required'),
+                  validator: EmailValidator(errorText: 'Email Required').call,
                   controller: controller.verifyEmail,
                   decoration: const InputDecoration(
                     labelText: ZText.email,
@@ -46,7 +46,7 @@ class ReAuthUserLoginForm extends StatelessWidget {
                   () => TextFormField(
                     obscureText: !controller.hidePassword.value,
                     validator:
-                        RequiredValidator(errorText: 'Password Required'),
+                        RequiredValidator(errorText: 'Password Required').call,
                     controller: controller.verifyPassword,
                     decoration: InputDecoration(
                       labelText: ZText.password,

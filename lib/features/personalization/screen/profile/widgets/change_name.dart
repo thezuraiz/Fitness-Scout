@@ -42,7 +42,7 @@ class ChangeNameScreen extends StatelessWidget {
                   TextFormField(
                     controller: controller.firstName,
                     validator:
-                        RequiredValidator(errorText: 'Required First Name!'),
+                        RequiredValidator(errorText: 'Required First Name!').call,
                     expands: false,
                     decoration: const InputDecoration(
                       labelText: ZText.firstName,
@@ -55,7 +55,7 @@ class ChangeNameScreen extends StatelessWidget {
                   TextFormField(
                     controller: controller.lastName,
                     validator:
-                        RequiredValidator(errorText: 'Required Last Name!'),
+                        RequiredValidator(errorText: 'Required Last Name!').call,
                     expands: false,
                     decoration: const InputDecoration(
                       labelText: ZText.lastName,

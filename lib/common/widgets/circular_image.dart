@@ -48,7 +48,7 @@ class ZCircularImage extends StatelessWidget {
                   progressIndicatorBuilder: (context, url, downloadProgress) =>
                       const ZShimmerEffect(width: 55, height: 55),
                   errorWidget: (context, url, error) =>
-                      Image(image: AssetImage(ZImages.userProfile)),
+                      const Image(image: AssetImage(ZImages.userProfile)),
                 )
               : Image(
                   image: AssetImage(image) as ImageProvider,

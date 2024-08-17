@@ -15,22 +15,22 @@ class ProfilePageController extends GetxController {
   void logout() {
     Get.dialog(
       AlertDialog(
-        title: Text("Logout"),
-        content: Text("Are you sure you want to logout?"),
+        title: const Text("Logout"),
+        content: const Text("Are you sure you want to logout?"),
         actions: [
           TextButton(
             onPressed: () {
               AuthenticationRepository.instance.logout();
             },
-            child: Text("Yes"),
-            style: TextButton.styleFrom(textStyle: TextStyle(color: ZColor.primary)),
+            style: TextButton.styleFrom(textStyle: const TextStyle(color: ZColor.primary)),
+            child: const Text("Yes"),
           ),
           TextButton(
             onPressed: () {
               Get.back(); // Close the dialog
             },
-            child: Text("No"),
-            style: TextButton.styleFrom(textStyle: TextStyle(color: ZColor.primary)),
+            style: TextButton.styleFrom(textStyle: const TextStyle(color: ZColor.primary)),
+            child: const Text("No"),
           ),
         ],
       ),

@@ -3,8 +3,7 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 import '../../../../../utils/constants/colors.dart';
 
-class RadicalMeter extends StatelessWidget{
-
+class RadicalMeter extends StatelessWidget {
   const RadicalMeter({super.key, required this.bmiMessage, required this.bmi});
 
   final String bmiMessage;
@@ -42,9 +41,12 @@ class RadicalMeter extends StatelessWidget{
           ],
           annotations: [
             GaugeAnnotation(
-              widget: Text(
-                " ${bmi.toStringAsFixed(3)}\n$bmiMessage",
-                style: Theme.of(context).textTheme.bodyLarge,
+              widget: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(bmiMessage),
+                  Text('BMI: ${bmi.toStringAsFixed(3)}'),
+                ],
               ),
               positionFactor: 0.5,
               angle: 90,

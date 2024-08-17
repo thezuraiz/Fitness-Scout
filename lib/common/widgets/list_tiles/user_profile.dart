@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../utils/constants/image_string.dart';
 
 class ZUserProfileTile extends StatelessWidget {
   const ZUserProfileTile({
@@ -18,12 +17,6 @@ class ZUserProfileTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final userController = UserController.instance;
     return ListTile(
-      // leading: const ZCircularImage(
-      //   image: ZImages.userProfile,
-      //   height: 50,
-      //   width: 50,
-      //   padding: 0,
-      // ),
       leading: Obx(
         () => ZCircularImage(
           image: userController.user.value.profilePicture,

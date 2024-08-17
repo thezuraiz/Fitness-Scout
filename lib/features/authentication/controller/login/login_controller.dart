@@ -49,6 +49,10 @@ class LoginController extends GetxController {
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         ZFullScreenLoader.stopLoading();
+        ZLoaders.errorSnackBar(
+            title: 'Internet Connection Failed',
+            message:
+                'Error while connecting internet. Please check and try again!');
         ZLogger.error('Internet Connection Failed!');
         return;
       }
@@ -56,6 +60,10 @@ class LoginController extends GetxController {
       // Todo: Form Validation
       if (!loginKey.currentState!.validate()) {
         ZFullScreenLoader.stopLoading();
+        ZLoaders.errorSnackBar(
+            title: 'Internet Connection Failed',
+            message:
+                'Error while connecting internet. Please check and try again!');
         return;
       }
 
@@ -66,12 +74,11 @@ class LoginController extends GetxController {
       }
 
       // Todo: Login using email & password
-      await AuthenticationRepository.instance.loginWithEmailAndPassword(email.text.trim(), password.text.trim());
-
+      await AuthenticationRepository.instance
+          .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
 
       // Todo: Welcome Message
       ZLoaders.successSnackBar(title: 'Welcome!', message: 'You are Login.');
-
 
       // Todo: Remove Loader
       ZFullScreenLoader.stopLoading();
@@ -86,34 +93,38 @@ class LoginController extends GetxController {
   }
 
   /// --- Google Sign In
-  Future<void> googleSignIn()async{
-    try{
+  Future<void> googleSignIn() async {
+    try {
       // Todo: Remove Keyboard
       FocusManager.instance.primaryFocus!.unfocus();
-      
+
       // Todo: Start Loader
-      ZFullScreenLoader.openLoadingDialogy('Logging you in...', ZImages.fileAnimation);
+      ZFullScreenLoader.openLoadingDialogy(
+          'Logging you in...', ZImages.fileAnimation);
 
       // Todo: Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
-      if(!isConnected){
+      if (!isConnected) {
         ZFullScreenLoader.stopLoading();
+        ZLoaders.errorSnackBar(
+            title: 'Internet Connection Failed',
+            message:
+                'Error while connecting internet. Please check and try again!');
         return;
       }
 
       // Todo: Google Authentication
-      final userCredentials = await AuthenticationRepository.instance.signInWithGoogle();
+      final userCredentials =
+          await AuthenticationRepository.instance.signInWithGoogle();
 
       // Todo: Save the data
       await userController.saveUserRecord(userCredentials);
 
       // Todo: Remove Loader
       ZFullScreenLoader.stopLoading();
-
-    }catch(e){
-      ZLoaders.errorSnackBar(title: 'Uh Snap!',message: e.toString());
+    } catch (e) {
+      ZLoaders.errorSnackBar(title: 'Uh Snap!', message: e.toString());
       ZFullScreenLoader.stopLoading();
     }
   }
-
 }

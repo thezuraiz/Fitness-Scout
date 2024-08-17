@@ -1,18 +1,31 @@
+import 'package:fitness_scout/data/repositories/user/user_repository.dart';
+import 'package:fitness_scout/features/personalization/controller/user_controller.dart';
 import 'package:fitness_scout/utils/helpers/bmi_calculator.dart';
+import 'package:fitness_scout/utils/helpers/loaders.dart';
+import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../utils/helpers/network_manager.dart';
+
 class BmiController extends GetxController {
   static BmiController get instance => Get.find();
 
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    bmi.value = 0;
+  }
+
   /// VARIABLES
-  var bmiMessage = ''.obs;
   static RxDouble bmi = 0.0.obs;
   final weight = TextEditingController();
   final height = TextEditingController();
   final bmiKey = GlobalKey<FormState>();
+  final userController = UserController.instance;
 
   final heightValidator = MultiValidator([
     RequiredValidator(errorText: "Required Validator"),
@@ -33,30 +46,43 @@ class BmiController extends GetxController {
   ]);
 
   /// --- Calculate BMI
-  void calculateBMI() {
-    // TODO: REMOVE KEYBOARD
-    FocusManager.instance.primaryFocus!.unfocus();
+  void calculateBMI() async {
+    try {
+      // TODO: REMOVE KEYBOARD
+      FocusManager.instance.primaryFocus!.unfocus();
 
-    // TODO: VALIDATION
-    if (bmiKey.currentState!.validate()) {
+      // TODO: VALIDATION
+      if (!bmiKey.currentState!.validate()) {
+        return;
+      }
+
+      /// Check Internet Connectivity
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        ZLoaders.errorSnackBar(
+            title: 'Internet Connection Failed',
+            message:
+                'Error while connecting internet. Please check and try again!');
+        return;
+      }
+
       // TODO: CALCULATE BMI
       var weightText = weight.text.trim();
       var heightText = height.text.trim();
 
-      if (weightText.isNotEmpty && heightText.isNotEmpty) {
-        bmi.value = BmiCalculator.calculateBMI(
-            double.parse(heightText), double.parse(heightText));
+      bmi.value = BmiCalculator.calculateBMI(
+          double.parse(heightText), double.parse(weightText));
 
-        if (bmi.value <= 18.5) {
-          bmiMessage.value = "Weak";
-        } else if (bmi.value <= 25) {
-          bmiMessage.value = "Healthy";
-        } else if (bmi.value > 25) {
-          bmiMessage.value = "Overweight";
-        }
-      } else {
-        bmiMessage.value = "Please fill all required text fields";
-      }
+      Map<String, dynamic> json = {"bmi": bmi.value};
+      await UserRepository.instance.updateSingleField(json);
+      userController.user.value.bmi = bmi.value;
+      userController.user.refresh();
+    } catch (e) {
+      ZLoaders.errorSnackBar(
+          title: 'Uh Snap!',
+          message:
+              'Something went wrong while saving you bmi. Please try again.');
+      ZLogger.error(e.toString());
     }
   }
 }

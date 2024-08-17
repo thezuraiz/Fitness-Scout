@@ -57,14 +57,12 @@ class UserController extends GetxController {
           maxWidth: 512);
       imageUploading.value = true;
       if (image != null) {
-        ZLogger.info('Uploading Image');
         // Upload Image to Cloud
         final imageUrl =
             await userRepository.uploadImage('Users/Images/Profile/', image);
 
-        // Update User Profile In firestore
+        // Update User Profile In Fire store
         Map<String, dynamic> json = {'profilePicture': imageUrl};
-        ZLogger.info('imageUrle: ' + imageUrl);
         await userRepository.updateSingleField(json);
 
         // Update Profile Image in User Controller
@@ -86,28 +84,28 @@ class UserController extends GetxController {
   Future<void> saveUserRecord(UserCredential? userCredential) async {
     try {
       // First Update Rx User and then if the user data is already store, If not store new data
-      // await fetchUserRecord();
-      // if (user.value.id.isEmpty) {
-      if (userCredential != null) {
-        // Format Data
-        final username = userCredential.user!.displayName ?? '';
+      await fetchUserRecord();
+      if (user.value.id.isEmpty) {
+        if (userCredential != null) {
+          // Format Data
+          final username = userCredential.user!.displayName ?? '';
 
-        // Map the data
-        final user = UserModel(
-            id: userCredential.user!.uid ?? '',
-            firstName:
-                userCredential.user!.displayName!.split(' ')[0].toString(),
-            lastName:
-                userCredential.user!.displayName!.split(' ').toString()[1],
-            userName: username,
-            email: userCredential.user!.email ?? '',
-            phoneNumber: userCredential.user!.phoneNumber ?? '',
-            profilePicture: userCredential.user!.photoURL ?? '');
+          // Map the data
+          final user = UserModel(
+              id: userCredential.user!.uid ?? '',
+              firstName:
+                  userCredential.user!.displayName!.split(' ')[0].toString(),
+              lastName:
+                  userCredential.user!.displayName!.split(' ').toString()[1],
+              userName: username,
+              email: userCredential.user!.email ?? '',
+              phoneNumber: userCredential.user!.phoneNumber ?? '',
+              profilePicture: userCredential.user!.photoURL ?? '');
 
-        // Save the Data
-        await UserRepository.instance.saveUserRecord(user);
+          // Save the Data
+          await UserRepository.instance.saveUserRecord(user);
+        }
       }
-      // }
     } catch (e) {
       ZLoaders.warningSnackBar(
           title: 'Data not saved',

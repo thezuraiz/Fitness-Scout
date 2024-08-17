@@ -6,11 +6,9 @@ import 'package:fitness_scout/features/personalization/screen/profile/widgets/ch
 import 'package:fitness_scout/features/personalization/screen/profile/widgets/profile_menu.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
-import 'package:fitness_scout/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:lottie/lottie.dart';
 
 import '../../../../utils/loaders/shimmer.dart';
 

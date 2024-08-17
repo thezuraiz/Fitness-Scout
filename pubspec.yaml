@@ -9,14 +9,15 @@ environment:
   sdk: '>=3.3.0 <4.0.0'
 
   # --- DEPENDENCIES
-
 dependencies:
   flutter:
     sdk: flutter
 
-  # --- ICONS
+  # --- ICONS & ANIMATIONS
   iconsax: any
   cupertino_icons: ^1.0.6
+  lottie: ^3.1.2
+  shimmer: ^3.0.0
 
   # --- STATE-MANAGEMENT
   get: any
@@ -26,7 +27,6 @@ dependencies:
   intl: any
   smooth_page_indicator: ^1.1.0
   form_field_validator: ^1.1.0
-  lottie: ^3.1.2
   connectivity_plus: ^2.3.4
   syncfusion_flutter_charts: ^25.2.6
   image_picker: ^1.1.2
@@ -42,11 +42,9 @@ dependencies:
   shared_preferences: ^2.2.3
   flutter_markdown: ^0.7.1
   google_maps_flutter: ^2.6.1
-  shimmer: ^3.0.0
   firebase_storage: ^11.7.7
 
   # --- DEV DEPENDENCIES
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -63,7 +61,6 @@ flutter:
   uses-material-design: true
 
   #  --- ASSETS
-
   assets:
     - assets/fonts/
     - assets/images/

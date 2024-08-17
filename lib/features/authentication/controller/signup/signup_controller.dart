@@ -1,7 +1,6 @@
 import 'package:fitness_scout/data/repositories/authentication/authentication_repository.dart';
 import 'package:fitness_scout/data/repositories/user/user_repository.dart';
 import 'package:fitness_scout/features/authentication/screen/signup_screen/verify_screen.dart';
-import 'package:fitness_scout/features/gym/screen/bmi/bmi_calculator.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
 import 'package:fitness_scout/utils/helpers/bmi_calculator.dart';
 import 'package:fitness_scout/utils/helpers/loaders.dart';
@@ -94,6 +93,10 @@ class SignupController extends GetxController {
       if (!isConnected) {
         // Remove Loader
         ZFullScreenLoader.stopLoading();
+        ZLoaders.errorSnackBar(
+            title: 'Internet Connection Failed',
+            message:
+                'Error while connecting internet. Please check and try again!');
         return;
       }
 

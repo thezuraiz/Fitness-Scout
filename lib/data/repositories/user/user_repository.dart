@@ -88,6 +88,7 @@ class UserRepository extends GetxController {
     } on PlatformException catch (e) {
       throw ZFormatException(e.code).message;
     } catch (e) {
+      ZLogger.error(e.toString());
       throw 'Something went wrong. Please try again';
     }
   }
@@ -114,7 +115,7 @@ class UserRepository extends GetxController {
       final ref = FirebaseStorage.instance.ref(path).child(image.name);
       await ref.putFile(File(image.path));
       final imageUrl = await ref.getDownloadURL();
-      ZLogger.info('imageUrl => ' + imageUrl);
+      ZLogger.info('imageUrl => $imageUrl');
       return imageUrl;
     } on FirebaseException catch (e) {
       throw ZFirebaseException(e.code).message;

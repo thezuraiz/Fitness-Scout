@@ -12,11 +12,12 @@ class ZText {
       "Welcome to a World of Limitless Choices - Find Your Perfect Gym!";
   static const String onBoardingSubTitle2 =
       "Seamless Health, Customizable Your Diet Plan - Your Health Our Priority";
-  static const String onBoardingSubTitle3 = "Start Your Health Journey with Quick, Safe, and Healthy Exercise";
+  static const String onBoardingSubTitle3 =
+      "Start Your Health Journey with Quick, Safe, and Healthy Exercise";
 
   // --- HOME
   static const String homeAppbarTitle = "Good day for Exercise";
-  static const String homeAppbarSubTitle = "The Zuraiz";
+  static const String homeAppbarSubTitle = "User";
 
   // Authentication Form Text
   static const String firstName = "First Name";
@@ -69,10 +70,8 @@ class ZText {
       "Your Account Security is our priority! We've Sent You a Secure Link to Safely Change Your Password and Keep Your Account Protected";
   static const String done = "Done";
 
-
   /// --- Order Review
   static const String orderReviewAppbarTitle = "Order Review";
   static const String orderReviewReferenceFieldTitle = "Reference ID";
   static const String fitnessScoutBankIBAN = 'PK39SADA0000003001234029';
-
 }

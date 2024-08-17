@@ -14,10 +14,13 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../user/user_repository.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
   final _auth = FirebaseAuth.instance;
+
+  User? get authUser => _auth.currentUser;
 
   /// --- Variables
   final deviceStorage = GetStorage();
@@ -72,7 +75,7 @@ class AuthenticationRepository extends GetxController {
       throw ZPlatformException(e.code).message;
     } catch (e) {
       ZLogger.info(e.toString());
-      throw 'Something went wrong. Please try again'+ e.toString();
+      throw 'Something went wrong. Please try again' + e.toString();
     }
   }
 
@@ -96,7 +99,6 @@ class AuthenticationRepository extends GetxController {
   }
 
   ///  [Email Authentication] - Send Email
-
   Future<void> sendEmailVerification() async {
     try {
       await _auth.currentUser!.sendEmailVerification();
@@ -159,13 +161,53 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  ///  [Email Authentication] - Logout
+  /// RE AUTHENTICATE USER
+  Future<void> reAuthenticateWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      // Create a credentials
+      AuthCredential credential =
+          EmailAuthProvider.credential(email: email, password: password);
 
+      // Re Authenticate
+      await _auth.currentUser!.reauthenticateWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      throw ZFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw ZFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw ZFormatException();
+    } on PlatformException catch (e) {
+      throw ZPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  ///  [Email Authentication] - Logout
   Future<void> logout() async {
     try {
       await GoogleSignIn().signOut();
       await _auth.signOut();
       Get.offAll(() => const LoginScreen());
+    } on FirebaseAuthException catch (e) {
+      throw ZFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw ZFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw ZFormatException();
+    } on PlatformException catch (e) {
+      throw ZPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  Future<void> deleteAccount() async {
+    try {
+      await UserRepository.instance.removeUserRecord(_auth.currentUser!.uid);
+
+      await _auth.currentUser?.delete();
     } on FirebaseAuthException catch (e) {
       throw ZFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {

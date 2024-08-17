@@ -11,8 +11,8 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 
-class BmiCalculator extends StatelessWidget {
-  const BmiCalculator({super.key});
+class BmiScreen extends StatelessWidget {
+  const BmiScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,10 @@ class BmiCalculator extends StatelessWidget {
       appBar: ZCustomAppBar(
         title: Text(
           "BMI Calculator",
-          style: Theme.of(context).textTheme.headlineMedium,
+          style: Theme
+              .of(context)
+              .textTheme
+              .headlineMedium,
         ),
         showArrows: true,
       ),
@@ -33,11 +36,12 @@ class BmiCalculator extends StatelessWidget {
             key: controller.bmiKey,
             child: Column(
               children: [
-                Obx(() => controller.bmi.value == 0
+                Obx(() =>
+                BmiController.bmi.value == 0
                     ? Lottie.asset(ZImages.bmiAnimation)
                     : RadicalMeter(
-                        bmiMessage: controller.bmiMessage.value,
-                        bmi: controller.bmi.value)),
+                    bmiMessage: controller.bmiMessage.value,
+                    bmi: BmiController.bmi.value)),
                 const SizedBox(
                   height: ZSizes.spaceBtwSections,
                 ),
@@ -88,4 +92,3 @@ class BmiCalculator extends StatelessWidget {
     );
   }
 }
-

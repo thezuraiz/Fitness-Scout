@@ -10,6 +10,7 @@ class UserModel {
   String profilePicture;
   double height;
   double weight;
+  double bmi; // updated to double
 
   String get fullName => '$firstName $lastName';
 
@@ -21,8 +22,9 @@ class UserModel {
     required this.email,
     required this.phoneNumber,
     required this.profilePicture,
-     this.height = 0, // initialize new field
-     this.weight = 0, // initialize new field
+    this.height = 0.0, // initialize new field
+    this.weight = 0.0, // initialize new field
+    this.bmi = 0.0, // initialize new field
   });
 
   // Factory method to create an empty UserModel
@@ -35,8 +37,11 @@ class UserModel {
       email: '',
       phoneNumber: '',
       profilePicture: '',
-      height: 0.0, // default value for new field
-      weight: 0.0, // default value for new field
+      height: 0.0,
+      // default value for new field
+      weight: 0.0,
+      // default value for new field
+      bmi: 0.0, // default value for new field
     );
   }
 
@@ -50,8 +55,11 @@ class UserModel {
       email: json['email'] as String,
       phoneNumber: json['phoneNumber'] as String,
       profilePicture: json['profilePicture'] as String,
-      height: (json['height'] as num).toDouble(), // parse new field
-      weight: (json['weight'] as num).toDouble(), // parse new field
+      height: (json['height'] as num).toDouble(),
+      // parse new field
+      weight: (json['weight'] as num).toDouble(),
+      // parse new field
+      bmi: (json['bmi'] as num).toDouble(), // parse new field
     );
   }
 
@@ -68,8 +76,11 @@ class UserModel {
         email: data['email'] ?? '',
         phoneNumber: data['phoneNumber'] ?? '',
         profilePicture: data['profilePicture'] ?? '',
-        height: (data['height'] ?? 0.0) as double, // default value for new field
-        weight: (data['weight'] ?? 0.0) as double, // default value for new field
+        height: (data['height'] ?? 0.0) as double,
+        // default value for new field
+        weight: (data['weight'] ?? 0.0) as double,
+        // default value for new field
+        bmi: (data['bmi'] ?? 0.0) as double, // default value for new field
       );
     } else {
       return UserModel.empty();
@@ -88,6 +99,7 @@ class UserModel {
       'profilePicture': profilePicture,
       'height': height, // include new field
       'weight': weight, // include new field
+      'bmi': bmi, // include new field
     };
   }
 
@@ -102,6 +114,7 @@ class UserModel {
     String? profilePicture,
     double? height, // add new field
     double? weight, // add new field
+    double? bmi, // add new field
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -111,15 +124,18 @@ class UserModel {
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       profilePicture: profilePicture ?? this.profilePicture,
-      height: height ?? this.height, // use new field
-      weight: weight ?? this.weight, // use new field
+      height: height ?? this.height,
+      // use new field
+      weight: weight ?? this.weight,
+      // use new field
+      bmi: bmi ?? this.bmi, // use new field
     );
   }
 
   // Override the toString method for better debug print
   @override
   String toString() {
-    return 'UserModel(id: $id, firstName: $firstName, lastName: $lastName, userName: $userName, email: $email, phoneNumber: $phoneNumber, profilePicture: $profilePicture, height: $height, weight: $weight)';
+    return 'UserModel(id: $id, firstName: $firstName, lastName: $lastName, userName: $userName, email: $email, phoneNumber: $phoneNumber, profilePicture: $profilePicture, height: $height, weight: $weight, bmi: $bmi)';
   }
 
   // Override the equality operator to compare instances by values
@@ -136,20 +152,22 @@ class UserModel {
         other.phoneNumber == phoneNumber &&
         other.profilePicture == profilePicture &&
         other.height == height &&
-        other.weight == weight;
+        other.weight == weight &&
+        other.bmi == bmi;
   }
 
   // Override hashCode to use all fields
   @override
   int get hashCode {
     return id.hashCode ^
-    firstName.hashCode ^
-    lastName.hashCode ^
-    userName.hashCode ^
-    email.hashCode ^
-    phoneNumber.hashCode ^
-    profilePicture.hashCode ^
-    height.hashCode ^
-    weight.hashCode;
+        firstName.hashCode ^
+        lastName.hashCode ^
+        userName.hashCode ^
+        email.hashCode ^
+        phoneNumber.hashCode ^
+        profilePicture.hashCode ^
+        height.hashCode ^
+        weight.hashCode ^
+        bmi.hashCode;
   }
 }

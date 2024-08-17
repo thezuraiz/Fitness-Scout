@@ -1,13 +1,15 @@
+import 'package:fitness_scout/utils/helpers/bmi_calculator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 class BmiController extends GetxController {
   static BmiController get instance => Get.find();
 
   /// VARIABLES
   var bmiMessage = ''.obs;
-  RxDouble bmi = 0.0.obs;
+  static RxDouble bmi = 0.0.obs;
   final weight = TextEditingController();
   final height = TextEditingController();
   final bmiKey = GlobalKey<FormState>();
@@ -30,23 +32,20 @@ class BmiController extends GetxController {
     ),
   ]);
 
-
   /// --- Calculate BMI
   void calculateBMI() {
     // TODO: REMOVE KEYBOARD
     FocusManager.instance.primaryFocus!.unfocus();
 
     // TODO: VALIDATION
-    if(bmiKey.currentState!.validate()){
-
+    if (bmiKey.currentState!.validate()) {
       // TODO: CALCULATE BMI
-      var weightText = weight.text.toString();
-      var heightText = height.text.toString();
+      var weightText = weight.text.trim();
+      var heightText = height.text.trim();
 
       if (weightText.isNotEmpty && heightText.isNotEmpty) {
-        var iW = double.parse(weightText);
-        var iH = double.parse(heightText) / 3.281;
-        bmi.value = iW / (iH * iH);
+        bmi.value = BmiCalculator.calculateBMI(
+            double.parse(heightText), double.parse(heightText));
 
         if (bmi.value <= 18.5) {
           bmiMessage.value = "Weak";
@@ -59,6 +58,5 @@ class BmiController extends GetxController {
         bmiMessage.value = "Please fill all required text fields";
       }
     }
-
   }
 }

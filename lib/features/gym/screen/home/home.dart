@@ -57,7 +57,7 @@ class HomePage extends StatelessWidget {
                       ),
                       GridCustomWidget(
                         icon: Iconsax.fatrows,
-                        onPressed: () => Get.to(const BmiCalculator()),
+                        onPressed: () => Get.to(const BmiScreen()),
                         buttonTitle: 'BMI',
                       ),
                       GridCustomWidget(

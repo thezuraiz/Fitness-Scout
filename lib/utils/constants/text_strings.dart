@@ -74,4 +74,8 @@ class ZText {
   static const String orderReviewAppbarTitle = "Order Review";
   static const String orderReviewReferenceFieldTitle = "Reference ID";
   static const String fitnessScoutBankIBAN = 'PK39SADA0000003001234029';
+
+  /// --- BMI Screen
+  static const String bmiScreenHeading =
+      "Warning: Please ensure the value is correct. All exercises depend on the BMI.";
 }

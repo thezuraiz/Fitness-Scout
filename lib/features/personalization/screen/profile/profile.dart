@@ -4,14 +4,12 @@ import 'package:fitness_scout/common/widgets/custom_shapes/primary_header_contai
 import 'package:fitness_scout/common/widgets/list_tiles/settings_menue_title.dart';
 import 'package:fitness_scout/common/widgets/list_tiles/user_profile.dart';
 import 'package:fitness_scout/common/widgets/section_heading.dart';
-import 'package:fitness_scout/data/repositories/authentication/authentication_repository.dart';
 import 'package:fitness_scout/features/gym/screen/bmi/bmi_calculator.dart';
 import 'package:fitness_scout/features/personalization/controller/profile_page_controller.dart';
 import 'package:fitness_scout/features/personalization/screen/profile/profile_settings.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ProfileScreen extends StatelessWidget {

@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 
-
 class NetworkManager extends GetxController {
   static NetworkManager get instance => Get.find();
 
@@ -17,14 +16,17 @@ class NetworkManager extends GetxController {
     super.onInit();
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
-          _updateConnectionStatus(result);
-        });
+      _updateConnectionStatus(result);
+    });
   }
 
   Future<void> _updateConnectionStatus(ConnectivityResult result) async {
     _connectionStatus.value = result;
     if (_connectionStatus.value == ConnectivityResult.none) {
-      ZLoaders.warningSnackBar(title: 'No Internet Connection');
+      ZLoaders.warningSnackBar(
+          title: 'No Internet Connection',
+          message:
+              'Error while connecting internet. Please check and try again!');
     }
   }
 

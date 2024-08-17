@@ -11,7 +11,7 @@ class ZFirebaseAuthException implements Exception{
 
   /// Get corresponding error message based on the error code
   String get message {
-    ZLogger.warning('Firebase Error => ' + code);
+    ZLogger.warning('Firebase Error => $code');
     switch (code) {
       case 'email-already-in-use':
         return 'The email address is already registered. Please use a different email.';

@@ -1,6 +1,6 @@
 import 'package:fitness_scout/common/widgets/custom_appbar.dart';
-import 'package:fitness_scout/features/personalization/screen/profile/profile.dart';
 import 'package:fitness_scout/features/personalization/screen/profile/profile_settings.dart';
+import 'package:fitness_scout/utils/loaders/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -28,13 +28,15 @@ class ZHomeAppbar extends StatelessWidget {
                 .apply(color: ZColor.grey),
           ),
           Obx(
-            () => Text(
-              controller.user.value.fullName ?? '',
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineSmall!
-                  .apply(color: ZColor.white),
-            ),
+            () => controller.profileLoading.value
+                ? const ZShimmerEffect(width: 120, height: 18)
+                : Text(
+                    controller.user.value.fullName,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall!
+                        .apply(color: ZColor.white),
+                  ),
           ),
         ],
       ),

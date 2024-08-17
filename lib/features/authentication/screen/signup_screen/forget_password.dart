@@ -37,6 +37,7 @@ class ForgetPassword extends StatelessWidget {
                 ),
                 validator: controller.emailValidation.call,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: controller.email,
               ),
               const SizedBox(
                 height: ZSizes.spaceBtwItems,

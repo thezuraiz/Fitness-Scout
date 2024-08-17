@@ -1,26 +1,24 @@
-import 'package:fitness_scout/utils/constants/colors.dart';
-import 'package:fitness_scout/utils/theme/custom_themes/appbar_theme.dart';
-import 'package:fitness_scout/utils/theme/custom_themes/bottom_sheet_theme.dart';
-import 'package:fitness_scout/utils/theme/custom_themes/check_box_theme.dart';
-import 'package:fitness_scout/utils/theme/custom_themes/chip_theme.dart';
-import 'package:fitness_scout/utils/theme/custom_themes/elevated_button_theme.dart';
-import 'package:fitness_scout/utils/theme/custom_themes/icon_theme.dart';
-import 'package:fitness_scout/utils/theme/custom_themes/outlined_button.dart';
-import 'package:fitness_scout/utils/theme/custom_themes/switch_theme.dart';
-import 'package:fitness_scout/utils/theme/custom_themes/textTheme.dart';
-import 'package:fitness_scout/utils/theme/custom_themes/text_button_theme.dart';
-import 'package:fitness_scout/utils/theme/custom_themes/textformfield_theme.dart';
 import 'package:flutter/material.dart';
 
+import '../constants/colors.dart';
+import 'custom_themes/appbar_theme.dart';
+import 'custom_themes/bottom_sheet_theme.dart';
+import 'custom_themes/check_box_theme.dart';
+import 'custom_themes/chip_theme.dart';
+import 'custom_themes/elevated_button_theme.dart';
+import 'custom_themes/outlined_button.dart';
+import 'custom_themes/textTheme.dart';
+import 'custom_themes/textformfield_theme.dart';
+
 class AppTheme {
-  AppTheme._();
+  AppTheme._(); // To make its constructor private
 
   // --- Light Theme
   static ThemeData lightTheme = ThemeData(
       useMaterial3: true,
       fontFamily: 'Poppins',
       brightness: Brightness.light,
-      primaryColor: const Color(0xff007BFF),
+      primaryColor: Colors.blue,
       scaffoldBackgroundColor: Colors.white,
       textTheme: ZTextTheme.lightTextTheme,
       chipTheme: ZChipTheme.lightChipThemeData,
@@ -29,17 +27,15 @@ class AppTheme {
       bottomSheetTheme: ZBottomSheetTheme.lightBottomSheetTheme,
       elevatedButtonTheme: ZElevatedButtonTheme.lightElevatedButtonTheme,
       outlinedButtonTheme: ZOutlinedButton.lightOutlinedButtonTheme,
-      inputDecorationTheme: ZTextFormFieldTheme.lightTextFormField,
-      switchTheme: ZSwitchTheme.lightSwitchThemeData,
-      textButtonTheme: ZTextThemeButton.lightTextButtonTheme,
-      iconTheme: ZIconTheme.lightIconTheme);
+      inputDecorationTheme: ZTextFormFieldTheme.lightTextFormField
+  );
 
   // --- Dark Theme
   static ThemeData darkTheme = ThemeData(
       useMaterial3: true,
       fontFamily: 'Poppins',
       brightness: Brightness.dark,
-      primaryColor: const Color(0xff005B5B),
+      primaryColor: Colors.blue,
       scaffoldBackgroundColor: ZColor.black,
       textTheme: ZTextTheme.darkTextTheme,
       chipTheme: ZChipTheme.darkChipThemeData,
@@ -48,8 +44,6 @@ class AppTheme {
       bottomSheetTheme: ZBottomSheetTheme.darkBottomSheetTheme,
       elevatedButtonTheme: ZElevatedButtonTheme.darkElevatedButtonTheme,
       outlinedButtonTheme: ZOutlinedButton.darkOutlinedButtonTheme,
-      inputDecorationTheme: ZTextFormFieldTheme.darkTextFormField,
-      switchTheme: ZSwitchTheme.darkSwitchThemeData,
-      textButtonTheme: ZTextThemeButton.darkTextButtonTheme,
-      iconTheme: ZIconTheme.darkIconTheme);
+      inputDecorationTheme: ZTextFormFieldTheme.darkTextFormField
+  );
 }

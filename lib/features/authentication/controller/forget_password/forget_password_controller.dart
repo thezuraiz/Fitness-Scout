@@ -46,7 +46,7 @@ class ForgetPasswordController extends GetxController {
       }
 
       // Todo: Send Email
-      AuthenticationRepository.instance.sendEmailVerification;
+      AuthenticationRepository.instance.sendPasswordResentEmail(email.text.trim());
 
       await ZDeviceUtils.playSound('sounds/email_send_notification.mp3');
 
@@ -54,7 +54,7 @@ class ForgetPasswordController extends GetxController {
       ZFullScreenLoader.stopLoading();
 
       // Todo: Show Success Screen
-      await ZLoaders.successSnackBar( title: 'Email Sent', message: 'Email Link Sent To Reset Your Password');
+      await ZLoaders.successSnackBar( title: 'Email Sent ${email.text.trim()}', message: 'Email Link Sent To Reset Your Password');
 
       // Todo: Redirect
       Get.to(() => ResetPassword(email: email.text.trim()));
@@ -82,7 +82,7 @@ class ForgetPasswordController extends GetxController {
       }
 
       // Todo: Send Email
-      AuthenticationRepository.instance.sendEmailVerification;
+      AuthenticationRepository.instance.sendPasswordResentEmail(email);
       await ZDeviceUtils.playSound('sounds/email_send_notification.mp3');
 
       // Todo: Stop Loader

@@ -9,20 +9,22 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 
+import '../../../personalization/model/user_model.dart';
+
 class SignupController extends GetxController {
   static SignupController get instance => Get.find();
 
   // Variables
 
   final signupFormKey = GlobalKey<FormState>();
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController userNameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController heightController = TextEditingController();
-  TextEditingController weightController = TextEditingController();
+  TextEditingController firstName = TextEditingController();
+  TextEditingController lastName = TextEditingController();
+  TextEditingController userName = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController phoneNumber = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController height = TextEditingController();
+  TextEditingController weight = TextEditingController();
 
   RxBool hidePassword = true.obs;
   RxBool privacyPolicy = false.obs;
@@ -115,22 +117,23 @@ class SignupController extends GetxController {
       // Register user in the Firebase Authentication & Save data in the firebase
       final userCredentials = await AuthenticationRepository.instance
           .registerWithEmailAndPassword(
-              emailController.text.trim(), passwordController.text.trim());
+              email.text.trim(), password.text.trim());
 
       /// Save Authenticated user data in the Firebase FireStore
 
       final userRepository = Get.put(UserRepository());
-      final newUser = {
-        'id': userCredentials.user!.uid,
-        'name':
-            '${firstNameController.text.trim()} ${lastNameController.text.trim()}',
-        'username': userNameController.text.trim().toString(),
-        'email': emailController.text.trim().toString(),
-        'height': heightController.text.trim().toString(),
-        'weight': weightController.text.trim().toString(),
-        'phoneNo': phoneNumberController.text.trim().toString(),
-        'profilePictue': ''
-      };
+
+      final newUser = UserModel(
+        id: userCredentials.user!.uid,
+        firstName: firstName.text.trim(),
+        lastName: lastName.text.trim(),
+        userName: userName.text.trim(),
+        email: email.text.trim(),
+        phoneNumber: phoneNumber.text.trim(),
+        profilePicture: '',
+        height: double.parse(height.text.trim()),
+        weight: double.parse(weight.text.trim()),
+      );
       userRepository.saveUserRecord(newUser);
 
       /// Remove Loader
@@ -143,9 +146,7 @@ class SignupController extends GetxController {
 
       // Move To Verify Email Screen
       Get.to(
-        () => VerifyScreen(
-          email: emailController.text.trim().toString(),
-        ),
+        () => VerifyScreen(email: email.text.trim().toString()),
       );
     } catch (e) {
       //  Show some generic error to the user
@@ -154,17 +155,17 @@ class SignupController extends GetxController {
     }
   }
 
-
   void signupWithFacebook() {
-    ZLoaders.warningSnackBar(title: 'Error',message: 'Facebook Authentication is under development');
+    ZLoaders.warningSnackBar(
+        title: 'Error',
+        message: 'Facebook Authentication is under development');
   }
-
-
 }
 
 class AlphabeticValidator extends TextFieldValidator {
   // Pass the error text to the super constructor
-  AlphabeticValidator({String errorText = 'Only alphabets are allowed'}) : super(errorText);
+  AlphabeticValidator({String errorText = 'Only alphabets are allowed'})
+      : super(errorText);
 
   @override
   bool isValid(String? value) {

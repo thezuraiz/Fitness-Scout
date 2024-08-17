@@ -1,7 +1,10 @@
 import 'package:fitness_scout/common/widgets/custom_shapes/primary_header_container.dart';
 import 'package:fitness_scout/features/gym/screen/bmi/bmi_calculator.dart';
+import 'package:fitness_scout/features/personalization/controller/user_controller.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
+import 'package:fitness_scout/utils/loaders/shimmer.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import '../../../../../utils/constants/sizes.dart';
 import 'home_appbar.dart';
@@ -11,10 +14,10 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userController = UserController.instance;
     return ZPrimaryHeaderContainer(
       child: Column(
         children: [
-
           // --- APPBAR
           const ZHomeAppbar(),
           const SizedBox(
@@ -23,24 +26,31 @@ class HomeHeader extends StatelessWidget {
 
           // --- BMI
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: ZSizes.spaceBtwItems),
+            padding:
+                const EdgeInsets.symmetric(horizontal: ZSizes.spaceBtwItems),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                 'Healthy',
+                  'Healthy',
                   style: Theme.of(context)
                       .textTheme
                       .headlineMedium!
                       .apply(color: ZColor.white),
                 ),
-                TextButton(
-                  child: Text('BMI: 20',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall!
-                        .apply(color: ZColor.grey),),
-                  onPressed: ()=> Get.to(const BmiCalculator()),
+                Obx(
+                  () => userController.profileLoading.value
+                      ? const ZShimmerEffect(width: 50, height: 20)
+                      : TextButton(
+                          child: Text(
+                            'BMI: ${userController.user.value.bmi.toStringAsFixed(2) ?? ''}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .apply(color: ZColor.grey),
+                          ),
+                          onPressed: () => Get.to(const BmiScreen()),
+                        ),
                 ),
               ],
             ),
@@ -51,7 +61,8 @@ class HomeHeader extends StatelessWidget {
 
           // --- App Trainer Message
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: ZSizes.spaceBtwItems),
+            padding:
+                const EdgeInsets.symmetric(horizontal: ZSizes.spaceBtwItems),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

@@ -1,6 +1,7 @@
 import 'package:fitness_scout/features/gym/screen/diet_plan/diet_plan.dart';
 import 'package:fitness_scout/features/gym/screen/home/home.dart';
 import 'package:fitness_scout/features/gym_pool/screen/gym_pool.dart';
+import 'package:fitness_scout/features/personalization/controller/user_controller.dart';
 import 'package:fitness_scout/features/personalization/screen/profile/profile.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
 import 'package:fitness_scout/utils/helpers/helper_functions.dart';
@@ -13,6 +14,7 @@ class NavigationMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(UserController());
     final controller = Get.put(NavigationController());
     final dark = ZHelperFunction.isDarkMode(context);
     return Obx(
@@ -44,8 +46,6 @@ class NavigationMenu extends StatelessWidget {
 
 class NavigationController extends GetxController {
   static NavigationController get instance => Get.find();
-
-
 
   RxInt selectedIndex = 0.obs;
 

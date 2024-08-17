@@ -1,7 +1,9 @@
 import 'package:fitness_scout/data/repositories/authentication/authentication_repository.dart';
 import 'package:fitness_scout/data/repositories/user/user_repository.dart';
 import 'package:fitness_scout/features/authentication/screen/signup_screen/verify_screen.dart';
+import 'package:fitness_scout/features/gym/screen/bmi/bmi_calculator.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
+import 'package:fitness_scout/utils/helpers/bmi_calculator.dart';
 import 'package:fitness_scout/utils/helpers/loaders.dart';
 import 'package:fitness_scout/utils/helpers/network_manager.dart';
 import 'package:fitness_scout/utils/popups/full_screen_loader.dart';
@@ -123,17 +125,20 @@ class SignupController extends GetxController {
 
       final userRepository = Get.put(UserRepository());
 
+      double bmi = BmiCalculator.calculateBMI(double.parse(height.text.trim()),
+              double.parse(weight.text.trim())) ??
+          0.0;
       final newUser = UserModel(
-        id: userCredentials.user!.uid,
-        firstName: firstName.text.trim(),
-        lastName: lastName.text.trim(),
-        userName: userName.text.trim(),
-        email: email.text.trim(),
-        phoneNumber: phoneNumber.text.trim(),
-        profilePicture: '',
-        height: double.parse(height.text.trim()),
-        weight: double.parse(weight.text.trim()),
-      );
+          id: userCredentials.user!.uid,
+          firstName: firstName.text.trim(),
+          lastName: lastName.text.trim(),
+          userName: userName.text.trim(),
+          email: email.text.trim(),
+          phoneNumber: phoneNumber.text.trim(),
+          profilePicture: '',
+          height: double.parse(height.text.trim()),
+          weight: double.parse(weight.text.trim()),
+          bmi: bmi);
       userRepository.saveUserRecord(newUser);
 
       /// Remove Loader

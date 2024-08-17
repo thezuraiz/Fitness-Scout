@@ -44,7 +44,7 @@ class SignupScreen extends StatelessWidget {
                         decoration: const InputDecoration(
                             labelText: ZText.firstName,
                             prefixIcon: Icon(Iconsax.user)),
-                        controller: controller.firstNameController,
+                        controller: controller.firstName,
                         validator: controller.nameValidator.call,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                       ),
@@ -57,7 +57,7 @@ class SignupScreen extends StatelessWidget {
                         decoration: const InputDecoration(
                             labelText: ZText.lastName,
                             prefixIcon: Icon(Iconsax.user)),
-                        controller: controller.lastNameController,
+                        controller: controller.lastName,
                         validator: controller.nameValidator.call,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                       ),
@@ -71,7 +71,7 @@ class SignupScreen extends StatelessWidget {
                   decoration: const InputDecoration(
                       labelText: ZText.userName,
                       prefixIcon: Icon(Iconsax.user_edit)),
-                  controller: controller.userNameController,
+                  controller: controller.userName,
                   validator: controller.usernameValidator.call,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
@@ -82,7 +82,7 @@ class SignupScreen extends StatelessWidget {
                   decoration: const InputDecoration(
                       labelText: ZText.email,
                       prefixIcon: Icon(Iconsax.activity)),
-                  controller: controller.emailController,
+                  controller: controller.email,
                   validator: controller.emailValidator.call,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
@@ -96,7 +96,7 @@ class SignupScreen extends StatelessWidget {
                         decoration: const InputDecoration(labelText: ZText.height,
                           prefixIcon: Icon(Icons.height)
                         ),
-                        controller: controller.heightController,
+                        controller: controller.height,
                         validator: controller.heightValidator.call,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                       ),
@@ -107,7 +107,7 @@ class SignupScreen extends StatelessWidget {
                     Expanded(
                       child: TextFormField(
                         decoration: const InputDecoration(labelText: ZText.weight,prefixIcon: Icon(Iconsax.weight)),
-                        controller: controller.weightController,
+                        controller: controller.weight,
                         validator: controller.weightValidator.call,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                       ),
@@ -122,7 +122,7 @@ class SignupScreen extends StatelessWidget {
                     labelText: ZText.phoneNo,
                     prefixIcon: Icon(Iconsax.call),
                   ),
-                  controller: controller.phoneNumberController,
+                  controller: controller.phoneNumber,
                   validator: controller.phoneNumberValidator.call,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
@@ -141,7 +141,7 @@ class SignupScreen extends StatelessWidget {
                               : Iconsax.eye_slash),
                         ),
                       ),
-                      controller: controller.passwordController,
+                      controller: controller.password,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: controller.passwordValidator.call,
                       obscureText: controller.hidePassword.value,

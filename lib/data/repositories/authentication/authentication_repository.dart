@@ -71,7 +71,8 @@ class AuthenticationRepository extends GetxController {
     } on PlatformException catch (e) {
       throw ZPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again';
+      ZLogger.info(e.toString());
+      throw 'Something went wrong. Please try again'+ e.toString();
     }
   }
 

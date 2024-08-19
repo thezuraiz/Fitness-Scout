@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fitness_scout/common/widgets/success_screen/successScreens.dart';
 import 'package:fitness_scout/utils/navigation_menu.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,9 +15,8 @@ import '../../../../utils/popups/full_screen_loader.dart';
 class SubscriptionController extends GetxController {
   static SubscriptionController get instance => Get.find();
 
-
   /// --- VARIABLES
-  late XFile? photo;
+  late XFile? photo = null;
   final orderFormKey = GlobalKey<FormState>();
 
   /// Functions
@@ -31,18 +32,18 @@ class SubscriptionController extends GetxController {
     ZLoaders.successSnackBar(title: "Copied", message: "IBAN Copied");
   }
 
-
-  bankScreenshotTransfer()async{
+  bankScreenshotTransfer() async {
     // Capture a photo.
     final ImagePicker picker = ImagePicker();
     photo = await picker.pickImage(source: ImageSource.gallery);
   }
 
-  submitForm(){
+  submitForm() {
     /// Remove Keyboard
     FocusManager.instance.primaryFocus!.unfocus();
+
     /// Form Validation
-    if(orderFormKey.currentState!.validate()){
+    if (orderFormKey.currentState!.validate()) {
       // Start Loader
       ZFullScreenLoader.openLoadingDialogy(
           'Working on your request', ZImages.fileAnimation);
@@ -54,13 +55,15 @@ class SubscriptionController extends GetxController {
 
       // Switch Screen
 
-      Get.to(SuccessScreen(
-        image: ZImages.successScreenAnimation,
-        title: "Verification Check",
-        subTitle: "Please wait. Our team will check your transaction and get approved you soon.",
-        onPressed: () => Get.offAll(const NavigationMenu()),
-      ),);
+      Get.to(
+        SuccessScreen(
+          image: ZImages.successScreenAnimation,
+          title: "Verification Check",
+          subTitle:
+              "Please wait. Our team will check your transaction and get approved you soon.",
+          onPressed: () => Get.offAll(const NavigationMenu()),
+        ),
+      );
     }
   }
-
 }

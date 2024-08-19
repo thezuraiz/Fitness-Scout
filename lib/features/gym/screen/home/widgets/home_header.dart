@@ -7,6 +7,7 @@ import 'package:fitness_scout/utils/helpers/helper_functions.dart';
 import 'package:fitness_scout/utils/loaders/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import '../../../../../utils/constants/sizes.dart';
 import 'home_appbar.dart';
 
@@ -31,6 +32,7 @@ class HomeHeader extends StatelessWidget {
 
           // --- BMI
           Container(
+            height: 55,
             margin: const EdgeInsets.symmetric(horizontal: ZSizes.md),
             padding: const EdgeInsets.symmetric(horizontal: ZSizes.md),
             decoration: BoxDecoration(
@@ -38,11 +40,32 @@ class HomeHeader extends StatelessWidget {
               borderRadius: BorderRadius.circular(ZSizes.cardRadiusLg),
               border: Border.all(color: dark ? ZColor.dark : ZColor.grey),
             ),
-            child: Obx(
-              () => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  userController.profileLoading.value
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                  const Icon(Iconsax.direct_right),
+                  Obx(
+                    () => userController.profileLoading.value
+                        ? const ZShimmerEffect(width: 50, height: 20)
+                        : TextButton(
+                            child: Text(
+                              'BMI: ${userController.user.value.bmi.toStringAsFixed(2)}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .apply(
+                                      color: dark
+                                          ? ZColor.light
+                                          : ZColor.darkerGrey),
+                            ),
+                            onPressed: () => Get.to(const BmiScreen()),
+                          ),
+                  ),
+                ]),
+                Obx(
+                  () => userController.profileLoading.value
                       ? const ZShimmerEffect(width: 50, height: 20)
                       : Text(
                           BmiCalculator.getBmiMessage(
@@ -51,18 +74,8 @@ class HomeHeader extends StatelessWidget {
                               color: dark ? ZColor.light : ZColor.darkerGrey),
                           overflow: TextOverflow.ellipsis,
                         ),
-                  userController.profileLoading.value
-                      ? const ZShimmerEffect(width: 50, height: 20)
-                      : TextButton(
-                          child: Text(
-                            'BMI: ${userController.user.value.bmi.toStringAsFixed(2)}',
-                            style: Theme.of(context).textTheme.bodySmall!.apply(
-                                color: dark ? ZColor.light : ZColor.darkerGrey),
-                          ),
-                          onPressed: () => Get.to(const BmiScreen()),
-                        ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
 
@@ -77,17 +90,15 @@ class HomeHeader extends StatelessWidget {
             child: Obx(
               () => userController.profileLoading.value
                   ? const ZShimmerEffect(width: 50, height: 20)
-                  : Flexible(
-                      child: Text(
-                        BmiCalculator.getAppMessage(
-                            userController.user.value.bmi),
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .apply(color: ZColor.white),
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                  : Text(
+                      BmiCalculator.getAppMessage(
+                          userController.user.value.bmi),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .apply(color: ZColor.white),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
                     ),
             ),
           ),

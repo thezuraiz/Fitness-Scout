@@ -23,9 +23,7 @@ class GridCustomWidget extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         decoration: BoxDecoration(
-          color: dark
-              ? ZColor.white.withOpacity(0.1)
-              : ZColor.grey.withOpacity(0.5),
+          color: dark ? ZColor.white.withOpacity(0.1) : ZColor.lightGrey,
           borderRadius: const BorderRadius.all(Radius.circular(20)),
         ),
         padding: const EdgeInsets.all(10),

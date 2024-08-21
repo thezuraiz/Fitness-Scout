@@ -1,3 +1,4 @@
+import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import '../constants/colors.dart';
@@ -23,6 +24,7 @@ class ZShimmerEffect extends StatelessWidget {
       child: Container(
         width: width,
         height: height,
+        margin: const EdgeInsets.all(ZSizes.md),
         decoration: BoxDecoration(
             color: color ?? (dark ? ZColor.darkGrey : ZColor.white),
             borderRadius: BorderRadius.circular(radius)),

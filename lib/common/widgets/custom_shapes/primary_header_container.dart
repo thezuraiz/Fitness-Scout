@@ -18,7 +18,7 @@ class ZPrimaryHeaderContainer extends StatelessWidget {
           children: [
             Positioned(
               top: -150,
-              right: -250,
+              right: -170,
               child: ZCircularContainer(
                 backgroundColor: ZColor.white.withOpacity(0.1),
               ),

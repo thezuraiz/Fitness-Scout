@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:fitness_scout/common/widgets/success_screen/successScreens.dart';
 import 'package:fitness_scout/utils/navigation_menu.dart';

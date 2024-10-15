@@ -1,4 +1,3 @@
-import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import '../../utils/constants/colors.dart';
 

@@ -1,5 +1,6 @@
 import 'package:fitness_scout/common/widgets/custom_appbar.dart';
 import 'package:fitness_scout/features/gym/controller/bmi/bmi_controller.dart';
+import 'package:fitness_scout/features/gym/controller/diet_plan/diet_plan_controller.dart';
 import 'package:fitness_scout/features/gym/screen/bmi/widgets/bmi_calculator_radical_meter.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
@@ -18,6 +19,7 @@ class BmiScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(BmiController());
+    final dietplan = DietPlanController.instance;
 
     return Scaffold(
       appBar: ZCustomAppBar(
@@ -33,6 +35,7 @@ class BmiScreen extends StatelessWidget {
           child: Form(
             key: controller.bmiKey,
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               children: [
                 Obx(() => BmiController.bmi.value == 0
                     ? Lottie.asset(ZImages.bmiAnimation)
@@ -78,14 +81,27 @@ class BmiScreen extends StatelessWidget {
                   keyboardType: TextInputType.number,
                 ),
                 const SizedBox(
-                  height: ZSizes.spaceBtwSections,
+                  height: ZSizes.spaceBtwSections * 4.5,
                 ),
+                // Spacer(),
                 SizedBox(
                   width: Get.width,
                   child: ElevatedButton(
                     onPressed: () => controller.calculateBMI(),
                     child: const Text(
                       "Calculate",
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: ZSizes.spaceBtwInputFields,
+                ),
+                SizedBox(
+                  width: Get.width,
+                  child: OutlinedButton(
+                    onPressed: dietplan.generateDietPlan,
+                    child: const Text(
+                      "Generate Diet Plan",
                     ),
                   ),
                 ),

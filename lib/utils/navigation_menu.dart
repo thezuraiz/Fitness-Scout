@@ -52,7 +52,7 @@ class NavigationController extends GetxController {
   final screens = [
     const HomePage(),
     const GymPool(),
-    const DietPlan(),
+    const DietPlanScreen(),
     const ProfileScreen()
   ];
 }

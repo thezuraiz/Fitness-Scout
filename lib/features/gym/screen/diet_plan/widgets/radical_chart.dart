@@ -9,9 +9,11 @@ class RadicalChart extends StatelessWidget {
     this.carbs = 35,
     this.fat = 35,
     this.protiens = 40,
+    this.calories = 0,
   });
 
   final double carbs, fat, protiens;
+  final int calories;
 
   @override
   Widget build(BuildContext context) {
@@ -52,11 +54,14 @@ class RadicalChart extends StatelessWidget {
                           style: TextStyle(color: Colors.grey, fontSize: 16),
                         ),
                         Text(
-                          '~2500',
-                          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                          ),
+                          '~ $calories',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                         const Text(
                           'Daily energy goal',

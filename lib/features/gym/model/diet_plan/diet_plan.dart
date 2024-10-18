@@ -1,81 +1,111 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class DietPlan {
-  final String id; // Assuming you want to keep the document ID
-  final String name; // Name of the diet plan
-  final String description; // Description of the diet plan
-  final int calories; // Total calories
-  final double protein; // Protein content
-  final double carbohydrates; // Carbohydrates content
-  final double fats; // Fats content
-  final List<FoodItem> foods; // List of food items
+  List<FoodCategory>? breakfast;
+  List<FoodCategory>? lunch;
+  List<FoodCategory>? dinner;
+  List<FoodCategory>? snacks;
+  int? calories;
+  String? dietaryPreference;
 
   DietPlan({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.calories,
-    required this.protein,
-    required this.carbohydrates,
-    required this.fats,
-    required this.foods,
+    this.breakfast,
+    this.lunch,
+    this.dinner,
+    this.snacks,
+    this.calories,
+    this.dietaryPreference,
   });
 
+  // Create a DietPlan object from a Firestore snapshot
+  factory DietPlan.fromSnapshot(DocumentSnapshot snapshot) {
+    Map<String, dynamic> json = snapshot.data() as Map<String, dynamic>;
+    return DietPlan.fromJson(json);
+  }
+
+  // Convert JSON data from Firestore into a DietPlan
   factory DietPlan.fromJson(Map<String, dynamic> json) {
     return DietPlan(
-      id: json['id'],
-      name: json['name'],
-      description: json['description'],
-      calories: json['calories'],
-      protein: json['protein'],
-      carbohydrates: json['carbohydrates'],
-      fats: json['fats'],
-      foods: (json['foods'] as List<dynamic>)
-          .map((foodJson) => FoodItem.fromJson(foodJson))
+      breakfast: (json['breakfast'] as List?)
+          ?.map((item) => FoodCategory.fromJson(item))
           .toList(),
+      lunch: (json['lunch'] as List?)
+          ?.map((item) => FoodCategory.fromJson(item))
+          .toList(),
+      dinner: (json['dinner'] as List?)
+          ?.map((item) => FoodCategory.fromJson(item))
+          .toList(),
+      snacks: (json['snacks'] as List?)
+          ?.map((item) => FoodCategory.fromJson(item))
+          .toList(),
+      calories: json['calories'],
+      dietaryPreference: json['dietaryPreference'],
     );
   }
 
+  // Convert DietPlan object to JSON for saving to Firestore
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'name': name,
-      'description': description,
+      'breakfast': breakfast?.map((v) => v.toJson()).toList(),
+      'lunch': lunch?.map((v) => v.toJson()).toList(),
+      'dinner': dinner?.map((v) => v.toJson()).toList(),
+      'snacks': snacks?.map((v) => v.toJson()).toList(),
       'calories': calories,
-      'protein': protein,
-      'carbohydrates': carbohydrates,
-      'fats': fats,
-      'foods': foods.map((food) => food.toJson()).toList(),
+      'dietaryPreference': dietaryPreference,
     };
+  }
+
+  // Factory constructor for an empty diet plan
+  factory DietPlan.empty() {
+    return DietPlan(
+      breakfast: [],
+      lunch: [],
+      dinner: [],
+      snacks: [],
+      calories: 0,
+      dietaryPreference: '',
+    );
   }
 }
 
-class FoodItem {
-  final String name; // Name of the food item
-  final double servingSize; // Serving size of the food item
-  final double calories; // Calories in the food item
-  final double protein; // Protein in the food item
+class FoodCategory {
+  final String name;
+  final int calories;
+  final String protein;
+  final String fat;
+  final String carbs;
+  final String imageUrl;
 
-  FoodItem({
+  FoodCategory({
     required this.name,
-    required this.servingSize,
     required this.calories,
     required this.protein,
+    required this.fat,
+    required this.carbs,
+    required this.imageUrl,
   });
 
-  factory FoodItem.fromJson(Map<String, dynamic> json) {
-    return FoodItem(
+  // Convert JSON data from Firestore into a FoodCategory
+  factory FoodCategory.fromJson(Map<String, dynamic> json) {
+    return FoodCategory(
       name: json['name'],
-      servingSize: json['servingSize'],
       calories: json['calories'],
       protein: json['protein'],
+      fat: json['fat'],
+      carbs: json['carbs'],
+      imageUrl: json['imageUrl'],
     );
   }
 
+  // Convert FoodCategory object to JSON for saving to Firestore
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'servingSize': servingSize,
       'calories': calories,
       'protein': protein,
+      'fat': fat,
+      'carbs': carbs,
+      'imageUrl': imageUrl,
     };
   }
 }

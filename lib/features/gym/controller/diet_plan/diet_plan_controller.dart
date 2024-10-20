@@ -1,4 +1,5 @@
 import 'package:fitness_scout/data/repositories/bmi/bmi_repositoty.dart';
+import 'package:fitness_scout/features/gym/controller/bmi/bmi_controller.dart';
 import 'package:fitness_scout/features/gym/model/diet_plan/diet_plan.dart';
 import 'package:fitness_scout/features/gym/screen/diet_plan/diet_plan.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
@@ -14,6 +15,7 @@ class DietPlanController extends GetxController {
   static DietPlanController get instance => Get.find();
 
   final bmi = Get.put(BMIRepository());
+  double bmiValue = BmiController.instance.getBmi;
   Rx<DietPlan> dietPlan = DietPlan.empty().obs;
   RxList dietTaken = [].obs;
 
@@ -44,7 +46,19 @@ class DietPlanController extends GetxController {
   Future<void> fetchDietPlan() async {
     ZLogger.info('Fetching Diet Plan');
     try {
-      final fetchedDietPlan = await bmi.fetchUserDetails();
+      final diet;
+      ZLogger.warning('BMI :$bmiValue , ${bmiValue.runtimeType}');
+      if (bmiValue < 18.5) {
+        diet = 'bmi_underweight';
+      } else if (bmiValue >= 18.5 && bmiValue < 25) {
+        diet = 'bmi_normal';
+      } else if (bmiValue >= 25 && bmiValue < 30) {
+        diet = 'bmi_overweight';
+      } else {
+        diet = 'bmi_obese';
+      }
+
+      final fetchedDietPlan = await bmi.getDietPlan(diet);
       dietPlan.value = fetchedDietPlan;
     } catch (e) {
       ZLogger.error('Error: ', e);

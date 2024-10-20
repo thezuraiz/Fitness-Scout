@@ -26,8 +26,8 @@ class DietPlanScreen extends StatelessWidget {
               final calories = dietplanController.dietPlan.value.calories;
               return RadicalChart(
                   carbs: (calories! * 50 / 100),
-                  fat: (calories! * 20 / 100),
-                  protiens: (calories! * 30 / 100),
+                  fat: (calories * 20 / 100),
+                  protiens: (calories * 30 / 100),
                   calories: calories ?? 0);
             }),
 

@@ -18,6 +18,7 @@ class BmiScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(DietPlanController());
     final controller = Get.put(BmiController());
     final dietplan = DietPlanController.instance;
 

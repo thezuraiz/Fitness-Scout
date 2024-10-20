@@ -14,10 +14,10 @@ class BMIRepository extends GetxController {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   /// Functions to fetch Diet Plan details based on user id
-  Future<DietPlan> fetchUserDetails() async {
+  Future<DietPlan> getDietPlan(final dietPlanCategory) async {
     try {
       DocumentSnapshot snapshot =
-          await _db.collection('dietPlans').doc('bmi_normal').get();
+          await _db.collection('dietPlans').doc(dietPlanCategory).get();
       if (snapshot.exists) {
         return DietPlan.fromSnapshot(snapshot);
       } else {

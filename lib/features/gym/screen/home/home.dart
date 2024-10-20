@@ -10,14 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:get/get.dart';
-import '../../controller/diet_plan/diet_plan_controller.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.put(DietPlanController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(

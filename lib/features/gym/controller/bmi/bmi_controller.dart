@@ -17,11 +17,15 @@ class BmiController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    bmi.value = 0;
+    bmi.value = 0.0;
   }
 
   /// VARIABLES
   static RxDouble bmi = 0.0.obs;
+
+  /// Getter to access the double value
+  double get getBmi => bmi.value;
+
   final weight = TextEditingController();
   final height = TextEditingController();
   final bmiKey = GlobalKey<FormState>();

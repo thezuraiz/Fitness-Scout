@@ -38,12 +38,12 @@ class BmiScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Obx(() => BmiController.bmi.value == 0
+                Obx(() => controller.bmi.value == 0
                     ? Lottie.asset(ZImages.bmiAnimation)
                     : RadicalMeter(
-                        bmiMessage: BmiCalculator.getBmiMessage(
-                            BmiController.bmi.value),
-                        bmi: BmiController.bmi.value)),
+                        bmiMessage:
+                            BmiCalculator.getBmiMessage(controller.bmi.value),
+                        bmi: controller.bmi.value)),
                 const SizedBox(
                   height: ZSizes.spaceBtwSections,
                 ),

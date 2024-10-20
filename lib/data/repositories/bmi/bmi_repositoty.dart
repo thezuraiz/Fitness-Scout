@@ -15,6 +15,7 @@ class BMIRepository extends GetxController {
 
   /// Functions to fetch Diet Plan details based on user id
   Future<DietPlan> getDietPlan(final dietPlanCategory) async {
+    ZLogger.info('Fetching $dietPlanCategory');
     try {
       DocumentSnapshot snapshot =
           await _db.collection('dietPlans').doc(dietPlanCategory).get();

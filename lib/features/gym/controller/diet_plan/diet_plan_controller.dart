@@ -5,6 +5,7 @@ import 'package:fitness_scout/features/gym/screen/diet_plan/diet_plan.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../../../utils/constants/image_string.dart';
 import '../../../../utils/helpers/loaders.dart';
@@ -15,7 +16,6 @@ class DietPlanController extends GetxController {
   static DietPlanController get instance => Get.find();
 
   final bmi = Get.put(BMIRepository());
-  double bmiValue = BmiController.instance.getBmi;
   Rx<DietPlan> dietPlan = DietPlan.empty().obs;
   RxList dietTaken = [].obs;
 
@@ -45,9 +45,13 @@ class DietPlanController extends GetxController {
 
   Future<void> fetchDietPlan() async {
     ZLogger.info('Fetching Diet Plan');
+
     try {
-      final diet;
-      ZLogger.warning('BMI :$bmiValue , ${bmiValue.runtimeType}');
+      String diet;
+      double bmiValue = BmiController.instance.bmi.value;
+      ZLogger.info('BMI: $bmiValue, ${bmiValue.runtimeType}');
+
+      // Determine diet category based on BMI value
       if (bmiValue < 18.5) {
         diet = 'bmi_underweight';
       } else if (bmiValue >= 18.5 && bmiValue < 25) {
@@ -58,11 +62,24 @@ class DietPlanController extends GetxController {
         diet = 'bmi_obese';
       }
 
-      final fetchedDietPlan = await bmi.getDietPlan(diet);
-      dietPlan.value = fetchedDietPlan;
+      final storage = GetStorage();
+      final storedDietPlan = storage.read('fetchDietPlan');
+      if (storedDietPlan == null) {
+        final fetchedDietPlan = await bmi.getDietPlan(diet);
+        if (fetchedDietPlan != null) {
+          ZLogger.info('Generating Diet Plain');
+          storage.write('fetchDietPlan', fetchedDietPlan);
+          dietPlan.value = fetchedDietPlan;
+        } else {
+          ZLogger.error('No diet plan found for diet: $diet');
+          dietPlan.value = DietPlan.empty();
+        }
+      } else {
+        dietPlan.value = storedDietPlan;
+      }
     } catch (e) {
-      ZLogger.error('Error: ', e);
-      this.dietPlan(DietPlan.empty());
+      ZLogger.error('Error while fetching diet plan:', e);
+      dietPlan.value = DietPlan.empty(); // Reset dietPlan to empty on error
     }
   }
 

@@ -11,11 +11,14 @@ import 'package:get/route_manager.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:get/get.dart';
 
+import '../../controller/bmi/bmi_controller.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final BMIx = Get.put(BmiController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(

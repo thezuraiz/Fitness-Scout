@@ -12,7 +12,7 @@ class DietPlanScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dietplanController = DietPlanController.instance;
+    final dietplanController = Get.put(DietPlanController());
 
     return Scaffold(
       body: SingleChildScrollView(

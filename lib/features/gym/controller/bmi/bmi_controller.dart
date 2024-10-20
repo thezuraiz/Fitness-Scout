@@ -7,24 +7,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../../../utils/helpers/network_manager.dart';
 
 class BmiController extends GetxController {
   static BmiController get instance => Get.find();
 
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-    bmi.value = 0.0;
-  }
-
   /// VARIABLES
-  static RxDouble bmi = 0.0.obs;
-
-  /// Getter to access the double value
-  double get getBmi => bmi.value;
+  RxDouble bmi = 0.0.obs;
 
   final weight = TextEditingController();
   final height = TextEditingController();
@@ -76,6 +67,11 @@ class BmiController extends GetxController {
 
       bmi.value = BmiCalculator.calculateBMI(
           double.parse(heightText), double.parse(weightText));
+
+      ZLogger.info('BMI: ${bmi.value}');
+
+      final storage = GetStorage();
+      storage.remove('fetchDietPlan');
 
       Map<String, dynamic> json = {"bmi": bmi.value};
       await UserRepository.instance.updateSingleField(json);

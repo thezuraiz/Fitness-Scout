@@ -30,9 +30,10 @@ dependencies:
   connectivity_plus: ^2.3.4
   syncfusion_flutter_charts: ^27.1.53
   image_picker: ^1.1.2
-  audioplayers: ^6.0.0
+  audioplayers: ^6.1.0
   syncfusion_flutter_gauges:
   cached_network_image: ^3.4.0
+  location: ^7.0.0
 
   #  --- FIREBASE
   firebase_core: ^2.31.1

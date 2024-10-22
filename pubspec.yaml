@@ -33,8 +33,7 @@ dependencies:
   audioplayers: ^6.1.0
   syncfusion_flutter_gauges:
   cached_network_image: ^3.4.0
-  location: ^7.0.0
-
+  geolocator: ^10.0.0
   #  --- FIREBASE
   firebase_core: ^2.31.1
   firebase_auth: ^4.19.6

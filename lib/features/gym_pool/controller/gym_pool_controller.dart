@@ -1,10 +1,23 @@
 import 'package:fitness_scout/utils/helpers/logger.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
+import '../../../utils/helpers/helper_functions.dart';
+
 class GymPoolController extends GetxController {
   static GymPoolController get instance => Get.find();
+
+  BitmapDescriptor? customMarkerIcon;
+  RxBool isDarkMode = ZHelperFunction.isDarkMode(Get.context!).obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    _fetchCurrentLocation();
+  }
 
   final CameraPosition initialPosition = const CameraPosition(
     target: LatLng(31.5204, 74.3587), // Default location
@@ -14,10 +27,27 @@ class GymPoolController extends GetxController {
   Rx<LatLng> userLocation =
       const LatLng(31.5204, 74.3587).obs; // Default location
 
-  @override
-  void onInit() {
-    super.onInit();
-    _fetchCurrentLocation();
+  Future<String> loadMapStyle(BuildContext context) async {
+    String fileName = isDarkMode.value
+        ? 'assets/map_styles/dark_map_style.json'
+        : 'assets/map_styles/light_map_style.json';
+
+    try {
+      String mapStyle = await rootBundle.loadString(fileName);
+      ZLogger.info('Loaded Map Style: $mapStyle'); // Debugging print
+      ZLogger.info('Current Theme: ${isDarkMode.value ? "Dark" : "Light"}');
+      return mapStyle;
+    } catch (e) {
+      ZLogger.info('Error loading map style: $e');
+      return 'Error loading map style: $e'; // Return empty string if there's an error
+    }
+  }
+
+  Future<void> _loadCustomMarkerIcon() async {
+    customMarkerIcon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(size: Size(1, 1)),
+      'assets/map_styles/location-v2.png', // Path to your custom marker image
+    );
   }
 
   // Method to fetch the user's current location
@@ -55,5 +85,6 @@ class GymPoolController extends GetxController {
 
     // Update userLocation
     userLocation.value = LatLng(position.latitude, position.longitude);
+    _loadCustomMarkerIcon();
   }
 }

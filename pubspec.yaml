@@ -75,6 +75,9 @@ flutter:
     - assets/artworks/
     - assets/images/qr_code/
     - assets/sounds/
+    - assets/map_styles/
+    - assets/map_styles/dark_map_style.json
+    - assets/map_styles/light_map_style.json
 
   #---------------- LOCAL FONTS ----------------
 

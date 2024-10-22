@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -10,22 +12,53 @@ import '../../../utils/helpers/helper_functions.dart';
 class GymPoolController extends GetxController {
   static GymPoolController get instance => Get.find();
 
-  BitmapDescriptor? customMarkerIcon;
-  RxBool isDarkMode = ZHelperFunction.isDarkMode(Get.context!).obs;
-
   @override
   void onInit() {
     super.onInit();
     _fetchCurrentLocation();
   }
 
+  BitmapDescriptor? customMarkerIcon;
+  RxBool isDarkMode = ZHelperFunction.isDarkMode(Get.context!).obs;
+  Rx<LatLng> userLocation = const LatLng(31.5204, 74.3587).obs;
+  Set<Marker> markers = <Marker>{}.obs;
+
   final CameraPosition initialPosition = const CameraPosition(
     target: LatLng(31.5204, 74.3587), // Default location
     zoom: 14.4746,
   );
 
-  Rx<LatLng> userLocation =
-      const LatLng(31.5204, 74.3587).obs; // Default location
+  void _addSurroundingMarkers(LatLng centerLocation) {
+    double radius = 900;
+
+    int markerCount = 5;
+
+    for (int i = 0; i < markerCount; i++) {
+      double angle = (i * (360 / markerCount)) * (3.14159 / 180);
+
+      double latOffset = (radius / 111320) * cos(angle);
+      double lngOffset = (radius / 111320) *
+          sin(angle) /
+          cos(centerLocation.latitude * (3.14159 / 180));
+
+      LatLng newMarkerPosition = LatLng(
+        centerLocation.latitude + latOffset,
+        centerLocation.longitude + lngOffset,
+      );
+
+      markers.add(
+        Marker(
+          markerId: MarkerId('surrounding_marker_$i'),
+          position: newMarkerPosition,
+          icon: customMarkerIcon ?? BitmapDescriptor.defaultMarker,
+          infoWindow: InfoWindow(
+            title: 'Surrounding Location $i',
+            snippet: 'This is a surrounding marker.',
+          ),
+        ),
+      );
+    }
+  }
 
   Future<String> loadMapStyle(BuildContext context) async {
     String fileName = isDarkMode.value
@@ -44,25 +77,22 @@ class GymPoolController extends GetxController {
   }
 
   Future<void> _loadCustomMarkerIcon() async {
-    customMarkerIcon = await BitmapDescriptor.fromAssetImage(
+    customMarkerIcon = await BitmapDescriptor.asset(
       const ImageConfiguration(size: Size(1, 1)),
       'assets/map_styles/location-v2.png', // Path to your custom marker image
     );
   }
 
-  // Method to fetch the user's current location
   Future<void> _fetchCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
-    // Check if location services are enabled
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       ZLogger.error('Location services are disabled.');
       return Future.error('Location services are disabled.');
     }
 
-    // Check for location permissions
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -78,13 +108,10 @@ class GymPoolController extends GetxController {
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
-
-    // Get the current location
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-
-    // Update userLocation
     userLocation.value = LatLng(position.latitude, position.longitude);
-    _loadCustomMarkerIcon();
+    await _loadCustomMarkerIcon();
+    _addSurroundingMarkers(userLocation.value);
   }
 }

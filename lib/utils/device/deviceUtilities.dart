@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class ZDeviceUtils {
     return MediaQuery.of(Get.context!).padding.top;
   }
 
-  static double getAppBarHeight(){
+  static double getAppBarHeight() {
     return kToolbarHeight;
   }
 
@@ -95,11 +96,11 @@ class ZDeviceUtils {
     }
   }
 
-  static bool isIOS(){
+  static bool isIOS() {
     return Platform.isIOS;
   }
 
-  static bool isAndriod(){
+  static bool isAndriod() {
     return Platform.isAndroid;
   }
 
@@ -116,12 +117,11 @@ class ZDeviceUtils {
     }
   }
 
-  // static void launchUrl(String url)async{
-  //   if(await canLaunchUrlString(url)){
-  //     await launchUrlString(url);
-  //   }else{
-  //     throw 'Could not launch $url';
-  //   }
-  // }
-
+// static void launchUrl(String url)async{
+//   if(await canLaunchUrlString(url)){
+//     await launchUrlString(url);
+//   }else{
+//     throw 'Could not launch $url';
+//   }
+// }
 }

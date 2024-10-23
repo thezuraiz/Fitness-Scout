@@ -13,9 +13,15 @@ class GymPoolController extends GetxController {
   static GymPoolController get instance => Get.find();
 
   @override
+  void onReady() {
+    super.onReady();
+    fetchCurrentLocation();
+  }
+
+  @override
   void onInit() {
     super.onInit();
-    _fetchCurrentLocation();
+    fetchCurrentLocation();
   }
 
   BitmapDescriptor? customMarkerIcon;
@@ -29,9 +35,10 @@ class GymPoolController extends GetxController {
   );
 
   void _addSurroundingMarkers(LatLng centerLocation) {
-    double radius = 900;
+    ZLogger.info('Adding Surrounding Locations');
+    double radius = 1000;
 
-    int markerCount = 5;
+    int markerCount = 6;
 
     for (int i = 0; i < markerCount; i++) {
       double angle = (i * (360 / markerCount)) * (3.14159 / 180);
@@ -58,6 +65,7 @@ class GymPoolController extends GetxController {
         ),
       );
     }
+    ZLogger.warning('Maps: ${markers}');
   }
 
   Future<String> loadMapStyle(BuildContext context) async {
@@ -67,8 +75,8 @@ class GymPoolController extends GetxController {
 
     try {
       String mapStyle = await rootBundle.loadString(fileName);
-      ZLogger.info('Loaded Map Style: $mapStyle'); // Debugging print
-      ZLogger.info('Current Theme: ${isDarkMode.value ? "Dark" : "Light"}');
+      // ZLogger.info('Loaded Map Style: $mapStyle'); // Debugging print
+      // ZLogger.info('Current Theme: ${isDarkMode.value ? "Dark" : "Light"}');
       return mapStyle;
     } catch (e) {
       ZLogger.info('Error loading map style: $e');
@@ -77,13 +85,16 @@ class GymPoolController extends GetxController {
   }
 
   Future<void> _loadCustomMarkerIcon() async {
-    customMarkerIcon = await BitmapDescriptor.asset(
-      const ImageConfiguration(size: Size(1, 1)),
-      'assets/map_styles/location-v2.png', // Path to your custom marker image
+    customMarkerIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(
+        size: Size(Get.width * 0.2, Get.width * 0.2),
+      ),
+      'assets/map_styles/location-pin-v1.png',
     );
   }
 
-  Future<void> _fetchCurrentLocation() async {
+  Future<void> fetchCurrentLocation() async {
+    await _loadCustomMarkerIcon();
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -110,8 +121,7 @@ class GymPoolController extends GetxController {
     }
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    userLocation.value = LatLng(position.latitude, position.longitude);
-    await _loadCustomMarkerIcon();
+    userLocation.value = await LatLng(position.latitude, position.longitude);
     _addSurroundingMarkers(userLocation.value);
   }
 }

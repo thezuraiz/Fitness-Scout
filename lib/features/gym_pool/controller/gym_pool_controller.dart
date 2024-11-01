@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-
+import 'dart:ui' as ui;
 import '../../../utils/helpers/helper_functions.dart';
 import '../model/gym_model.dart';
 
@@ -15,10 +15,8 @@ class GymPoolController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _loadCustomMarkerIcon().then((_) {
-      loadGYMS();
-      fetchCurrentLocation();
-    });
+    loadGYMS();
+    fetchCurrentLocation();
   }
 
   BitmapDescriptor? customMarkerIcon;
@@ -35,12 +33,15 @@ class GymPoolController extends GetxController {
 
   void _addSurroundingMarkers() {
     ZLogger.info('Adding ${gyms.length} gym markers.');
-    gyms.forEach((gym) {
+    gyms.forEach((gym) async {
       if (gym.location != null) {
+        final Uint8List iconMarker = await _loadCustomMarkerIcon();
+
         markers.add(
           Marker(
             markerId: MarkerId(gym.id),
-            icon: customMarkerIcon ?? BitmapDescriptor.defaultMarker,
+            icon: BitmapDescriptor.fromBytes(iconMarker) ??
+                BitmapDescriptor.defaultMarker,
             infoWindow: InfoWindow(
               title: gym.gymName,
               snippet: gym.description,
@@ -77,18 +78,15 @@ class GymPoolController extends GetxController {
     ZLogger.info('GYMs POOL : ${gyms.first.toJson()}');
   }
 
-  Future<void> _loadCustomMarkerIcon() async {
-    customMarkerIcon = await BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(
-        size: Size(Get.width * 0.2, Get.width * 0.2),
-      ),
-      'assets/map_styles/location-pin-v1.png',
-    );
-    if (customMarkerIcon != null) {
-      ZLogger.info('Custom marker icon loaded successfully.');
-    } else {
-      ZLogger.error('Failed to load custom marker icon.');
-    }
+  Future<Uint8List> _loadCustomMarkerIcon() async {
+    ByteData data =
+        await rootBundle.load('assets/map_styles/location-pin-v1.png');
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetHeight: 150);
+    ui.FrameInfo frameInfo = await codec.getNextFrame();
+    return (await frameInfo.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
 
   Future<void> fetchCurrentLocation() async {

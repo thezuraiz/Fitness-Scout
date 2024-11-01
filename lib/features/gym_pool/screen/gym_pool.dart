@@ -45,7 +45,7 @@ class GymPool extends StatelessWidget {
                   zoomControlsEnabled: false,
                   zoomGesturesEnabled: true,
                   myLocationButtonEnabled: true,
-                  markers: controller.markers,
+                  markers: Set<Marker>.of(controller.markers),
                   onCameraIdle: () async {
                     if (location != controller.initialPosition.target) {}
                   },

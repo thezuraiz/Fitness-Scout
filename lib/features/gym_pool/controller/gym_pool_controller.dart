@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:fitness_scout/data/repositories/gym_pool/gym_pool_repository.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -8,65 +7,53 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../../utils/helpers/helper_functions.dart';
+import '../model/gym_model.dart';
 
 class GymPoolController extends GetxController {
   static GymPoolController get instance => Get.find();
 
   @override
-  void onReady() {
-    super.onReady();
-    fetchCurrentLocation();
-  }
-
-  @override
   void onInit() {
     super.onInit();
-    fetchCurrentLocation();
+    _loadCustomMarkerIcon().then((_) {
+      loadGYMS();
+      fetchCurrentLocation();
+    });
   }
 
   BitmapDescriptor? customMarkerIcon;
   RxBool isDarkMode = ZHelperFunction.isDarkMode(Get.context!).obs;
   Rx<LatLng> userLocation = const LatLng(31.5204, 74.3587).obs;
   Set<Marker> markers = <Marker>{}.obs;
+  RxList<GymOwnerModel> gyms = <GymOwnerModel>[].obs;
+  final gymRepository = Get.put(GymPoolRepository());
 
   final CameraPosition initialPosition = const CameraPosition(
     target: LatLng(31.5204, 74.3587), // Default location
     zoom: 14.4746,
   );
 
-  void _addSurroundingMarkers(LatLng centerLocation) {
-    ZLogger.info('Adding Surrounding Locations');
-    double radius = 1000;
-
-    int markerCount = 6;
-
-    for (int i = 0; i < markerCount; i++) {
-      double angle = (i * (360 / markerCount)) * (3.14159 / 180);
-
-      double latOffset = (radius / 111320) * cos(angle);
-      double lngOffset = (radius / 111320) *
-          sin(angle) /
-          cos(centerLocation.latitude * (3.14159 / 180));
-
-      LatLng newMarkerPosition = LatLng(
-        centerLocation.latitude + latOffset,
-        centerLocation.longitude + lngOffset,
-      );
-
-      markers.add(
-        Marker(
-          markerId: MarkerId('surrounding_marker_$i'),
-          position: newMarkerPosition,
-          icon: customMarkerIcon ?? BitmapDescriptor.defaultMarker,
-          infoWindow: InfoWindow(
-            title: 'Surrounding Location $i',
-            snippet: 'This is a surrounding marker.',
+  void _addSurroundingMarkers() {
+    ZLogger.info('Adding ${gyms.length} gym markers.');
+    gyms.forEach((gym) {
+      if (gym.location != null) {
+        markers.add(
+          Marker(
+            markerId: MarkerId(gym.id),
+            icon: customMarkerIcon ?? BitmapDescriptor.defaultMarker,
+            infoWindow: InfoWindow(
+              title: gym.gymName,
+              snippet: gym.description,
+            ),
+            position: LatLng(gym.location!.latitude, gym.location!.longitude),
           ),
-        ),
-      );
-    }
-    ZLogger.warning('Maps: ${markers}');
+        );
+      }
+    });
+    ZLogger.info('Total markers: ${markers.length}');
   }
+
+  // ZLogger.warning('Maps: ${markers}');
 
   Future<String> loadMapStyle(BuildContext context) async {
     String fileName = isDarkMode.value
@@ -84,6 +71,12 @@ class GymPoolController extends GetxController {
     }
   }
 
+  Future<void> loadGYMS() async {
+    gyms.value = await gymRepository.fetchGYMS();
+    _addSurroundingMarkers();
+    ZLogger.info('GYMs POOL : ${gyms.first.toJson()}');
+  }
+
   Future<void> _loadCustomMarkerIcon() async {
     customMarkerIcon = await BitmapDescriptor.fromAssetImage(
       ImageConfiguration(
@@ -91,10 +84,14 @@ class GymPoolController extends GetxController {
       ),
       'assets/map_styles/location-pin-v1.png',
     );
+    if (customMarkerIcon != null) {
+      ZLogger.info('Custom marker icon loaded successfully.');
+    } else {
+      ZLogger.error('Failed to load custom marker icon.');
+    }
   }
 
   Future<void> fetchCurrentLocation() async {
-    await _loadCustomMarkerIcon();
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -122,6 +119,5 @@ class GymPoolController extends GetxController {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     userLocation.value = await LatLng(position.latitude, position.longitude);
-    _addSurroundingMarkers(userLocation.value);
   }
 }

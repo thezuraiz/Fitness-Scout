@@ -2,9 +2,11 @@ import 'package:fitness_scout/common/widgets/blank_screen.dart';
 import 'package:fitness_scout/common/widgets/grid_custom_widgets.dart';
 import 'package:fitness_scout/common/widgets/list_tiles/settings_menue_title.dart';
 import 'package:fitness_scout/common/widgets/section_heading.dart';
+import 'package:fitness_scout/data/repositories/gym_pool/gym_pool_repository.dart';
 import 'package:fitness_scout/features/gym/screen/bmi/bmi_calculator.dart';
 import 'package:fitness_scout/features/gym/screen/home/widgets/home_grid.dart';
 import 'package:fitness_scout/features/gym/screen/home/widgets/home_header.dart';
+import 'package:fitness_scout/features/gym_pool/controller/gym_pool_controller.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -19,6 +21,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final BMIx = Get.put(BmiController());
+    // final GYM = Get.put(GymPoolController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -41,7 +44,7 @@ class HomePage extends StatelessWidget {
                     children: [
                       GridCustomWidget(
                         icon: Iconsax.activity,
-                        onPressed: () {},
+                        onPressed: () => GymPoolController.instance.loadGYMS(),
                         buttonTitle: 'Exercises',
                       ),
                       GridCustomWidget(

@@ -43,6 +43,7 @@ dependencies:
   flutter_markdown: ^0.7.1
   google_maps_flutter: ^2.6.1
   firebase_storage: ^11.7.7
+  custom_info_window: ^1.0.1
 
   # --- DEV DEPENDENCIES
 dev_dependencies:

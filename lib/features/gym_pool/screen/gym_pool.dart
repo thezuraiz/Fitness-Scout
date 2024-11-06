@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:custom_info_window/custom_info_window.dart';
 import 'package:fitness_scout/features/gym_pool/controller/gym_pool_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,42 +16,61 @@ class GymPool extends StatelessWidget {
     return Scaffold(
       body: Obx(() {
         final location = controller.userLocation.value;
+        final infoWindowController =
+            controller.customInfoWindowController.value;
 
         return SafeArea(
-          child: FutureBuilder(
-              future: controller.loadMapStyle(context),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                return GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                    target: location,
-                    zoom: 16,
-                  ),
-                  onMapCreated: (GoogleMapController mapController) async {
-                    controller0.complete(mapController);
-                    String mapStyle = await controller.loadMapStyle(context);
-                    mapController.setMapStyle(mapStyle);
-                    await mapController.animateCamera(
-                      CameraUpdate.newCameraPosition(
-                        CameraPosition(
-                          target: controller.userLocation.value,
-                          zoom: 14.0,
-                        ),
+          child: Stack(
+            children: [
+              FutureBuilder(
+                  future: controller.loadMapStyle(context),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    return GoogleMap(
+                      initialCameraPosition: CameraPosition(
+                        target: location,
+                        zoom: 16,
                       ),
+                      onMapCreated: (GoogleMapController mapController) async {
+                        controller0.complete(mapController);
+                        String mapStyle =
+                            await controller.loadMapStyle(context);
+                        mapController.setMapStyle(mapStyle);
+                        await mapController.animateCamera(
+                          CameraUpdate.newCameraPosition(
+                            CameraPosition(
+                              target: controller.userLocation.value,
+                              zoom: 14.0,
+                            ),
+                          ),
+                        );
+                        infoWindowController.googleMapController =
+                            mapController;
+                      },
+                      myLocationEnabled: true,
+                      zoomControlsEnabled: false,
+                      zoomGesturesEnabled: true,
+                      myLocationButtonEnabled: true,
+                      markers: Set<Marker>.of(controller.markers),
+                      onCameraIdle: () async {
+                        if (location != controller.initialPosition.target) {}
+                      },
+                      onTap: (position) =>
+                          infoWindowController.hideInfoWindow!(),
+                      onCameraMove: (position) =>
+                          infoWindowController.onCameraMove!(),
                     );
-                  },
-                  myLocationEnabled: true,
-                  zoomControlsEnabled: false,
-                  zoomGesturesEnabled: true,
-                  myLocationButtonEnabled: true,
-                  markers: Set<Marker>.of(controller.markers),
-                  onCameraIdle: () async {
-                    if (location != controller.initialPosition.target) {}
-                  },
-                );
-              }),
+                  }),
+              CustomInfoWindow(
+                controller: infoWindowController,
+                height: 150,
+                width: 200,
+                offset: 40,
+              )
+            ],
+          ),
         );
       }),
     );

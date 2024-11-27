@@ -1,5 +1,6 @@
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:fitness_scout/data/repositories/gym_pool/gym_pool_repository.dart';
+import 'package:fitness_scout/features/gym_pool/screen/gymProfilePage.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
@@ -56,88 +57,89 @@ class GymPoolController extends GetxController {
               // ),
               position: LatLng(gym.location!.latitude, gym.location!.longitude),
               onTap: () {
-                customInfoWindowController.value.addInfoWindow!(
-                  Container(
-                    height: 800,
-                    width: 300,
-                    decoration: BoxDecoration(
-                      color: isDarkMode.value ? ZColor.dark : ZColor.white,
-                      border: Border.all(
-                          color: isDarkMode.value ? ZColor.white : ZColor.grey),
-                      borderRadius:
-                          BorderRadius.circular(ZSizes.borderRadiusLg),
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 300,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: NetworkImage(gym.images![0]),
-                                  fit: BoxFit.fitWidth,
-                                  filterQuality: FilterQuality.medium),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(
-                              ZSizes.md,
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: 200,
-                                  child: Text(
-                                    'ID: ${gym.id}',
-                                    style: TextStyle(
-                                        color: isDarkMode.value
-                                            ? ZColor.white
-                                            : ZColor.dark),
-                                    softWrap: true,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 200,
-                                  child: Text(
-                                    '${gym.gymName} GYM' ?? '',
-                                    style: TextStyle(
-                                        color: isDarkMode.value
-                                            ? ZColor.white
-                                            : ZColor.dark),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    softWrap: false,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 200,
-                                  child: Text(
-                                    'Description: ${gym.description}' ?? '',
-                                    softWrap: true,
-                                    style: TextStyle(
-                                        color: isDarkMode.value
-                                            ? ZColor.white
-                                            : ZColor.dark),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  LatLng(gym.location!.latitude, gym.location!.longitude),
-                );
+                Get.to(GymDetailScreen(gym: gym));
+                // customInfoWindowController.value.addInfoWindow!(
+                //   Container(
+                //     height: 800,
+                //     width: 300,
+                //     decoration: BoxDecoration(
+                //       color: isDarkMode.value ? ZColor.dark : ZColor.white,
+                //       border: Border.all(
+                //           color: isDarkMode.value ? ZColor.white : ZColor.grey),
+                //       borderRadius:
+                //           BorderRadius.circular(ZSizes.borderRadiusLg),
+                //     ),
+                //     child: SingleChildScrollView(
+                //       child: Column(
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         mainAxisAlignment: MainAxisAlignment.start,
+                //         children: [
+                //           Container(
+                //             width: 300,
+                //             height: 100,
+                //             decoration: BoxDecoration(
+                //               image: DecorationImage(
+                //                   image: NetworkImage(gym.images![0]),
+                //                   fit: BoxFit.fitWidth,
+                //                   filterQuality: FilterQuality.medium),
+                //             ),
+                //           ),
+                //           Padding(
+                //             padding: const EdgeInsets.all(
+                //               ZSizes.md,
+                //             ),
+                //             child: Column(
+                //               mainAxisAlignment: MainAxisAlignment.start,
+                //               crossAxisAlignment: CrossAxisAlignment.start,
+                //               children: [
+                //                 SizedBox(
+                //                   width: 200,
+                //                   child: Text(
+                //                     'ID: ${gym.id}',
+                //                     style: TextStyle(
+                //                         color: isDarkMode.value
+                //                             ? ZColor.white
+                //                             : ZColor.dark),
+                //                     softWrap: true,
+                //                     maxLines: 1,
+                //                     overflow: TextOverflow.ellipsis,
+                //                   ),
+                //                 ),
+                //                 SizedBox(
+                //                   width: 200,
+                //                   child: Text(
+                //                     '${gym.gymName} GYM' ?? '',
+                //                     style: TextStyle(
+                //                         color: isDarkMode.value
+                //                             ? ZColor.white
+                //                             : ZColor.dark),
+                //                     maxLines: 2,
+                //                     overflow: TextOverflow.ellipsis,
+                //                     softWrap: false,
+                //                   ),
+                //                 ),
+                //                 SizedBox(
+                //                   width: 200,
+                //                   child: Text(
+                //                     'Description: ${gym.description}' ?? '',
+                //                     softWrap: true,
+                //                     style: TextStyle(
+                //                         color: isDarkMode.value
+                //                             ? ZColor.white
+                //                             : ZColor.dark),
+                //                     maxLines: 2,
+                //                     overflow: TextOverflow.ellipsis,
+                //                   ),
+                //                 ),
+                //               ],
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                //   LatLng(gym.location!.latitude, gym.location!.longitude),
+                // );
                 Get.reload();
               }),
         );

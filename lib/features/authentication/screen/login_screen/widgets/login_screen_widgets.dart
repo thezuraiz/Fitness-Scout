@@ -42,9 +42,8 @@ class LoginScreenFormField extends StatelessWidget {
                 () => TextFormField(
                   decoration: InputDecoration(
                       suffixIcon: IconButton(
-                          onPressed: () =>
-                              controller.hidePassword.value =!
-                              controller.hidePassword.value,
+                          onPressed: () => controller.hidePassword.value =
+                              !controller.hidePassword.value,
                           icon: Icon(controller.hidePassword.value
                               ? Iconsax.eye
                               : Iconsax.eye_slash)),
@@ -79,7 +78,7 @@ class LoginScreenFormField extends StatelessWidget {
 
                   // TODO: Forget Password
                   TextButton(
-                    onPressed: ()=> Get.to(() => const ForgetPassword()),
+                    onPressed: () => Get.to(() => const ForgetPassword()),
                     child: const Text(ZText.forgetPassword),
                   )
                 ],

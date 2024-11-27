@@ -23,6 +23,7 @@ class GymOwnerModel {
   final String isApproved;
   final List<Visitor>? visitors;
   final String gymType;
+  final int ratings;
 
   GymOwnerModel(
       {required this.id,
@@ -44,7 +45,8 @@ class GymOwnerModel {
       this.balance = 0.0,
       this.isApproved = 'Not-Approved',
       this.visitors,
-      this.gymType = 'Normal'});
+      this.gymType = 'Normal',
+      this.ratings = 0});
 
   // Convert Firestore document snapshot to GymOwnerModel
   factory GymOwnerModel.fromSnapshot(DocumentSnapshot snapshot) {
@@ -110,6 +112,7 @@ class GymOwnerModel {
         "balance": balance,
         "isApproved": isApproved,
         "visitors": visitors?.map((v) => v.toJson()).toList(),
+        'ratings': ratings ?? '',
       };
 
   // Create an empty GymOwnerModel instance
@@ -134,6 +137,7 @@ class GymOwnerModel {
       balance: 0.0,
       isApproved: 'Not-Approved',
       visitors: [],
+      ratings: 0,
     );
   }
 }

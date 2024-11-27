@@ -1,7 +1,9 @@
+import 'package:fitness_scout/features/gym_pool/screen/gymScanner.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
 import 'package:fitness_scout/utils/helpers/loaders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:readmore/readmore.dart';
 
@@ -129,8 +131,12 @@ class GymDetailScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: SizedBox(
           width: double.infinity,
-          child:
-              ElevatedButton(onPressed: () {}, child: const Text('Check In')),
+          child: ElevatedButton(
+              onPressed: () => Get.to(GymScanner(
+                    gymId: gym.id,
+                    gymName: gym.gymName.toString(),
+                  )),
+              child: const Text('Check In')),
         ),
       ),
     );

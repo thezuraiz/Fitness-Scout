@@ -2,10 +2,10 @@ import 'package:fitness_scout/common/widgets/blank_screen.dart';
 import 'package:fitness_scout/common/widgets/grid_custom_widgets.dart';
 import 'package:fitness_scout/common/widgets/list_tiles/settings_menue_title.dart';
 import 'package:fitness_scout/common/widgets/section_heading.dart';
-import 'package:fitness_scout/data/repositories/gym_pool/gym_pool_repository.dart';
 import 'package:fitness_scout/features/gym/screen/bmi/bmi_calculator.dart';
 import 'package:fitness_scout/features/gym/screen/home/widgets/home_grid.dart';
 import 'package:fitness_scout/features/gym/screen/home/widgets/home_header.dart';
+import 'package:fitness_scout/features/gym/screen/upcoming_events/upcoming_event.dart';
 import 'package:fitness_scout/features/gym_pool/controller/gym_pool_controller.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +14,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:get/get.dart';
 
 import '../../controller/bmi/bmi_controller.dart';
+import '../../controller/upcoming_events/upcoming_event.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -22,6 +23,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final BMIx = Get.put(BmiController());
     // final GYM = Get.put(GymPoolController());
+    Get.put(UpcomingEventsController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -49,8 +51,8 @@ class HomePage extends StatelessWidget {
                       ),
                       GridCustomWidget(
                         icon: Iconsax.home,
-                        onPressed: () {},
-                        buttonTitle: 'Up Coming Events',
+                        onPressed: () => Get.to(const UpcomingEventsScreen()),
+                        buttonTitle: 'UpComing Events',
                       ),
                       GridCustomWidget(
                         icon: Iconsax.airdrop4,

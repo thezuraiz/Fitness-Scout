@@ -4,7 +4,6 @@ import 'package:fitness_scout/features/gym/screen/bmi/bmi_calculator.dart';
 import 'package:fitness_scout/features/personalization/controller/user_controller.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
 import 'package:fitness_scout/utils/helpers/bmi_calculator.dart';
-import 'package:fitness_scout/utils/helpers/helper_functions.dart';
 import 'package:fitness_scout/utils/loaders/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,7 +17,7 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userController = Get.put(UserController());
-    userController.fetchUserRecord();
+    // userController.fetchUserRecord();
     return ZPrimaryHeaderContainer(
       child: Stack(
         children: [

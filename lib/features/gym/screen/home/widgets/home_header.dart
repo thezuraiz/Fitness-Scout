@@ -19,7 +19,6 @@ class HomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final userController = Get.put(UserController());
     userController.fetchUserRecord();
-    final dark = ZHelperFunction.isDarkMode(context);
     return ZPrimaryHeaderContainer(
       child: Stack(
         children: [

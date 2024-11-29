@@ -28,12 +28,12 @@ class UserController extends GetxController {
   final verifyPassword = TextEditingController();
   GlobalKey<FormState> reAuthFormKey = GlobalKey<FormState>();
 
-  /// Ots not required due to login page its automatically calls, so I call it home header
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   fetchUserRecord();
-  // }
+  //// Ots not required due to login page its automatically calls, so I call it home header
+  @override
+  void onInit() {
+    super.onInit();
+    fetchUserRecord();
+  }
 
   /// Fetch User Record
   Future<void> fetchUserRecord() async {

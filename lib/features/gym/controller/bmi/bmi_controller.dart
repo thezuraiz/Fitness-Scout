@@ -18,16 +18,27 @@ class BmiController extends GetxController {
   RxDouble bmi = 0.0.obs;
 
   final weight = TextEditingController();
-  final height = TextEditingController();
+  final heightInFeet = TextEditingController();
+  final heightInInches = TextEditingController();
   final bmiKey = GlobalKey<FormState>();
   final userController = UserController.instance;
+  final RxBool showDietPlan = false.obs;
 
-  final heightValidator = MultiValidator([
+  final heightInInchsValidator = MultiValidator([
     RequiredValidator(errorText: "Required Validator"),
     RangeValidator(
-      min: 1,
-      max: 15,
-      errorText: 'Height must be between 1 and 15',
+      min: 0,
+      max: 12,
+      errorText: 'Height must be between 0 and 12',
+    ),
+  ]);
+
+  final heightInFeetValidator = MultiValidator([
+    RequiredValidator(errorText: "Required Validator"),
+    RangeValidator(
+      min: 0,
+      max: 9,
+      errorText: 'Height must be between 0 and 9',
     ),
   ]);
 
@@ -43,6 +54,7 @@ class BmiController extends GetxController {
   /// --- Calculate BMI
   void calculateBMI() async {
     try {
+      showDietPlan.value = false;
       // TODO: REMOVE KEYBOARD
       FocusManager.instance.primaryFocus!.unfocus();
 
@@ -63,15 +75,17 @@ class BmiController extends GetxController {
 
       // TODO: CALCULATE BMI
       var weightText = weight.text.trim();
-      var heightText = height.text.trim();
+      var heightInFeetText = heightInFeet.text.trim();
+      var heightInInchesText = heightInInches.text.trim();
 
-      bmi.value = BmiCalculator.calculateBMI(
-          double.parse(heightText), double.parse(weightText));
+      bmi.value = BmiCalculator.calculateBMI(double.parse(heightInFeetText),
+          double.parse(heightInInchesText), double.parse(weightText));
 
       ZLogger.info('BMI: ${bmi.value}');
 
       final storage = GetStorage();
       storage.remove('fetchDietPlan');
+      showDietPlan.value = true;
 
       Map<String, dynamic> json = {"bmi": bmi.value};
       await UserRepository.instance.updateSingleField(json);

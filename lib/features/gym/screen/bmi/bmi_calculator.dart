@@ -31,70 +31,134 @@ class BmiScreen extends StatelessWidget {
         showArrows: true,
       ),
       body: SingleChildScrollView(
-        child: Container(
+        child: Padding(
           padding: const EdgeInsets.all(ZSizes.defaultSpace),
-          child: Form(
-            key: controller.bmiKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Obx(() => controller.bmi.value == 0
+          child: Column(
+            // mainAxisSize: MainAxisSize.min,
+            children: [
+              Obx(
+                () => controller.bmi.value == 0
                     ? Lottie.asset(ZImages.bmiAnimation)
                     : RadicalMeter(
                         bmiMessage:
                             BmiCalculator.getBmiMessage(controller.bmi.value),
-                        bmi: controller.bmi.value)),
-                const SizedBox(
-                  height: ZSizes.spaceBtwSections,
-                ),
-                Text(
-                  ZText.bmiScreenHeading,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(
-                  height: ZSizes.spaceBtwItems,
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: "Weight (In KG's)",
-                    prefixIcon: Icon(
-                      CupertinoIcons.heart_fill,
-                      color: ZColor.primary,
+                        bmi: controller.bmi.value),
+              ),
+              Text(
+                ZText.bmiScreenHeading,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(
+                height: ZSizes.spaceBtwInputFields,
+              ),
+              Form(
+                key: controller.bmiKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: "Weight (In KG's)",
+                        prefixIcon: Icon(
+                          Iconsax.health,
+                          color: ZColor.primary,
+                        ),
+                      ),
+                      controller: controller.weight,
+                      validator: controller.weightValidator.call,
+                      keyboardType: TextInputType.number,
                     ),
-                  ),
-                  controller: controller.weight,
-                  validator: controller.weightValidator.call,
-                  keyboardType: TextInputType.number,
-                ),
-                const SizedBox(
-                  height: ZSizes.spaceBtwInputFields,
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(
-                      Iconsax.align_vertically,
-                      color: ZColor.primary,
+                    const SizedBox(
+                      height: ZSizes.spaceBtwItems,
                     ),
-                    labelText: "Height (In Feets)",
-                  ),
-                  controller: controller.height,
-                  validator: controller.heightValidator.call,
-                  keyboardType: TextInputType.number,
-                ),
-                const SizedBox(
-                  height: ZSizes.spaceBtwSections * 4.5,
-                ),
-                // Spacer(),
-                SizedBox(
-                  width: Get.width,
-                  child: ElevatedButton(
-                    onPressed: () => controller.calculateBMI(),
-                    child: const Text(
-                      "Calculate",
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            decoration: const InputDecoration(
+                              prefixIcon: Icon(
+                                Iconsax.align_vertically,
+                                color: ZColor.primary,
+                              ),
+                              labelText: "Height (In Feets)",
+                            ),
+                            controller: controller.heightInFeet,
+                            validator: controller.heightInFeetValidator,
+                            keyboardType: TextInputType.number,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: ZSizes.spaceBtwItems,
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            decoration: const InputDecoration(
+                              prefixIcon: Icon(
+                                Iconsax.direct_right,
+                                color: ZColor.primary,
+                              ),
+                              labelText: "In Inches",
+                            ),
+                            controller: controller.heightInInches,
+                            validator: controller.heightInInchsValidator,
+                            keyboardType: TextInputType.number,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                          ),
+                        ),
+                      ],
                     ),
+                  ],
+                ),
+              ),
+              // const SizedBox(
+              //   height: ZSizes.spaceBtwSections * 2.2,
+              // ),
+              // SizedBox(
+              //   width: Get.width,
+              //   child: ElevatedButton(
+              //     onPressed: () => controller.calculateBMI(),
+              //     child: const Text(
+              //       "Calculate",
+              //     ),
+              //   ),
+              // ),
+              // if (controller.showDietPlan.value == true) ...[
+              //   const SizedBox(
+              //     height: ZSizes.spaceBtwInputFields,
+              //   ),
+              //   SizedBox(
+              //     width: Get.width,
+              //     child: OutlinedButton(
+              //       onPressed: dietplan.generateDietPlan,
+              //       child: const Text(
+              //         "Generate Diet Plan",
+              //       ),
+              //     ),
+              //   ),
+              // ]
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(ZSizes.defaultSpace),
+        child: Obx(
+          () => Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: Get.width,
+                child: ElevatedButton(
+                  onPressed: () => controller.calculateBMI(),
+                  child: const Text(
+                    "Calculate",
                   ),
                 ),
-                SizedBox(
+              ),
+              if (controller.showDietPlan.value == true) ...[
+                const SizedBox(
                   height: ZSizes.spaceBtwInputFields,
                 ),
                 SizedBox(
@@ -106,8 +170,8 @@ class BmiScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-              ],
-            ),
+              ]
+            ],
           ),
         ),
       ),

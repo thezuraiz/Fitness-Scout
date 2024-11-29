@@ -2,7 +2,6 @@ import 'package:custom_info_window/custom_info_window.dart';
 import 'package:fitness_scout/data/repositories/gym_pool/gym_pool_repository.dart';
 import 'package:fitness_scout/features/gym_pool/screen/gymProfilePage.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
-import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:iconsax/iconsax.dart';
 import 'dart:ui' as ui;
+import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
 import '../model/gym_model.dart';
 
@@ -18,7 +19,7 @@ class GymPoolController extends GetxController {
   static GymPoolController get instance => Get.find();
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     loadGYMS();
     fetchCurrentLocation();
@@ -211,5 +212,99 @@ class GymPoolController extends GetxController {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     userLocation.value = await LatLng(position.latitude, position.longitude);
+  }
+
+  showButtomSheet(
+    BuildContext context,
+  ) {
+    return showModalBottomSheet(
+        context: context,
+        enableDrag: true,
+        showDragHandle: true,
+        builder: (BuildContext context) {
+          return gyms.isEmpty
+              ? SizedBox(
+                  height: 170,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        const Icon(
+                          Iconsax.info_circle,
+                          size: 80,
+                        ),
+                        const SizedBox(
+                          height: ZSizes.spaceBtwItems,
+                        ),
+                        Text(
+                          'No Nearby Location',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : SizedBox(
+                  height: 250,
+                  child: ListView.separated(
+                    separatorBuilder: (_, __) => const SizedBox(
+                      height: ZSizes.spaceBtwItems,
+                    ),
+                    itemCount: gyms.length,
+                    itemBuilder: (context, index) {
+                      final gym = gyms.value[index];
+                      return Card(
+                        margin:
+                            const EdgeInsets.symmetric(horizontal: ZSizes.sm),
+                        color: ZHelperFunction.isDarkMode(context)
+                            ? ZColor.dark
+                            : ZColor.lightContainer,
+                        child: ListTile(
+                          onTap: () {
+                            ZLogger.info('Location ${gym.location!.latitude}');
+                            Get.back();
+                            googleMapController?.animateCamera(
+                              CameraUpdate.newCameraPosition(
+                                CameraPosition(
+                                  target: LatLng(gym.location!.latitude,
+                                      gym.location!.longitude),
+                                  zoom: 14.0,
+                                ),
+                              ),
+                            );
+                          },
+                          title: Text('${gym.gymName} GYM'),
+                          subtitle: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(gym.address.toString()),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(
+                                    Iconsax.star5,
+                                    color: Colors.amber,
+                                    size: 24,
+                                  ),
+                                  const SizedBox(
+                                    width: ZSizes.spaceBtwItems / 2,
+                                  ),
+                                  Text.rich(TextSpan(children: [
+                                    TextSpan(
+                                        text: gym.ratings.toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge),
+                                    const TextSpan(text: '(8)')
+                                  ])),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+        });
   }
 }

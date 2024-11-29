@@ -1,17 +1,21 @@
 import 'package:fitness_scout/utils/helpers/logger.dart';
 
 class BmiCalculator {
-  static double calculateBMI(double height, double weight) {
+  static double calculateBMI(
+      double heightFeet, double heightInches, double weightKg) {
     // Ensure height and weight are positive values
-    if (height > 0.0 && weight > 0.0) {
-      // Convert height from feet to meters
-      double heightInMeters = height * 0.3048;
+    if (heightFeet > 0.0 && weightKg > 0.0) {
+      double totalHeightInches = (heightFeet * 12) + heightInches;
 
-      // Calculate BMI
-      double bmi = weight / (heightInMeters * heightInMeters);
+      // Convert height from inches to meters (1 inch = 0.0254 meters)
+      double heightInMeters = totalHeightInches * 0.0254;
+
+      // BMI formula: weight (kg) / height (m)²
+      double bmi = weightKg / (heightInMeters * heightInMeters);
+      ZLogger.info('BMI : $bmi');
       return bmi;
     } else {
-      ZLogger.error("Please enter valid height and weight.");
+      print("Please enter valid height and weight.");
       return 0.0;
     }
   }

@@ -130,7 +130,7 @@ class SignupController extends GetxController {
       final userRepository = Get.put(UserRepository());
 
       double bmi = BmiCalculator.calculateBMI(double.parse(height.text.trim()),
-              double.parse(weight.text.trim())) ??
+              0, double.parse(weight.text.trim())) ??
           0.0;
       final newUser = UserModel(
           id: FirebaseAuth.instance.currentUser!.uid,

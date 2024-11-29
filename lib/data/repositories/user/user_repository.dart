@@ -36,6 +36,7 @@ class UserRepository extends GetxController {
   /// Functions to fetch user details based on user id
   Future<UserModel> fetchUserDetails() async {
     try {
+      ZLogger.info(AuthenticationRepository.instance.authUser!.uid.toString());
       final documentSnapshot = await _db
           .collection('Users')
           .doc(AuthenticationRepository.instance.authUser?.uid)

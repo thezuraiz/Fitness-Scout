@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_scout/data/repositories/authentication/authentication_repository.dart';
 import 'package:fitness_scout/data/repositories/user/user_repository.dart';
 import 'package:fitness_scout/features/authentication/screen/signup_screen/verify_screen.dart';
@@ -132,7 +133,7 @@ class SignupController extends GetxController {
               double.parse(weight.text.trim())) ??
           0.0;
       final newUser = UserModel(
-          id: userCredentials.user!.uid,
+          id: FirebaseAuth.instance.currentUser!.uid,
           firstName: firstName.text.trim(),
           lastName: lastName.text.trim(),
           userName: userName.text.trim(),

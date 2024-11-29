@@ -1,9 +1,13 @@
 import 'dart:async';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:fitness_scout/features/gym_pool/controller/gym_pool_controller.dart';
+import 'package:fitness_scout/utils/constants/colors.dart';
+import 'package:fitness_scout/utils/constants/sizes.dart';
+import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:iconsax/iconsax.dart';
 
 class GymPool extends StatelessWidget {
   const GymPool({super.key});
@@ -35,6 +39,7 @@ class GymPool extends StatelessWidget {
                       ),
                       onMapCreated: (GoogleMapController mapController) async {
                         controller0.complete(mapController);
+                        controller.googleMapController = mapController;
                         String mapStyle =
                             await controller.loadMapStyle(context);
                         mapController.setMapStyle(mapStyle);
@@ -73,6 +78,16 @@ class GymPool extends StatelessWidget {
           ),
         );
       }),
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        backgroundColor: Colors.white,
+        foregroundColor: ZColor.dark,
+        child: const Icon(Iconsax.airdrop),
+        onPressed: () {
+          ZLogger.info('gyms ${controller.gyms.length}');
+          controller.showButtomSheet(context);
+        },
+      ),
     );
   }
 }

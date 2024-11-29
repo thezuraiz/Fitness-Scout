@@ -12,7 +12,7 @@ class DietPlanScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dietplanController = Get.put(DietPlanController());
+    final dietplanController = DietPlanController.instance;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -25,10 +25,10 @@ class DietPlanScreen extends StatelessWidget {
             Obx(() {
               final calories = dietplanController.dietPlan.value.calories;
               return RadicalChart(
-                  carbs: (calories! * 50 / 100),
-                  fat: (calories * 20 / 100),
-                  protiens: (calories * 30 / 100),
-                  calories: calories ?? 0);
+                  carbs: calories! * 50 / 100,
+                  fat: calories * 20 / 100,
+                  protiens: calories * 30 / 100,
+                  calories: calories);
             }),
 
             Padding(

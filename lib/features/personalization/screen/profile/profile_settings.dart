@@ -133,7 +133,7 @@ class SettingScreen extends StatelessWidget {
               ProfileMenu(title: "Gender", subTitle: 'Male', onPressed: () {}),
               ProfileMenu(
                   title: "Date of Birth",
-                  subTitle: '11-Aug-2023',
+                  subTitle: '11-Aug-2003',
                   onPressed: () {}),
               const Divider(),
               const SizedBox(

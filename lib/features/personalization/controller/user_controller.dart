@@ -28,19 +28,23 @@ class UserController extends GetxController {
   final verifyPassword = TextEditingController();
   GlobalKey<FormState> reAuthFormKey = GlobalKey<FormState>();
 
-  @override
-  void onInit() {
-    super.onInit();
-    fetchUserRecord();
-  }
+  /// Ots not required due to login page its automatically calls, so I call it home header
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   fetchUserRecord();
+  // }
 
   /// Fetch User Record
   Future<void> fetchUserRecord() async {
+    ZLogger.info('Fetching User Records');
     try {
       profileLoading.value = true;
       final user = await userRepository.fetchUserDetails();
+      ZLogger.info('User Record Found! ${user.toString()}');
       this.user(user);
     } catch (e) {
+      ZLogger.error('User Not found');
       user(UserModel.empty());
     } finally {
       profileLoading.value = false;

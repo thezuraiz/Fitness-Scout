@@ -1,29 +1,19 @@
+---
 name: fitness_scout
-description: "A new Flutter project."
-
-publish_to: 'none'
-
+description: A new Flutter project.
+publish_to: none
 version: 1.0.0+1
-
 environment:
   sdk: '>=3.3.0 <4.0.0'
-
-  # --- DEPENDENCIES
 dependencies:
   flutter:
     sdk: flutter
-
-  # --- ICONS & ANIMATIONS
   iconsax: any
   cupertino_icons: ^1.0.6
   lottie: ^3.1.2
   shimmer: ^3.0.0
-
-  # --- STATE-MANAGEMENT
   get: any
   get_storage: ^2.1.1
-
-  #  --- UTILITY PACKAGES
   intl: any
   smooth_page_indicator: ^1.1.0
   form_field_validator: ^1.1.0
@@ -31,10 +21,9 @@ dependencies:
   syncfusion_flutter_charts: ^27.1.53
   image_picker: ^1.1.2
   audioplayers: ^6.1.0
-  syncfusion_flutter_gauges:
+  syncfusion_flutter_gauges: null
   cached_network_image: ^3.4.0
   geolocator: ^10.0.0
-  #  --- FIREBASE
   firebase_core: ^2.31.1
   firebase_auth: ^4.19.6
   cloud_firestore: ^4.17.4
@@ -45,27 +34,18 @@ dependencies:
   firebase_storage: ^11.7.7
   custom_info_window: ^1.0.1
   readmore: ^3.0.0
-  #  flutter_rating_bar: ^4.0.1
   mobile_scanner: ^6.0.2
   url_launcher: ^6.3.1
-
-  # --- DEV DEPENDENCIES
+  mocktail: ^1.0.4
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^3.0.0
-  flutter_native_splash:
+  flutter_native_splash: ^2.4.3
   flutter_launcher_icons: ^0.13.1
-
-  #  FOR CONSOLE ERRORS
   logger: any
-
 flutter:
-
   uses-material-design: true
-
-  #  --- ASSETS
   assets:
     - assets/fonts/
     - assets/images/
@@ -83,9 +63,6 @@ flutter:
     - assets/map_styles/
     - assets/map_styles/dark_map_style.json
     - assets/map_styles/light_map_style.json
-
-  #---------------- LOCAL FONTS ----------------
-
   fonts:
     - family: Poppins
       fonts:

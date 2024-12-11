@@ -96,15 +96,17 @@ class UserController extends GetxController {
 
           // Map the data
           final user = UserModel(
-              id: userCredential.user!.uid ?? '',
-              firstName:
-                  userCredential.user!.displayName!.split(' ')[0].toString(),
-              lastName:
-                  userCredential.user!.displayName!.split(' ').toString()[1],
-              userName: username,
-              email: userCredential.user!.email ?? '',
-              phoneNumber: userCredential.user!.phoneNumber ?? '',
-              profilePicture: userCredential.user!.photoURL ?? '');
+            id: userCredential.user!.uid ?? '',
+            firstName: userCredential.user!.displayName?.split(' ')[0] ?? '',
+            lastName: userCredential.user!.displayName!.split(' ').length > 1
+                ? userCredential.user!.displayName!.split(' ')[1]
+                : '',
+            userName: username,
+            email: userCredential.user!.email ?? '',
+            phoneNumber: userCredential.user!.phoneNumber ?? '',
+            profilePicture: userCredential.user!.photoURL ?? '',
+            userAttendance: <GymAttendanceUser>[],
+          );
 
           // Save the Data
           await UserRepository.instance.saveUserRecord(user);

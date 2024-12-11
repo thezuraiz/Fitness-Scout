@@ -267,7 +267,7 @@ class GymPoolController extends GetxController {
                                 CameraPosition(
                                   target: LatLng(gym.location!.latitude,
                                       gym.location!.longitude),
-                                  zoom: 14.0,
+                                  zoom: 15.0,
                                 ),
                               ),
                             );

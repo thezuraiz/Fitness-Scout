@@ -144,12 +144,14 @@ class GymOwnerModel {
 
 class Visitor {
   final String userId;
+  final String name;
   final Map<String, dynamic> checkInTime;
   final Map<String, dynamic>? checkOutTime;
 
   Visitor({
     required this.userId,
     required this.checkInTime,
+    required this.name,
     this.checkOutTime,
   });
 
@@ -157,11 +159,13 @@ class Visitor {
         "user_id": userId,
         "check_in_time": checkInTime,
         "check_out_time": checkOutTime,
+        'name': name,
       };
 
   factory Visitor.fromJson(Map<String, dynamic> json) => Visitor(
         userId: json["user_id"],
         checkInTime: json["check_in_time"],
+        name: json['name'],
         checkOutTime:
             json["check_out_time"] != null ? json["check_out_time"] : {},
       );

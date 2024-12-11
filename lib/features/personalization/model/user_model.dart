@@ -10,7 +10,9 @@ class UserModel {
   String profilePicture;
   double height;
   double weight;
-  double bmi; // updated to double
+  double bmi;
+  List<GymAttendanceUser> userAttendance;
+  final int totalVisits;
 
   String get fullName => '$firstName $lastName';
 
@@ -22,9 +24,11 @@ class UserModel {
     required this.email,
     required this.phoneNumber,
     required this.profilePicture,
-    this.height = 0.0, // initialize new field
-    this.weight = 0.0, // initialize new field
-    this.bmi = 0.0, // initialize new field
+    this.height = 0.0,
+    this.weight = 0.0,
+    this.bmi = 0.0,
+    this.totalVisits = 0,
+    this.userAttendance = const [],
   });
 
   // Factory method to create an empty UserModel
@@ -38,10 +42,10 @@ class UserModel {
       phoneNumber: '',
       profilePicture: '',
       height: 0.0,
-      // default value for new field
       weight: 0.0,
-      // default value for new field
-      bmi: 0.0, // default value for new field
+      bmi: 0.0,
+      totalVisits: 0,
+      userAttendance: [],
     );
   }
 
@@ -56,35 +60,37 @@ class UserModel {
       phoneNumber: json['phoneNumber'] as String,
       profilePicture: json['profilePicture'] as String,
       height: (json['height'] as num).toDouble(),
-      // parse new field
       weight: (json['weight'] as num).toDouble(),
-      // parse new field
-      bmi: (json['bmi'] as num).toDouble(), // parse new field
+      bmi: (json['bmi'] as num).toDouble(),
+      totalVisits: json['totalVisits'] ?? 0,
+      userAttendance: (json['userAttendance'] as List<dynamic>?)
+              ?.map((item) => GymAttendanceUser.fromMap(item))
+              .toList() ??
+          [],
     );
   }
 
   /// Factory method to create a UserModel from a Firestore snapshot
   factory UserModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> snapshot) {
-    if (snapshot.data() != null) {
-      final data = snapshot.data() as Map<String, dynamic>;
-      return UserModel(
-        id: snapshot.id,
-        firstName: data['firstName'] ?? '',
-        lastName: data['lastName'] ?? '',
-        userName: data['userName'] ?? '',
-        email: data['email'] ?? '',
-        phoneNumber: data['phoneNumber'] ?? '',
-        profilePicture: data['profilePicture'] ?? '',
-        height: (data['height'] ?? 0.0) as double,
-        // default value for new field
-        weight: (data['weight'] ?? 0.0) as double,
-        // default value for new field
-        bmi: (data['bmi'] ?? 0.0) as double, // default value for new field
-      );
-    } else {
-      return UserModel.empty();
-    }
+    final data = snapshot.data() ?? {};
+    return UserModel(
+      id: snapshot.id,
+      firstName: data['firstName'] ?? '',
+      lastName: data['lastName'] ?? '',
+      userName: data['userName'] ?? '',
+      email: data['email'] ?? '',
+      phoneNumber: data['phoneNumber'] ?? '',
+      profilePicture: data['profilePicture'] ?? '',
+      height: (data['height'] ?? 0.0).toDouble(),
+      weight: (data['weight'] ?? 0.0).toDouble(),
+      bmi: (data['bmi'] ?? 0.0).toDouble(),
+      totalVisits: data['totalVisits'] ?? 0,
+      userAttendance: (data['userAttendance'] as List<dynamic>?)
+              ?.map((item) => GymAttendanceUser.fromMap(item))
+              .toList() ??
+          [],
+    );
   }
 
   // Method to convert a UserModel to a JSON map
@@ -97,9 +103,11 @@ class UserModel {
       'email': email,
       'phoneNumber': phoneNumber,
       'profilePicture': profilePicture,
-      'height': height, // include new field
-      'weight': weight, // include new field
-      'bmi': bmi, // include new field
+      'height': height,
+      'weight': weight,
+      'bmi': bmi,
+      'totalVisits': totalVisits,
+      'userAttendance': userAttendance.map((item) => item.toMap()).toList(),
     };
   }
 
@@ -112,9 +120,11 @@ class UserModel {
     String? email,
     String? phoneNumber,
     String? profilePicture,
-    double? height, // add new field
-    double? weight, // add new field
-    double? bmi, // add new field
+    double? height,
+    double? weight,
+    double? bmi,
+    int? totalVisits,
+    List<GymAttendanceUser>? userAttendance,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -125,20 +135,18 @@ class UserModel {
       phoneNumber: phoneNumber ?? this.phoneNumber,
       profilePicture: profilePicture ?? this.profilePicture,
       height: height ?? this.height,
-      // use new field
       weight: weight ?? this.weight,
-      // use new field
-      bmi: bmi ?? this.bmi, // use new field
+      bmi: bmi ?? this.bmi,
+      totalVisits: totalVisits ?? this.totalVisits,
+      userAttendance: userAttendance ?? this.userAttendance,
     );
   }
 
-  // Override the toString method for better debug print
   @override
   String toString() {
-    return 'UserModel(id: $id, firstName: $firstName, lastName: $lastName, userName: $userName, email: $email, phoneNumber: $phoneNumber, profilePicture: $profilePicture, height: $height, weight: $weight, bmi: $bmi)';
+    return 'UserModel(id: $id, firstName: $firstName, lastName: $lastName, userName: $userName, email: $email, phoneNumber: $phoneNumber, profilePicture: $profilePicture, height: $height, weight: $weight, bmi: $bmi, totalVisits: $totalVisits, userAttendance: $userAttendance)';
   }
 
-  // Override the equality operator to compare instances by values
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -153,10 +161,11 @@ class UserModel {
         other.profilePicture == profilePicture &&
         other.height == height &&
         other.weight == weight &&
-        other.bmi == bmi;
+        other.bmi == bmi &&
+        other.totalVisits == totalVisits &&
+        other.userAttendance == userAttendance;
   }
 
-  // Override hashCode to use all fields
   @override
   int get hashCode {
     return id.hashCode ^
@@ -168,6 +177,54 @@ class UserModel {
         profilePicture.hashCode ^
         height.hashCode ^
         weight.hashCode ^
-        bmi.hashCode;
+        bmi.hashCode ^
+        totalVisits.hashCode ^
+        userAttendance.hashCode;
+  }
+}
+
+class GymAttendanceUser {
+  final String id;
+  final String name;
+  final DateTime checkOutTime;
+  final DateTime checkInTime;
+
+  GymAttendanceUser({
+    required this.id,
+    required this.name,
+    required this.checkInTime,
+    required this.checkOutTime,
+  });
+
+  factory GymAttendanceUser.empty() {
+    return GymAttendanceUser(
+      id: '',
+      name: '',
+      checkInTime: DateTime.fromMillisecondsSinceEpoch(0),
+      checkOutTime: DateTime.fromMillisecondsSinceEpoch(0),
+    );
+  }
+
+  factory GymAttendanceUser.fromMap(Map<String, dynamic> map) {
+    return GymAttendanceUser(
+      id: map['id'] ?? '',
+      name: map['name'] ?? '',
+      checkInTime: DateTime.parse(map['checkInTime']),
+      checkOutTime: DateTime.parse(map['checkOutTime']),
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'checkInTime': checkInTime.toIso8601String(),
+      'checkOutTime': checkOutTime.toIso8601String(),
+    };
+  }
+
+  @override
+  String toString() {
+    return 'GymAttendanceUser(id: $id, name: $name, checkInTime: $checkInTime, checkOutTime: $checkOutTime)';
   }
 }

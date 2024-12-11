@@ -17,7 +17,7 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userController = Get.put(UserController());
-    // userController.fetchUserRecord();
+    userController.fetchUserRecord();
     return ZPrimaryHeaderContainer(
       child: Stack(
         children: [

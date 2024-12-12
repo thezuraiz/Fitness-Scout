@@ -6,6 +6,7 @@ import 'package:fitness_scout/features/gym/screen/bmi/bmi_calculator.dart';
 import 'package:fitness_scout/features/gym/screen/diet_plan/diet_plan.dart';
 import 'package:fitness_scout/features/gym/screen/home/widgets/home_grid.dart';
 import 'package:fitness_scout/features/gym/screen/home/widgets/home_header.dart';
+import 'package:fitness_scout/features/gym/screen/track_attendance/attendance_screen.dart';
 import 'package:fitness_scout/features/gym/screen/upcoming_events/upcoming_event.dart';
 import 'package:fitness_scout/features/gym_pool/controller/gym_pool_controller.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
@@ -51,8 +52,8 @@ class HomePage extends StatelessWidget {
                     children: [
                       GridCustomWidget(
                         icon: Iconsax.activity,
-                        onPressed: () => GymPoolController.instance.loadGYMS(),
-                        buttonTitle: 'Exercises',
+                        onPressed: () => Get.to(const BmiScreen()),
+                        buttonTitle: 'BMI',
                       ),
                       GridCustomWidget(
                         icon: Iconsax.home,
@@ -71,8 +72,8 @@ class HomePage extends StatelessWidget {
                       ),
                       GridCustomWidget(
                         icon: Iconsax.fatrows,
-                        onPressed: () => Get.to(const BmiScreen()),
-                        buttonTitle: 'BMI',
+                        onPressed: () => Get.to(const TrackAttendance()),
+                        buttonTitle: 'Track Attendance',
                       ),
                       GridCustomWidget(
                         icon: Iconsax.wallet,

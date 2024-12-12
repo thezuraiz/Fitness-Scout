@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:fitness_scout/features/gym_pool/controller/gym_pool_controller.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
-import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,6 +17,7 @@ class GymPool extends StatelessWidget {
     Completer<GoogleMapController> controller0 = Completer();
 
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       body: Obx(() {
         final location = controller.userLocation.value;
         final infoWindowController =

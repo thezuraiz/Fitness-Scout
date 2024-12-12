@@ -1,6 +1,9 @@
+import 'package:fitness_scout/features/gym_pool/controller/gym_scanner_controller.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
+import 'package:fitness_scout/utils/helpers/loaders.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:get/get.dart';
 
 class GymScanner extends StatelessWidget {
   const GymScanner({super.key, required this.gymId, required this.gymName});
@@ -10,6 +13,7 @@ class GymScanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(GymScannerController());
     return Scaffold(
       appBar: AppBar(
         title: Text('Scan QR for $gymName GYM',
@@ -31,8 +35,12 @@ class GymScanner extends StatelessWidget {
                 if (barcodes.isNotEmpty) {
                   final String scannedData =
                       barcodes.first.rawValue ?? 'Unknown';
-                  _handleScannedData(context, scannedData);
+                  controller.markAttendance();
                 }
+              },
+              onDetectError: (_, __) {
+                ZLoaders.errorSnackBar(
+                    title: 'Scanned Failed', message: 'Something Went Wrong');
               },
             ),
           ),
@@ -58,24 +66,6 @@ class GymScanner extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _handleScannedData(BuildContext context, String data) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('QR Code Scanned!'),
-        content: Text('Scanned Data: $data'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(); // Close the dialog
-            },
-            child: const Text('OK'),
           ),
         ],
       ),

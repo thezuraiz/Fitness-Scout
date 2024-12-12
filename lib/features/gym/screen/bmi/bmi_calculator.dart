@@ -28,7 +28,7 @@ class BmiScreen extends StatelessWidget {
           "BMI Calculator",
           style: Theme.of(context).textTheme.headlineMedium,
         ),
-        showArrows: true,
+        showArrows: Navigator.canPop(context),
       ),
       body: SingleChildScrollView(
         child: Padding(

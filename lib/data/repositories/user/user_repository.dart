@@ -39,7 +39,7 @@ class UserRepository extends GetxController {
       ZLogger.info(AuthenticationRepository.instance.authUser!.uid.toString());
       final documentSnapshot = await _db
           .collection('Users')
-          .doc(AuthenticationRepository.instance.authUser?.uid)
+          .doc(AuthenticationRepository.instance.authUser!.uid)
           .get();
       if (documentSnapshot.exists) {
         return UserModel.fromSnapshot(documentSnapshot);
@@ -53,7 +53,7 @@ class UserRepository extends GetxController {
     } on PlatformException catch (e) {
       throw ZFormatException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again';
+      throw 'Something went wrong. Please try again $e';
     }
   }
 

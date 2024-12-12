@@ -1,16 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_scout/data/repositories/authentication/authentication_repository.dart';
 import 'package:fitness_scout/data/repositories/gym_pool/gym_pool_repository.dart';
-import 'package:fitness_scout/data/repositories/user/user_repository.dart';
-import 'package:fitness_scout/features/personalization/controller/user_controller.dart';
-import 'package:fitness_scout/features/personalization/model/user_model.dart';
+import 'package:fitness_scout/features/gym_pool/controller/gym_pool_controller.dart';
+
 import 'package:fitness_scout/utils/helpers/loaders.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:intl/intl.dart';
 
 import '../../../utils/constants/image_string.dart';
 import '../../../utils/helpers/network_manager.dart';
@@ -18,6 +13,11 @@ import '../../../utils/popups/full_screen_loader.dart';
 
 class GymScannerController extends GetxController {
   static GymScannerController get instance => Get.find();
+
+  @override
+  void onInit() {
+    GymPoolController.instance.loadGYMS();
+  }
 
   onDetectQR(final capture) {
     final List<Barcode> barcodes = capture.barcodes;

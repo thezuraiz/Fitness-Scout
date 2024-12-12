@@ -45,7 +45,7 @@ class GymScannerController extends GetxController {
     );
   }
 
-  Future<void> markAttendance() async {
+  Future<void> markAttendance(String gymID) async {
     try {
       Get.back();
       // Start Loading
@@ -63,6 +63,7 @@ class GymScannerController extends GetxController {
                 'Error while connecting internet. Please check and try again!');
         return;
       }
+      await GymPoolRepository.instance.takeGYMAttendance(gymID);
       await GymPoolRepository.instance.takeUserAttendance();
       await ZLoaders.successSnackBar(title: 'Attendance marked');
     } catch (e) {

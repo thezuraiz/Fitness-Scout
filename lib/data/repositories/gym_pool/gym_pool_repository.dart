@@ -57,7 +57,26 @@ class GymPoolRepository extends GetxController {
         ),
       });
     } catch (e) {
-      throw 'Something went wrong while marking attendance';
+      throw 'Something went wrong while marking User attendance';
+    }
+  }
+
+  Future<void> takeGYMAttendance(String gymID) async {
+    try {
+      await FirebaseFirestore.instance.collection('Gyms').doc(gymID).update({
+        'visitors': FieldValue.arrayUnion(
+          [
+            GymUserAttendance(
+              id: _userID,
+              checkInTime: DateTime.now(),
+              checkOutTime: DateTime.now().add(const Duration(hours: 1)),
+              name: UserController.instance.user.value.firstName,
+            ).toMap()
+          ],
+        ),
+      });
+    } catch (e) {
+      throw 'Something went wrong while marking GYM attendance';
     }
   }
 }

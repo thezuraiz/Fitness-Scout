@@ -35,7 +35,7 @@ class GymScanner extends StatelessWidget {
                 if (barcodes.isNotEmpty) {
                   final String scannedData =
                       barcodes.first.rawValue ?? 'Unknown';
-                  controller.markAttendance();
+                  controller.markAttendance(scannedData);
                 }
               },
               onDetectError: (_, __) {

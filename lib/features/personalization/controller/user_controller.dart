@@ -44,7 +44,7 @@ class UserController extends GetxController {
       ZLogger.info('User Record Found! ${user.toString()}');
       this.user(user);
     } catch (e) {
-      ZLogger.error('User Not found');
+      ZLogger.error('User Not found: $e');
       user(UserModel.empty());
     } finally {
       profileLoading.value = false;
@@ -105,7 +105,7 @@ class UserController extends GetxController {
             email: userCredential.user!.email ?? '',
             phoneNumber: userCredential.user!.phoneNumber ?? '',
             profilePicture: userCredential.user!.photoURL ?? '',
-            userAttendance: <GymAttendanceUser>[],
+            userAttendance: <GymUserAttendance>[],
           );
 
           // Save the Data

@@ -11,7 +11,7 @@ class UserModel {
   double height;
   double weight;
   double bmi;
-  List<GymAttendanceUser> userAttendance;
+  List<GymUserAttendance> userAttendance;
   final int totalVisits;
 
   String get fullName => '$firstName $lastName';
@@ -64,7 +64,7 @@ class UserModel {
       bmi: (json['bmi'] as num).toDouble(),
       totalVisits: json['totalVisits'] ?? 0,
       userAttendance: (json['userAttendance'] as List<dynamic>?)
-              ?.map((item) => GymAttendanceUser.fromMap(item))
+              ?.map((item) => GymUserAttendance.fromMap(item))
               .toList() ??
           [],
     );
@@ -87,7 +87,7 @@ class UserModel {
       bmi: (data['bmi'] ?? 0.0).toDouble(),
       totalVisits: data['totalVisits'] ?? 0,
       userAttendance: (data['userAttendance'] as List<dynamic>?)
-              ?.map((item) => GymAttendanceUser.fromMap(item))
+              ?.map((item) => GymUserAttendance.fromMap(item))
               .toList() ??
           [],
     );
@@ -124,7 +124,7 @@ class UserModel {
     double? weight,
     double? bmi,
     int? totalVisits,
-    List<GymAttendanceUser>? userAttendance,
+    List<GymUserAttendance>? userAttendance,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -183,21 +183,21 @@ class UserModel {
   }
 }
 
-class GymAttendanceUser {
+class GymUserAttendance {
   final String id;
   final String name;
   final DateTime checkOutTime;
   final DateTime checkInTime;
 
-  GymAttendanceUser({
+  GymUserAttendance({
     required this.id,
     required this.name,
     required this.checkInTime,
     required this.checkOutTime,
   });
 
-  factory GymAttendanceUser.empty() {
-    return GymAttendanceUser(
+  factory GymUserAttendance.empty() {
+    return GymUserAttendance(
       id: '',
       name: '',
       checkInTime: DateTime.fromMillisecondsSinceEpoch(0),
@@ -205,8 +205,8 @@ class GymAttendanceUser {
     );
   }
 
-  factory GymAttendanceUser.fromMap(Map<String, dynamic> map) {
-    return GymAttendanceUser(
+  factory GymUserAttendance.fromMap(Map<String, dynamic> map) {
+    return GymUserAttendance(
       id: map['id'] ?? '',
       name: map['name'] ?? '',
       checkInTime: DateTime.parse(map['checkInTime']),
@@ -225,6 +225,6 @@ class GymAttendanceUser {
 
   @override
   String toString() {
-    return 'GymAttendanceUser(id: $id, name: $name, checkInTime: $checkInTime, checkOutTime: $checkOutTime)';
+    return 'GymUserAttendance(id: $id, name: $name, checkInTime: $checkInTime, checkOutTime: $checkOutTime)';
   }
 }

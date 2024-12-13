@@ -1,3 +1,4 @@
+import 'package:fitness_scout/features/gym_pool/controller/gym_pool_controller.dart';
 import 'package:fitness_scout/features/gym_pool/screen/gymScanner.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
 import 'package:fitness_scout/utils/helpers/loaders.dart';
@@ -131,14 +132,25 @@ class GymDetailScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: SizedBox(
           width: double.infinity,
-          child: ElevatedButton(
-              onPressed: () => Get.to(GymScanner(
-                    gymId: gym.id,
-                    gymName: gym.gymName.toString(),
-                    gymPhoneNo: gym.contactNumber.toString(),
-                    gymAddress: gym.address.toString(),
-                  )),
-              child: const Text('Check In')),
+          child: Obx(
+            () => GymPoolController.isAllowedToCheckIn.value
+                ? ElevatedButton(
+                    onPressed: () => Get.to(GymScanner(
+                        gymId: gym.id,
+                        gymName: gym.gymName.toString(),
+                        gymPhoneNo: gym.contactNumber.toString(),
+                        gymAddress: gym.address.toString(),
+                        gymRatings: gym.ratings)),
+                    child: const Text('Check In'))
+                : ElevatedButton(
+                    onPressed: () => GymPoolController.instance.checkOutFromGym(
+                        context,
+                        gym.id.toString(),
+                        gym.ratings,
+                        gym.visitors!.length),
+                    child: const Text('Check Out'),
+                  ),
+          ),
         ),
       ),
     );

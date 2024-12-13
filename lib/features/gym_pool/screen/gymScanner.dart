@@ -11,10 +11,12 @@ class GymScanner extends StatelessWidget {
       required this.gymId,
       required this.gymName,
       required this.gymPhoneNo,
-      required this.gymAddress});
+      required this.gymAddress,
+      required this.gymRatings});
 
   final String gymId;
   final String gymName, gymPhoneNo, gymAddress;
+  final int gymRatings;
 
   @override
   Widget build(BuildContext context) {

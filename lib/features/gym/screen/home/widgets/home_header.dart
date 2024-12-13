@@ -56,7 +56,7 @@ class HomeHeader extends StatelessWidget {
                         )),
                     Obx(
                       () => userController.profileLoading.value
-                          ? const ZShimmerEffect(width: 50, height: 20)
+                          ? const ZShimmerEffect(width: 100, height: 20)
                           : HomeAppHeaderStatsTile(
                               icon: Iconsax.direct_right,
                               buttonText:
@@ -68,7 +68,7 @@ class HomeHeader extends StatelessWidget {
                     ),
                     Obx(
                       () => userController.profileLoading.value
-                          ? const ZShimmerEffect(width: 50, height: 20)
+                          ? const ZShimmerEffect(width: 150, height: 20)
                           : HomeAppHeaderStatsTile(
                               icon: Iconsax.check,
                               buttonText: BmiCalculator.getBmiMessage(
@@ -80,7 +80,7 @@ class HomeHeader extends StatelessWidget {
                     ),
                     Obx(
                       () => userController.profileLoading.value
-                          ? const ZShimmerEffect(width: 50, height: 20)
+                          ? const ZShimmerEffect(width: 150, height: 20)
                           : HomeAppHeaderStatsTile(
                               icon: Iconsax.star_1,
                               buttonText: '240 kcal burned',

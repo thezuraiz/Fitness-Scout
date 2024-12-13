@@ -6,10 +6,15 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:get/get.dart';
 
 class GymScanner extends StatelessWidget {
-  const GymScanner({super.key, required this.gymId, required this.gymName});
+  const GymScanner(
+      {super.key,
+      required this.gymId,
+      required this.gymName,
+      required this.gymPhoneNo,
+      required this.gymAddress});
 
   final String gymId;
-  final String gymName;
+  final String gymName, gymPhoneNo, gymAddress;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +40,8 @@ class GymScanner extends StatelessWidget {
                 if (barcodes.isNotEmpty) {
                   final String scannedData =
                       barcodes.first.rawValue ?? 'Unknown';
-                  controller.markAttendance(scannedData);
+                  controller.markAttendance(
+                      scannedData, gymName, gymPhoneNo, gymAddress);
                 }
               },
               onDetectError: (_, __) {

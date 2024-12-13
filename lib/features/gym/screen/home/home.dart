@@ -17,6 +17,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:get/get.dart';
 
+import '../../../../utils/navigation_menu.dart';
 import '../../controller/bmi/bmi_controller.dart';
 import '../../controller/diet_plan/diet_plan_controller.dart';
 import '../../controller/upcoming_events/upcoming_event.dart';
@@ -62,7 +63,8 @@ class HomePage extends StatelessWidget {
                       ),
                       GridCustomWidget(
                         icon: Iconsax.airdrop4,
-                        onPressed: () {},
+                        onPressed: () => NavigationController
+                            .instance.selectedIndex.value = 1,
                         buttonTitle: 'Nearby GYMS',
                       ),
                       GridCustomWidget(

@@ -55,7 +55,7 @@ class GymPoolRepository extends GetxController {
               location: gymLocation,
               checkInTime: DateTime.now(),
               checkOutTime: DateTime.now().add(const Duration(hours: 1)),
-              name: UserController.instance.user.value.firstName,
+              name: gymName,
             ).toMap()
           ],
         ),

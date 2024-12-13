@@ -23,15 +23,16 @@ class GymAttendanceController extends GetxController {
 
   RxList<GymUserAttendance> userGYMAttendance = <GymUserAttendance>[].obs;
   final _userId = FirebaseAuth.instance.currentUser!.uid;
+  RxBool isLoading = false.obs;
 
   Future<void> loadUserAttendance() async {
     try {
-      ZLogger.info('Load User Attendance');
+      isLoading.value = true;
+      ZLogger.info('Loading User Attendance');
 
       // Todo: Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
-        ZFullScreenLoader.stopLoading();
         ZLoaders.errorSnackBar(
             title: 'Internet Connection Failed',
             message:
@@ -51,7 +52,11 @@ class GymAttendanceController extends GetxController {
           .toList();
 
       ZLogger.info('UserData: ${userGYMAttendance.value}');
+      await Future.delayed(const Duration(seconds: 1));
+      isLoading.value = false;
+      ZLogger.info('Is Loading ${isLoading.value}');
     } catch (e) {
+      isLoading.value = false;
       ZLogger.error('Errors: $e');
     }
   }

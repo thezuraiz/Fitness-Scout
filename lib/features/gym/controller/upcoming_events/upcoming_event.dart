@@ -9,7 +9,7 @@ class UpcomingEventsController extends GetxController {
   static UpcomingEventsController get instance => Get.find();
   final upcomingEvents = Get.put(UpcomingEventsRepository());
   RxList<GymEvent> gymEvents = <GymEvent>[].obs;
-  RxBool isEventsLoading = false.obs;
+  RxBool isEventsLoading = true.obs;
 
   @override
   void onInit() {
@@ -28,6 +28,7 @@ class UpcomingEventsController extends GetxController {
           title: 'Something went wrong ',
           message: 'While fetching Upcoming Events');
     } finally {
+      await Future.delayed(const Duration(seconds: 1));
       isEventsLoading.value = false;
     }
   }

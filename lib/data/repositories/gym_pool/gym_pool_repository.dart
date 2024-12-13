@@ -83,4 +83,15 @@ class GymPoolRepository extends GetxController {
       throw 'Something went wrong while marking GYM attendance';
     }
   }
+
+  Future<void> markCheckOut(String gymId, int gymRatings) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('Gyms')
+          .doc(gymId)
+          .update({'ratings': gymRatings});
+    } catch (e) {
+      throw 'Something went wrong while marking GYM attendance';
+    }
+  }
 }

@@ -1,11 +1,15 @@
+import 'dart:async';
+
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:fitness_scout/data/repositories/gym_pool/gym_pool_repository.dart';
+import 'package:fitness_scout/features/gym_pool/controller/gym_scanner_controller.dart';
 import 'package:fitness_scout/features/gym_pool/screen/gymProfilePage.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
@@ -21,10 +25,11 @@ class GymPoolController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    loadGYMS();
-    fetchCurrentLocation();
+    await loadGYMS();
+    await fetchCurrentLocation();
   }
 
+  static RxBool isAllowedToCheckIn = true.obs;
   BitmapDescriptor? customMarkerIcon;
   RxBool isDarkMode = ZHelperFunction.isDarkMode(Get.context!).obs;
   Rx<LatLng> userLocation = const LatLng(31.5204, 74.3587).obs;
@@ -306,5 +311,126 @@ class GymPoolController extends GetxController {
                   ),
                 );
         });
+  }
+
+  scheduleDailyReset() {
+    isAllowedToCheckIn.value = false;
+    final now = DateTime.now();
+    final nextMidnight = DateTime(now.year, now.month, now.day + 1);
+    final durationUntilMidnight = nextMidnight.difference(now);
+
+    Timer(durationUntilMidnight, () {
+      isAllowedToCheckIn.value = true;
+    });
+  }
+
+  void checkOutFromGym(
+      BuildContext context, String gymId, int oldRating, int oldVisits) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        double newRating = 4;
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: RatingBar.builder(
+                    initialRating: 3,
+                    itemCount: 5,
+                    wrapAlignment: WrapAlignment.spaceEvenly,
+                    itemBuilder: (context, index) {
+                      switch (index) {
+                        case 0:
+                          return Icon(
+                            Icons.sentiment_very_dissatisfied,
+                            color: Colors.red,
+                          );
+                        case 1:
+                          return Icon(
+                            Icons.sentiment_dissatisfied,
+                            color: Colors.redAccent,
+                          );
+                        case 2:
+                          return Icon(
+                            Icons.sentiment_neutral,
+                            color: Colors.amber,
+                          );
+                        case 3:
+                          return Icon(
+                            Icons.sentiment_satisfied,
+                            color: ZColor.primary.withOpacity(0.9),
+                          );
+                        case 4:
+                          return Icon(
+                            Icons.sentiment_very_satisfied,
+                            color: ZColor.primary,
+                          );
+                        default:
+                          return Icon(Iconsax.airdrop);
+                      }
+                    },
+                    onRatingUpdate: (rating) {
+                      newRating = rating;
+                      ZLogger.info('New Rating: $newRating');
+                    },
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                Text(
+                  'Confirm Checkout',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium!
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 16.0),
+                Text(
+                  'Are you sure you want to check out from this gym?',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(height: 24.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close the dialog
+                      },
+                      child: Text(
+                        'Cancel',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ),
+                    const SizedBox(width: 8.0),
+                    SizedBox(
+                      width: 150,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                          // Perform the checkout action here
+                          ZLogger.info('Checked out from gym: $gymId');
+                          int newRatings =
+                              oldRating + newRating.toInt() ~/ oldVisits;
+                          GymScannerController.checkOut(gymId, newRatings);
+                          // markCheckOut
+                        },
+                        child: const Text('Check Out'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

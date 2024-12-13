@@ -25,54 +25,50 @@ class TrackAttendance extends StatelessWidget {
                   : Colors.black),
         ),
       ),
-      body: SingleChildScrollView(
-        child: RefreshIndicator(
-          onRefresh: () => controller.loadUserAttendance(),
-          child: Obx(
-            () => Padding(
-              padding: const EdgeInsets.all(ZSizes.defaultSpace),
-              child: controller.isLoading.value == true
-                  ? ListView.builder(
-                      itemCount: 3,
-                      shrinkWrap: true,
-                      itemBuilder: (_, __) => Card(
-                        margin: const EdgeInsets.symmetric(vertical: ZSizes.sm),
-                        color: dark ? ZColor.darkGrey : ZColor.lightContainer,
-                        child: const ListTile(
-                          contentPadding: EdgeInsets.all(1),
-                          title: ZShimmerEffect(width: 30, height: 10),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ZShimmerEffect(
-                                  width: double.infinity, height: 10),
-                              ZShimmerEffect(
-                                  width: double.infinity, height: 10),
-                            ],
-                          ),
+      body: RefreshIndicator(
+        onRefresh: () => controller.loadUserAttendance(),
+        child: Obx(
+          () => Padding(
+            padding: const EdgeInsets.all(ZSizes.defaultSpace),
+            child: controller.isLoading.value == true
+                ? ListView.builder(
+                    itemCount: 3,
+                    shrinkWrap: true,
+                    itemBuilder: (_, __) => Card(
+                      margin: const EdgeInsets.symmetric(vertical: ZSizes.sm),
+                      color: dark ? ZColor.darkGrey : ZColor.lightContainer,
+                      child: const ListTile(
+                        contentPadding: EdgeInsets.all(1),
+                        title: ZShimmerEffect(width: 30, height: 10),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ZShimmerEffect(width: double.infinity, height: 10),
+                            ZShimmerEffect(width: double.infinity, height: 10),
+                          ],
                         ),
                       ),
-                    )
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: controller.userGYMAttendance.length,
-                      itemBuilder: (_, index) {
-                        final singleAttendance =
-                            controller.userGYMAttendance.value[index];
-                        DateTime checkOutTime = singleAttendance.checkOutTime;
-                        bool isOnGoing = checkOutTime.isAfter(DateTime.now());
-                        return ZCustomCard(
-                            gymName: singleAttendance.name,
-                            gymPhoneNo: singleAttendance.phoneNo,
-                            gymLocation: singleAttendance.location,
-                            gymCheckInDate: DateFormat('dd-MM-yyy')
-                                .format(singleAttendance.checkInTime),
-                            gymCheckInTime: DateFormat('HH:mm a')
-                                .format(singleAttendance.checkInTime),
-                            selectedAddress: isOnGoing ? true : false);
-                      },
                     ),
-            ),
+                  )
+                : ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: controller.userGYMAttendance.length,
+                    itemBuilder: (_, index) {
+                      final singleAttendance =
+                          controller.userGYMAttendance.value[index];
+                      DateTime checkOutTime = singleAttendance.checkOutTime;
+                      bool isOnGoing = checkOutTime.isAfter(DateTime.now());
+                      return ZCustomCard(
+                          gymName: singleAttendance.name,
+                          gymPhoneNo: singleAttendance.phoneNo,
+                          gymLocation: singleAttendance.location,
+                          gymCheckInDate: DateFormat('dd-MM-yyy')
+                              .format(singleAttendance.checkInTime),
+                          gymCheckInTime: DateFormat('HH:mm a')
+                              .format(singleAttendance.checkInTime),
+                          selectedAddress: isOnGoing ? true : false);
+                    },
+                  ),
           ),
         ),
       ),

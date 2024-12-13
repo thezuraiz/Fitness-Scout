@@ -26,6 +26,7 @@ class GymPoolRepository extends GetxController {
       if (documentSnapshot.docs.isNotEmpty) {
         return documentSnapshot.docs.map((gym) {
           ZLogger.info('gym: ${gym.data()}');
+          print(gym.data()['opening_hours'].toString());
           return GymOwnerModel.fromSnapshot(gym);
         }).toList();
       } else {
@@ -42,13 +43,16 @@ class GymPoolRepository extends GetxController {
     }
   }
 
-  Future<void> takeUserAttendance() async {
+  Future<void> takeUserAttendance(
+      String gymName, String gymPhoneNo, String gymLocation) async {
     try {
       await FirebaseFirestore.instance.collection('Users').doc(_userID).update({
         'userAttendance': FieldValue.arrayUnion(
           [
             GymUserAttendance(
               id: _userID,
+              phoneNo: gymPhoneNo,
+              location: gymLocation,
               checkInTime: DateTime.now(),
               checkOutTime: DateTime.now().add(const Duration(hours: 1)),
               name: UserController.instance.user.value.firstName,

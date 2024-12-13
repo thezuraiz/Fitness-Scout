@@ -64,8 +64,8 @@ class UserModel {
       bmi: (json['bmi'] as num).toDouble(),
       totalVisits: json['totalVisits'] ?? 0,
       userAttendance: (json['userAttendance'] as List<dynamic>?)
-              ?.map((item) => GymUserAttendance.fromMap(item))
-              .toList() ??
+          ?.map((item) => GymUserAttendance.fromMap(item))
+          .toList() ??
           [],
     );
   }
@@ -87,8 +87,8 @@ class UserModel {
       bmi: (data['bmi'] ?? 0.0).toDouble(),
       totalVisits: data['totalVisits'] ?? 0,
       userAttendance: (data['userAttendance'] as List<dynamic>?)
-              ?.map((item) => GymUserAttendance.fromMap(item))
-              .toList() ??
+          ?.map((item) => GymUserAttendance.fromMap(item))
+          .toList() ??
           [],
     );
   }
@@ -169,29 +169,31 @@ class UserModel {
   @override
   int get hashCode {
     return id.hashCode ^
-        firstName.hashCode ^
-        lastName.hashCode ^
-        userName.hashCode ^
-        email.hashCode ^
-        phoneNumber.hashCode ^
-        profilePicture.hashCode ^
-        height.hashCode ^
-        weight.hashCode ^
-        bmi.hashCode ^
-        totalVisits.hashCode ^
-        userAttendance.hashCode;
+    firstName.hashCode ^
+    lastName.hashCode ^
+    userName.hashCode ^
+    email.hashCode ^
+    phoneNumber.hashCode ^
+    profilePicture.hashCode ^
+    height.hashCode ^
+    weight.hashCode ^
+    bmi.hashCode ^
+    totalVisits.hashCode ^
+    userAttendance.hashCode;
   }
 }
 
 class GymUserAttendance {
   final String id;
-  final String name;
+  final String name, phoneNo, location;
   final DateTime checkOutTime;
   final DateTime checkInTime;
 
   GymUserAttendance({
     required this.id,
     required this.name,
+    this.phoneNo = '',
+    this.location = '',
     required this.checkInTime,
     required this.checkOutTime,
   });
@@ -200,6 +202,8 @@ class GymUserAttendance {
     return GymUserAttendance(
       id: '',
       name: '',
+      location: '',
+      phoneNo: '',
       checkInTime: DateTime.fromMillisecondsSinceEpoch(0),
       checkOutTime: DateTime.fromMillisecondsSinceEpoch(0),
     );
@@ -209,6 +213,8 @@ class GymUserAttendance {
     return GymUserAttendance(
       id: map['id'] ?? '',
       name: map['name'] ?? '',
+      phoneNo: map['phoneNo'] ?? '',
+      location: map['location'] ?? '',
       checkInTime: DateTime.parse(map['checkInTime']),
       checkOutTime: DateTime.parse(map['checkOutTime']),
     );
@@ -218,6 +224,8 @@ class GymUserAttendance {
     return {
       'id': id,
       'name': name,
+      'phoneNo': phoneNo,
+      'location': location,
       'checkInTime': checkInTime.toIso8601String(),
       'checkOutTime': checkOutTime.toIso8601String(),
     };

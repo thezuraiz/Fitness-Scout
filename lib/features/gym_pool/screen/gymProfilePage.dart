@@ -135,6 +135,8 @@ class GymDetailScreen extends StatelessWidget {
               onPressed: () => Get.to(GymScanner(
                     gymId: gym.id,
                     gymName: gym.gymName.toString(),
+                    gymPhoneNo: gym.contactNumber.toString(),
+                    gymAddress: gym.address.toString(),
                   )),
               child: const Text('Check In')),
         ),

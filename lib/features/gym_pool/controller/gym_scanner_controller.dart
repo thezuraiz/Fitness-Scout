@@ -45,7 +45,8 @@ class GymScannerController extends GetxController {
     );
   }
 
-  Future<void> markAttendance(String gymID) async {
+  Future<void> markAttendance(String gymID, String gymName, String gymPhoneNo,
+      String gymLocation) async {
     try {
       Get.back();
       // Start Loading
@@ -64,7 +65,8 @@ class GymScannerController extends GetxController {
         return;
       }
       await GymPoolRepository.instance.takeGYMAttendance(gymID);
-      await GymPoolRepository.instance.takeUserAttendance();
+      await GymPoolRepository.instance
+          .takeUserAttendance(gymName, gymPhoneNo, gymLocation);
       await ZLoaders.successSnackBar(title: 'Attendance marked');
     } catch (e) {
       ZLogger.error('Error : $e');

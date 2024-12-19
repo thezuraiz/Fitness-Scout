@@ -24,7 +24,7 @@ class UpcomingEventsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'UpComing Events',
-          style: Theme.of(context).textTheme.headlineMedium,
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
       body: RefreshIndicator(

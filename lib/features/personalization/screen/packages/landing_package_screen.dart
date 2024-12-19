@@ -18,7 +18,7 @@ class LandingPackageScreen extends StatelessWidget {
         showArrows: false,
         title: Text(
           "GYM Plans",
-          style: Theme.of(context).textTheme.headlineMedium,
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
       body: SingleChildScrollView(
@@ -32,7 +32,9 @@ class LandingPackageScreen extends StatelessWidget {
               ),
               SizedBox(
                 width: Get.width * 0.6,
-                child: const Image(image: AssetImage(ZImages.gym_plan_images1),),
+                child: const Image(
+                  image: AssetImage(ZImages.gym_plan_images1),
+                ),
               ),
               const SizedBox(
                 height: ZSizes.spaceBtwSections * 2,

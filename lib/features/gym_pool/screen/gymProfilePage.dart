@@ -1,3 +1,4 @@
+import 'package:fitness_scout/common/widgets/custom_shapes/custom_amenities_container.dart';
 import 'package:fitness_scout/features/gym_pool/controller/gym_pool_controller.dart';
 import 'package:fitness_scout/features/gym_pool/screen/gymScanner.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
@@ -71,7 +72,7 @@ class GymDetailScreen extends StatelessWidget {
                             ),
                             Text.rich(TextSpan(children: [
                               TextSpan(
-                                  text: '5.0',
+                                  text: '4.3',
                                   style: Theme.of(context).textTheme.bodyLarge),
                               TextSpan(text: '(${gym.visitors!.length})')
                             ])),
@@ -81,8 +82,7 @@ class GymDetailScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     ReadMoreText(
-                      gym.description.toString() * 50 ??
-                          "No description provided.",
+                      '${gym.description}  ' * 20 ?? "No description provided.",
                       trimLines: 3,
                       trimMode: TrimMode.Line,
                       trimCollapsedText: "Show More",
@@ -99,7 +99,7 @@ class GymDetailScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: ZSizes.sm),
-                    Divider(),
+                    const Divider(),
                     const SizedBox(height: ZSizes.sm),
                     buildSectionTitle(context, 'Contact Info'),
                     buildContactRow(
@@ -121,6 +121,16 @@ class GymDetailScreen extends StatelessWidget {
                       gym.email,
                       Icons.email_outlined,
                     ),
+                    buildSectionTitle(context, 'Amenities'),
+                    const SizedBox(height: 10),
+                    Wrap(
+                      children: gym.amenities!
+                          .map(
+                            (aminity) => CustomAmenitiesContainer(
+                                amenityName: aminity['name'].toString()),
+                          )
+                          .toList(),
+                    )
                   ],
                 ),
               ),

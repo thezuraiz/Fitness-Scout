@@ -26,7 +26,7 @@ class BmiScreen extends StatelessWidget {
       appBar: ZCustomAppBar(
         title: Text(
           "BMI Calculator",
-          style: Theme.of(context).textTheme.headlineMedium,
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
         showArrows: Navigator.canPop(context),
       ),

@@ -25,7 +25,7 @@ class PackageDetailPage extends StatelessWidget {
       appBar: ZCustomAppBar(
         title: Text(
           title,
-          style: Theme.of(context).textTheme.headlineMedium,
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
         showArrows: true,
       ),

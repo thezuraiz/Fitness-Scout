@@ -19,7 +19,7 @@ class TrackAttendance extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Attendance',
-          style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
               color: ZHelperFunction.isDarkMode(context)
                   ? Colors.white
                   : Colors.black),

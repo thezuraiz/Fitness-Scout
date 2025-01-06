@@ -54,7 +54,7 @@ class GymDetailScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${gym.gymName ?? "Gym Name"} GYM',
+                          gym.gymName ?? "Gym Name",
                           style: Theme.of(context)
                               .textTheme
                               .headlineMedium

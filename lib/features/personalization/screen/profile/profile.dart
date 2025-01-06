@@ -6,6 +6,7 @@ import 'package:fitness_scout/common/widgets/list_tiles/user_profile.dart';
 import 'package:fitness_scout/common/widgets/section_heading.dart';
 import 'package:fitness_scout/features/gym/screen/bmi/bmi_calculator.dart';
 import 'package:fitness_scout/features/personalization/controller/profile_page_controller.dart';
+import 'package:fitness_scout/features/personalization/screen/profile/account_and_privacy_screen.dart';
 import 'package:fitness_scout/features/personalization/screen/profile/profile_settings.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +92,9 @@ class ProfileScreen extends StatelessWidget {
                     icon: Iconsax.security_card,
                     title: "Account and Privacy",
                     subTitle: "Manage data usage and connected accounts",
-                    onPressed: () => Get.to(() => const BlankScreen()),
+                    onPressed: () => Get.to(
+                      () => const AccountAndPrivacyScreen(),
+                    ),
                   ),
 
                   /// --- App Settings

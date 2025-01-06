@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_scout/data/repositories/authentication/authentication_repository.dart';
 import 'package:fitness_scout/features/personalization/controller/user_controller.dart';
 import 'package:fitness_scout/utils/constants/image_string.dart';
@@ -64,6 +66,35 @@ class LoginController extends GetxController {
             title: 'Internet Connection Failed',
             message:
                 'Error while connecting internet. Please check and try again!');
+        return;
+      }
+
+      final userCredential = await AuthenticationRepository.instance
+          .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
+
+      final _userId = userCredential.user!.uid;
+      ZLogger.warning('User Id: $_userId');
+
+      final DocumentSnapshot userData = await FirebaseFirestore.instance
+          .collection('Gyms')
+          .doc(_userId)
+          .get();
+
+      if (userData.exists || userData.data() != null) {
+        ZLogger.error('User already registered with gym owner app');
+
+        // Todo: Logout User
+        await FirebaseAuth.instance.signOut();
+
+        // Todo: Show Message
+        ZLoaders.errorSnackBar(
+          title: 'Already Registered in Fitness Scout Gym App',
+          message:
+              'This email is already associated with the Fitness Scout Gym App. Please use a different email to register your gym.',
+        );
+
+        // Todo: Remove Loader
+        ZFullScreenLoader.stopLoading();
         return;
       }
 

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../utils/helpers/logger.dart';
 
+enum GymType { Basic, Silver, Diamond, Not_Decided }
+
 class GymOwnerModel {
   final String id;
   final String name;
@@ -16,12 +18,13 @@ class GymOwnerModel {
   final String? license;
   final Map<String, dynamic>? openingHours;
   final List<String>? images;
+  final List<TransactionHistory>? transactionHistory;
   final List<Map<String, dynamic>>? amenities;
   final OwnerBankDetails? ownerBankDetails;
   final double balance;
   final String isApproved;
   final List<Visitor>? visitors;
-  final String gymType;
+  final GymType gymType;
   final int ratings;
 
   GymOwnerModel({
@@ -39,12 +42,13 @@ class GymOwnerModel {
     this.license,
     this.openingHours,
     this.images,
+    this.transactionHistory,
     this.amenities,
     this.ownerBankDetails,
     this.balance = 0.0,
     this.isApproved = 'Not-Approved',
     this.visitors,
-    this.gymType = 'Normal',
+    this.gymType = GymType.Not_Decided,
     this.ratings = 0,
   });
 
@@ -87,8 +91,13 @@ class GymOwnerModel {
                     Visitor.fromJson(visitor as Map<String, dynamic>))
                 .toList() ??
             [],
-        gymType: data['gym_type'] ?? 'Normal',
+        gymType: _gymTypeFromString(data['gym_type'] ?? 'Not_Decided'),
         ratings: data['ratings'] ?? 0,
+        transactionHistory: (data['transactions'] as List<dynamic>?)
+                ?.map((transaction) => TransactionHistory.fromJson(
+                    transaction as Map<String, dynamic>))
+                .toList() ??
+            [],
       );
     } catch (e, stackTrace) {
       ZLogger.error('Error parsing GymOwnerModel: $e $stackTrace');
@@ -117,8 +126,9 @@ class GymOwnerModel {
         "balance": balance,
         "isApproved": isApproved,
         "visitors": visitors?.map((v) => v.toJson()).toList(),
-        "gym_type": gymType,
+        "gym_type": _gymTypeToString(gymType),
         "ratings": ratings,
+        "transactions": transactionHistory?.map((v) => v.toJson()).toList(),
       };
 
   // Factory for creating an empty GymOwnerModel
@@ -142,9 +152,37 @@ class GymOwnerModel {
         balance: 0.0,
         isApproved: 'Not-Approved',
         visitors: [],
-        gymType: 'Normal',
+        gymType: GymType.Not_Decided,
         ratings: 0,
+        transactionHistory: [],
       );
+
+  // Helper functions to convert GymType enum to/from string
+  static GymType _gymTypeFromString(String gymType) {
+    switch (gymType) {
+      case 'Silver':
+        return GymType.Silver;
+      case 'Diamond':
+        return GymType.Diamond;
+      case 'Basic':
+        return GymType.Basic;
+      default:
+        return GymType.Not_Decided;
+    }
+  }
+
+  static String _gymTypeToString(GymType gymType) {
+    switch (gymType) {
+      case GymType.Silver:
+        return 'Silver';
+      case GymType.Diamond:
+        return 'Diamond';
+      case GymType.Basic:
+        return 'Basic';
+      default:
+        return 'Not_Decided';
+    }
+  }
 }
 
 class Visitor {
@@ -215,4 +253,43 @@ class OwnerBankDetails {
         "account_number": accountNumber,
         "iban": iban,
       };
+}
+
+class TransactionHistory {
+  final DateTime requestedDate; // ISO 8601 formatted date
+  final String transactionMethod;
+  final String transactionStatus, message;
+  final int widthDrawAmount;
+
+  TransactionHistory({
+    required this.requestedDate,
+    required this.transactionMethod,
+    required this.transactionStatus,
+    required this.widthDrawAmount,
+    this.message = '',
+  });
+
+  // Convert Firebase data to Dart object
+  factory TransactionHistory.fromJson(Map<String, dynamic> json) {
+    return TransactionHistory(
+      requestedDate: json['requested_date'] != null
+          ? DateTime.tryParse(json['requested_date']) ?? DateTime.now()
+          : DateTime.now(),
+      transactionMethod: json['transactionMethod'] ?? 'Unknown',
+      transactionStatus: json['transactionStatus'] ?? 'Pending',
+      widthDrawAmount: json['widthDrawAmount'] ?? 0,
+      message: json['message'] ?? '',
+    );
+  }
+
+  // Convert Dart object to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'requested_date': requestedDate.toIso8601String(),
+      'transactionMethod': transactionMethod,
+      'transactionStatus': transactionStatus,
+      'message': message,
+      'widthDrawAmount': widthDrawAmount,
+    };
+  }
 }

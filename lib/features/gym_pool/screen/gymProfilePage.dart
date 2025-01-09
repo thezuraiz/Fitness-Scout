@@ -146,11 +146,13 @@ class GymDetailScreen extends StatelessWidget {
             () => GymPoolController.isAllowedToCheckIn.value
                 ? ElevatedButton(
                     onPressed: () => Get.to(GymScanner(
-                        gymId: gym.id,
-                        gymName: gym.gymName.toString(),
-                        gymPhoneNo: gym.contactNumber.toString(),
-                        gymAddress: gym.address.toString(),
-                        gymRatings: gym.ratings)),
+                          gymId: gym.id,
+                          gymName: gym.gymName.toString(),
+                          gymPhoneNo: gym.contactNumber.toString(),
+                          gymAddress: gym.address.toString(),
+                          gymRatings: gym.ratings,
+                          gymType: gym.gymType,
+                        )),
                     child: const Text('Check In'))
                 : ElevatedButton(
                     onPressed: () => GymPoolController.instance.checkOutFromGym(

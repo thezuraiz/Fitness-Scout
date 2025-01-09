@@ -41,7 +41,7 @@ class UserController extends GetxController {
     try {
       profileLoading.value = true;
       final user = await userRepository.fetchUserDetails();
-      ZLogger.info('User Record Found! ${user.toString()}');
+      ZLogger.info('User Record Found! ${user.toJson().toString()}');
       this.user(user);
     } catch (e) {
       ZLogger.error('User Not found: $e');

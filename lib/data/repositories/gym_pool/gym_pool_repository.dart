@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_scout/data/repositories/user/user_repository.dart';
 import 'package:fitness_scout/utils/helpers/loaders.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/services.dart';
@@ -62,6 +63,42 @@ class GymPoolRepository extends GetxController {
       });
     } catch (e) {
       throw 'Something went wrong while marking User attendance';
+    }
+  }
+
+  Future<void> payToGym(String gymID, GymType gymType) async {
+    try {
+      // Define charges based on GymType enum
+      final int perPersonalCharge = _getChargeByGymType(gymType);
+
+      if (perPersonalCharge == 0) {
+        // ZLoaders.errorSnackBar(title: 'Uh Snap!', message: 'GYM not Approved');
+        throw Exception('GYM Not Approved');
+      }
+
+      // Update the gym balance in Firestore
+      await FirebaseFirestore.instance.collection('Gyms').doc(gymID).update({
+        'balance': FieldValue.increment(perPersonalCharge),
+      });
+    } catch (e) {
+      // Handle and log the error
+      ZLogger.warning('Error in payToGym: $e');
+      throw 'GYM Not Approved, Please try another gym';
+    }
+  }
+
+// Helper function to get charge based on GymType enum
+  int _getChargeByGymType(GymType gymType) {
+    ZLogger.info('GYM Type: ${gymType.name}');
+    switch (gymType) {
+      case GymType.Basic:
+        return 200;
+      case GymType.Silver:
+        return 400;
+      case GymType.Diamond:
+        return 500;
+      default:
+        return 0; // Not Approved or unknown types
     }
   }
 

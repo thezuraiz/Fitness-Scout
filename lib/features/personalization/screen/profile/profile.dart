@@ -5,6 +5,7 @@ import 'package:fitness_scout/common/widgets/list_tiles/settings_menue_title.dar
 import 'package:fitness_scout/common/widgets/list_tiles/user_profile.dart';
 import 'package:fitness_scout/common/widgets/section_heading.dart';
 import 'package:fitness_scout/features/gym/screen/bmi/bmi_calculator.dart';
+import 'package:fitness_scout/features/gym/screen/track_attendance/attendance_screen.dart';
 import 'package:fitness_scout/features/personalization/controller/profile_page_controller.dart';
 import 'package:fitness_scout/features/personalization/screen/profile/account_and_privacy_screen.dart';
 import 'package:fitness_scout/features/personalization/screen/profile/profile_settings.dart';
@@ -60,9 +61,9 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   ZSettingsMenueTitle(
                     icon: Iconsax.safe_home,
-                    title: "My Addresses",
-                    subTitle: "Set our location",
-                    onPressed: () => Get.to(() => const BlankScreen()),
+                    title: "Track Gyms",
+                    subTitle: "View All Gyms You Have Visited",
+                    onPressed: () => Get.to(() => const TrackAttendance()),
                   ),
                   ZSettingsMenueTitle(
                     icon: Iconsax.bag_tick,
@@ -77,15 +78,9 @@ class ProfileScreen extends StatelessWidget {
                     onPressed: () => Get.to(() => const BlankScreen()),
                   ),
                   ZSettingsMenueTitle(
-                    icon: Iconsax.discount_shape,
-                    title: "My Coupons",
-                    subTitle: "List of all the discounted coupons",
-                    onPressed: () => Get.to(() => const BlankScreen()),
-                  ),
-                  ZSettingsMenueTitle(
                     icon: Iconsax.notification,
                     title: "Notifications",
-                    subTitle: "Set any kind of notification message",
+                    subTitle: "See any kind of notification message",
                     onPressed: () => Get.to(() => const BlankScreen()),
                   ),
                   ZSettingsMenueTitle(

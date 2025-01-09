@@ -5,18 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:get/get.dart';
 
+import '../model/gym_model.dart';
+
 class GymScanner extends StatelessWidget {
-  const GymScanner(
-      {super.key,
-      required this.gymId,
-      required this.gymName,
-      required this.gymPhoneNo,
-      required this.gymAddress,
-      required this.gymRatings});
+  const GymScanner({super.key,
+    required this.gymId,
+    required this.gymName,
+    required this.gymPhoneNo,
+    required this.gymAddress,
+    required this.gymRatings,
+    required this.gymType});
 
   final String gymId;
   final String gymName, gymPhoneNo, gymAddress;
   final int gymRatings;
+  final GymType gymType;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,10 @@ class GymScanner extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Scan QR for $gymName GYM',
-            style: Theme.of(context).textTheme.headlineSmall),
+            style: Theme
+                .of(context)
+                .textTheme
+                .headlineSmall),
         // backgroundColor: ZColor.primary,
         centerTitle: true,
       ),
@@ -43,7 +49,7 @@ class GymScanner extends StatelessWidget {
                   final String scannedData =
                       barcodes.first.rawValue ?? 'Unknown';
                   controller.markAttendance(
-                      scannedData, gymName, gymPhoneNo, gymAddress);
+                      scannedData, gymName, gymPhoneNo, gymType, gymAddress);
                 }
               },
               onDetectError: (_, __) {

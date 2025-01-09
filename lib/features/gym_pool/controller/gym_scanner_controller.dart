@@ -1,4 +1,5 @@
 import 'package:fitness_scout/data/repositories/gym_pool/gym_pool_repository.dart';
+import 'package:fitness_scout/features/authentication/controller/onboarding/onboarding_controller.dart';
 import 'package:fitness_scout/features/gym_pool/controller/gym_pool_controller.dart';
 
 import 'package:fitness_scout/utils/helpers/loaders.dart';
@@ -11,6 +12,7 @@ import '../../../utils/constants/image_string.dart';
 import '../../../utils/device/deviceUtilities.dart';
 import '../../../utils/helpers/network_manager.dart';
 import '../../../utils/popups/full_screen_loader.dart';
+import '../model/gym_model.dart';
 
 class GymScannerController extends GetxController {
   static GymScannerController get instance => Get.find();
@@ -47,7 +49,7 @@ class GymScannerController extends GetxController {
   }
 
   Future<void> markAttendance(String gymID, String gymName, String gymPhoneNo,
-      String gymLocation) async {
+      GymType gymType, String gymLocation) async {
     try {
       Get.back();
       // Start Loading
@@ -65,9 +67,11 @@ class GymScannerController extends GetxController {
                 'Error while connecting internet. Please check and try again!');
         return;
       }
+      await GymPoolRepository.instance.payToGym(gymID, gymType);
       await GymPoolRepository.instance.takeGYMAttendance(gymID);
       await GymPoolRepository.instance
           .takeUserAttendance(gymName, gymPhoneNo, gymLocation);
+
       await GymPoolController.instance.scheduleDailyReset();
       ZDeviceUtils.playSound('sounds/success_notification.mp3');
       await ZLoaders.successSnackBar(
@@ -77,7 +81,7 @@ class GymScannerController extends GetxController {
     } catch (e) {
       ZLogger.error('Error : $e');
       ZLogger.warning('Error: $e');
-      ZLoaders.errorSnackBar(title: 'Invalid Data');
+      ZLoaders.errorSnackBar(title: 'Uh Snap!', message: e.toString());
     } finally {
       ZFullScreenLoader.stopLoading();
     }

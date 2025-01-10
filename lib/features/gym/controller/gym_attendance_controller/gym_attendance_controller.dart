@@ -1,15 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_scout/data/repositories/user/user_repository.dart';
 import 'package:fitness_scout/features/personalization/controller/user_controller.dart';
 import 'package:fitness_scout/features/personalization/model/user_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../../../utils/helpers/loaders.dart';
 import '../../../../utils/helpers/logger.dart';
 import '../../../../utils/helpers/network_manager.dart';
-import '../../../../utils/popups/full_screen_loader.dart';
 
 class GymAttendanceController extends GetxController {
   static GymAttendanceController get instance => Get.find();
@@ -17,7 +14,8 @@ class GymAttendanceController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    userGYMAttendance.value = UserController.instance.user.value.userAttendance;
+    userGYMAttendance.value =
+        UserController.instance.user.value.userAttendance.reversed.toList();
     ZLogger.info('${userGYMAttendance.value}');
   }
 
@@ -49,6 +47,8 @@ class GymAttendanceController extends GetxController {
       List<dynamic> userAttendanceList = data['userAttendance'];
       userGYMAttendance.value = userAttendanceList
           .map((item) => GymUserAttendance.fromMap(item))
+          .toList()
+          .reversed
           .toList();
       print(userGYMAttendance.value.toString());
       print(userGYMAttendance.value.length);

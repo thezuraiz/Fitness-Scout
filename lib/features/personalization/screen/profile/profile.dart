@@ -8,6 +8,7 @@ import 'package:fitness_scout/features/gym/screen/bmi/bmi_calculator.dart';
 import 'package:fitness_scout/features/gym/screen/track_attendance/attendance_screen.dart';
 import 'package:fitness_scout/features/personalization/controller/profile_page_controller.dart';
 import 'package:fitness_scout/features/personalization/screen/profile/account_and_privacy_screen.dart';
+import 'package:fitness_scout/features/personalization/screen/profile/notification_screen.dart';
 import 'package:fitness_scout/features/personalization/screen/profile/profile_settings.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -60,18 +61,6 @@ class ProfileScreen extends StatelessWidget {
                     height: ZSizes.spaceBtwItems,
                   ),
                   ZSettingsMenueTitle(
-                    icon: Iconsax.safe_home,
-                    title: "Track Gyms",
-                    subTitle: "View All Gyms You Have Visited",
-                    onPressed: () => Get.to(() => const TrackAttendance()),
-                  ),
-                  ZSettingsMenueTitle(
-                    icon: Iconsax.bag_tick,
-                    title: "My BMI",
-                    subTitle: "Your BMI, Monitor your health",
-                    onPressed: () => Get.to(const BmiScreen()),
-                  ),
-                  ZSettingsMenueTitle(
                     icon: Iconsax.bank,
                     title: "Bank Account",
                     subTitle: "Buy Package through Bank",
@@ -81,7 +70,7 @@ class ProfileScreen extends StatelessWidget {
                     icon: Iconsax.notification,
                     title: "Notifications",
                     subTitle: "See any kind of notification message",
-                    onPressed: () => Get.to(() => const BlankScreen()),
+                    onPressed: () => Get.to(() => const NotificationScreen()),
                   ),
                   ZSettingsMenueTitle(
                     icon: Iconsax.security_card,
@@ -90,6 +79,18 @@ class ProfileScreen extends StatelessWidget {
                     onPressed: () => Get.to(
                       () => const AccountAndPrivacyScreen(),
                     ),
+                  ),
+                  ZSettingsMenueTitle(
+                    icon: Iconsax.safe_home,
+                    title: "Track My Attendance",
+                    subTitle: "View All Gyms You Have Visited",
+                    onPressed: () => Get.to(() => const TrackAttendance()),
+                  ),
+                  ZSettingsMenueTitle(
+                    icon: Iconsax.bag_tick,
+                    title: "My BMI",
+                    subTitle: "Your BMI, Monitor your health",
+                    onPressed: () => Get.to(const BmiScreen()),
                   ),
 
                   /// --- App Settings

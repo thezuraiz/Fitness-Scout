@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_scout/data/repositories/user/user_repository.dart';
-import 'package:fitness_scout/utils/helpers/loaders.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 import '../../../features/gym_pool/model/gym_model.dart';
 import '../../../features/personalization/controller/user_controller.dart';

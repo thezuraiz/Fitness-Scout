@@ -18,6 +18,7 @@ import 'dart:ui' as ui;
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
 import '../model/gym_model.dart';
+import '../screen/gymBottomScreen.dart';
 
 class GymPoolController extends GetxController {
   static GymPoolController get instance => Get.find();
@@ -64,88 +65,6 @@ class GymPoolController extends GetxController {
               position: LatLng(gym.location!.latitude, gym.location!.longitude),
               onTap: () {
                 Get.to(GymDetailScreen(gym: gym));
-                // customInfoWindowController.value.addInfoWindow!(
-                //   Container(
-                //     height: 800,
-                //     width: 300,
-                //     decoration: BoxDecoration(
-                //       color: isDarkMode.value ? ZColor.dark : ZColor.white,
-                //       border: Border.all(
-                //           color: isDarkMode.value ? ZColor.white : ZColor.grey),
-                //       borderRadius:
-                //           BorderRadius.circular(ZSizes.borderRadiusLg),
-                //     ),
-                //     child: SingleChildScrollView(
-                //       child: Column(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         mainAxisAlignment: MainAxisAlignment.start,
-                //         children: [
-                //           Container(
-                //             width: 300,
-                //             height: 100,
-                //             decoration: BoxDecoration(
-                //               image: DecorationImage(
-                //                   image: NetworkImage(gym.images![0]),
-                //                   fit: BoxFit.fitWidth,
-                //                   filterQuality: FilterQuality.medium),
-                //             ),
-                //           ),
-                //           Padding(
-                //             padding: const EdgeInsets.all(
-                //               ZSizes.md,
-                //             ),
-                //             child: Column(
-                //               mainAxisAlignment: MainAxisAlignment.start,
-                //               crossAxisAlignment: CrossAxisAlignment.start,
-                //               children: [
-                //                 SizedBox(
-                //                   width: 200,
-                //                   child: Text(
-                //                     'ID: ${gym.id}',
-                //                     style: TextStyle(
-                //                         color: isDarkMode.value
-                //                             ? ZColor.white
-                //                             : ZColor.dark),
-                //                     softWrap: true,
-                //                     maxLines: 1,
-                //                     overflow: TextOverflow.ellipsis,
-                //                   ),
-                //                 ),
-                //                 SizedBox(
-                //                   width: 200,
-                //                   child: Text(
-                //                     '${gym.gymName} GYM' ?? '',
-                //                     style: TextStyle(
-                //                         color: isDarkMode.value
-                //                             ? ZColor.white
-                //                             : ZColor.dark),
-                //                     maxLines: 2,
-                //                     overflow: TextOverflow.ellipsis,
-                //                     softWrap: false,
-                //                   ),
-                //                 ),
-                //                 SizedBox(
-                //                   width: 200,
-                //                   child: Text(
-                //                     'Description: ${gym.description}' ?? '',
-                //                     softWrap: true,
-                //                     style: TextStyle(
-                //                         color: isDarkMode.value
-                //                             ? ZColor.white
-                //                             : ZColor.dark),
-                //                     maxLines: 2,
-                //                     overflow: TextOverflow.ellipsis,
-                //                   ),
-                //                 ),
-                //               ],
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                //   LatLng(gym.location!.latitude, gym.location!.longitude),
-                // );
                 Get.reload();
               }),
         );
@@ -219,99 +138,280 @@ class GymPoolController extends GetxController {
     userLocation.value = await LatLng(position.latitude, position.longitude);
   }
 
-  showButtomSheet(
-    BuildContext context,
-  ) {
-    return showModalBottomSheet(
-        context: context,
-        enableDrag: true,
-        showDragHandle: true,
-        builder: (BuildContext context) {
-          return gyms.isEmpty
-              ? SizedBox(
-                  height: 170,
-                  child: Center(
-                    child: Column(
-                      children: [
-                        const Icon(
-                          Iconsax.info_circle,
-                          size: 80,
-                        ),
-                        const SizedBox(
-                          height: ZSizes.spaceBtwItems,
-                        ),
-                        Text(
-                          'No Nearby Location',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              : SizedBox(
-                  height: 250,
-                  child: ListView.separated(
-                    separatorBuilder: (_, __) => const SizedBox(
-                      height: ZSizes.spaceBtwItems,
-                    ),
-                    itemCount: gyms.length,
-                    itemBuilder: (context, index) {
-                      final gym = gyms.value[index];
-                      return Card(
-                        margin:
-                            const EdgeInsets.symmetric(horizontal: ZSizes.sm),
-                        color: ZHelperFunction.isDarkMode(context)
-                            ? ZColor.dark
-                            : ZColor.lightContainer,
-                        child: ListTile(
-                          onTap: () {
-                            ZLogger.info('Location ${gym.location!.latitude}');
-                            Get.back();
-                            googleMapController?.animateCamera(
-                              CameraUpdate.newCameraPosition(
-                                CameraPosition(
-                                  target: LatLng(gym.location!.latitude,
-                                      gym.location!.longitude),
-                                  zoom: 15.0,
-                                ),
-                              ),
-                            );
-                          },
-                          title: Text('${gym.gymName} GYM'),
-                          subtitle: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(gym.address.toString()),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Icon(
-                                    Iconsax.star5,
-                                    color: Colors.amber,
-                                    size: 24,
-                                  ),
-                                  const SizedBox(
-                                    width: ZSizes.spaceBtwItems / 2,
-                                  ),
-                                  Text.rich(TextSpan(children: [
-                                    TextSpan(
-                                        text: gym.ratings.toString(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge),
-                                    const TextSpan(text: '(8)')
-                                  ])),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-        });
+  void showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      enableDrag: true,
+      showDragHandle: true,
+      builder: (BuildContext context) {
+        return GymBottomSheet(
+          gyms: gyms,
+          userLocation: Position(
+            longitude: userLocation.value.longitude,
+            latitude: userLocation.value.latitude,
+            timestamp: DateTime.now(),
+            accuracy: 0.0,
+            altitude: 0.0,
+            heading: 0.0,
+            speed: 0.0,
+            speedAccuracy: 0.0,
+            altitudeAccuracy: 0.0,
+            headingAccuracy: 0.0,
+          ),
+          onGymSelected: (latitude, longitude) {
+            Get.back();
+            googleMapController?.animateCamera(
+              CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: LatLng(latitude, longitude),
+                  zoom: 15.0,
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
+
+  // void showButtomSheet(BuildContext context) async {
+  //   final List<int> distanceOptions = [1, 2, 3, 4, 5]; // 1-5KM options
+  //   int selectedDistance = 1; // Default selected distance
+  //
+  //   List<GymOwnerModel> nearbyGyms = gyms.where((gym) {
+  //     if (gym.location == null) return false;
+  //     double distanceInMeters = Geolocator.distanceBetween(
+  //       userLocation.value.latitude,
+  //       userLocation.value.longitude,
+  //       gym.location!.latitude,
+  //       gym.location!.longitude,
+  //     );
+  //     return distanceInMeters <= 1000; // 1KM radius
+  //   }).toList();
+  //
+  //   showModalBottomSheet(
+  //     context: context,
+  //     enableDrag: true,
+  //     showDragHandle: true,
+  //     builder: (BuildContext context) {
+  //       return nearbyGyms.isEmpty
+  //           ? SizedBox(
+  //               height: 170,
+  //               child: Center(
+  //                 child: Column(
+  //                   children: [
+  //                     const Icon(
+  //                       Iconsax.info_circle,
+  //                       size: 80,
+  //                     ),
+  //                     const SizedBox(
+  //                       height: ZSizes.spaceBtwItems,
+  //                     ),
+  //                     Text(
+  //                       'No Nearby Location',
+  //                       style: Theme.of(context).textTheme.titleMedium,
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             )
+  //           : SizedBox(
+  //               height: 250,
+  //               child: Column(
+  //                 children: [
+  //                   Padding(
+  //                     padding: EdgeInsets.symmetric(horizontal: ZSizes.sm),
+  //                     child: Row(
+  //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                       children: [
+  //                         Text(
+  //                           'Distance: ',
+  //                           style: Theme.of(context).textTheme.headlineSmall,
+  //                         ),
+  //                         DropdownButton<int>(
+  //                           value: selectedDistance,
+  //                           onChanged: (int? newValue) {
+  //                             // selectedDistance = newValue!;
+  //                             // _filterGymsByDistance(selectedDistance);
+  //                           },
+  //                           items: distanceOptions
+  //                               .map<DropdownMenuItem<int>>((int value) {
+  //                             return DropdownMenuItem<int>(
+  //                               value: value,
+  //                               child: Text('$value KM'),
+  //                             );
+  //                           }).toList(),
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                   ListView.separated(
+  //                     separatorBuilder: (_, __) => const SizedBox(
+  //                       height: ZSizes.spaceBtwItems,
+  //                     ),
+  //                     shrinkWrap: true,
+  //                     itemCount: nearbyGyms.length,
+  //                     itemBuilder: (context, index) {
+  //                       final gym = nearbyGyms[index];
+  //                       return Card(
+  //                         margin:
+  //                             const EdgeInsets.symmetric(horizontal: ZSizes.sm),
+  //                         color: ZHelperFunction.isDarkMode(context)
+  //                             ? ZColor.dark
+  //                             : ZColor.lightContainer,
+  //                         child: ListTile(
+  //                           onTap: () {
+  //                             ZLogger.info(
+  //                                 'Location ${gym.location!.latitude}');
+  //                             Get.back();
+  //                             googleMapController?.animateCamera(
+  //                               CameraUpdate.newCameraPosition(
+  //                                 CameraPosition(
+  //                                   target: LatLng(gym.location!.latitude,
+  //                                       gym.location!.longitude),
+  //                                   zoom: 15.0,
+  //                                 ),
+  //                               ),
+  //                             );
+  //                           },
+  //                           title: Text(gym.gymName.toString()),
+  //                           subtitle: Row(
+  //                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                             children: [
+  //                               Text(gym.address.toString()),
+  //                               Row(
+  //                                 mainAxisSize: MainAxisSize.min,
+  //                                 children: [
+  //                                   const Icon(
+  //                                     Iconsax.star5,
+  //                                     color: Colors.amber,
+  //                                     size: 24,
+  //                                   ),
+  //                                   const SizedBox(
+  //                                     width: ZSizes.spaceBtwItems / 2,
+  //                                   ),
+  //                                   Text.rich(
+  //                                     TextSpan(
+  //                                       children: [
+  //                                         TextSpan(
+  //                                             text: gym.ratings.toString(),
+  //                                             style: Theme.of(context)
+  //                                                 .textTheme
+  //                                                 .bodyLarge),
+  //                                         TextSpan(
+  //                                             text:
+  //                                                 ' (${gym.visitors!.length})')
+  //                                       ],
+  //                                     ),
+  //                                   ),
+  //                                 ],
+  //                               )
+  //                             ],
+  //                           ),
+  //                         ),
+  //                       );
+  //                     },
+  //                   )
+  //                 ],
+  //               ),
+  //             );
+  //     },
+  //   );
+  // }
+
+  // showButtomSheet(
+  //   BuildContext context,
+  // ) {
+  //   return showModalBottomSheet(
+  //       context: context,
+  //       enableDrag: true,
+  //       showDragHandle: true,
+  //       builder: (BuildContext context) {
+  //         return gyms.isEmpty
+  //             ? SizedBox(
+  //                 height: 170,
+  //                 child: Center(
+  //                   child: Column(
+  //                     children: [
+  //                       const Icon(
+  //                         Iconsax.info_circle,
+  //                         size: 80,
+  //                       ),
+  //                       const SizedBox(
+  //                         height: ZSizes.spaceBtwItems,
+  //                       ),
+  //                       Text(
+  //                         'No Nearby Location',
+  //                         style: Theme.of(context).textTheme.titleMedium,
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               )
+  //             : SizedBox(
+  //                 height: 250,
+  //                 child: ListView.separated(
+  //                   separatorBuilder: (_, __) => const SizedBox(
+  //                     height: ZSizes.spaceBtwItems,
+  //                   ),
+  //                   itemCount: gyms.length,
+  //                   itemBuilder: (context, index) {
+  //                     final gym = gyms.value[index];
+  //                     return Card(
+  //                       margin:
+  //                           const EdgeInsets.symmetric(horizontal: ZSizes.sm),
+  //                       color: ZHelperFunction.isDarkMode(context)
+  //                           ? ZColor.dark
+  //                           : ZColor.lightContainer,
+  //                       child: ListTile(
+  //                         onTap: () {
+  //                           ZLogger.info('Location ${gym.location!.latitude}');
+  //                           Get.back();
+  //                           googleMapController?.animateCamera(
+  //                             CameraUpdate.newCameraPosition(
+  //                               CameraPosition(
+  //                                 target: LatLng(gym.location!.latitude,
+  //                                     gym.location!.longitude),
+  //                                 zoom: 15.0,
+  //                               ),
+  //                             ),
+  //                           );
+  //                         },
+  //                         title: Text('${gym.gymName} GYM'),
+  //                         subtitle: Row(
+  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                           children: [
+  //                             Text(gym.address.toString()),
+  //                             Row(
+  //                               mainAxisSize: MainAxisSize.min,
+  //                               children: [
+  //                                 const Icon(
+  //                                   Iconsax.star5,
+  //                                   color: Colors.amber,
+  //                                   size: 24,
+  //                                 ),
+  //                                 const SizedBox(
+  //                                   width: ZSizes.spaceBtwItems / 2,
+  //                                 ),
+  //                                 Text.rich(TextSpan(children: [
+  //                                   TextSpan(
+  //                                       text: gym.ratings.toString(),
+  //                                       style: Theme.of(context)
+  //                                           .textTheme
+  //                                           .bodyLarge),
+  //                                   const TextSpan(text: '(8)')
+  //                                 ])),
+  //                               ],
+  //                             )
+  //                           ],
+  //                         ),
+  //                       ),
+  //                     );
+  //                   },
+  //                 ),
+  //               );
+  //       });
+  // }
 
   scheduleDailyReset() {
     isAllowedToCheckIn.value = false;

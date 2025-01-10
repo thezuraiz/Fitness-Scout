@@ -25,7 +25,7 @@ class ZHomeAppbar extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .labelMedium!
-                .apply(color: ZColor.grey),
+                .apply(color: ZColor.lightGrey),
           ),
           Obx(
             () => controller.profileLoading.value
@@ -41,11 +41,17 @@ class ZHomeAppbar extends StatelessWidget {
         ],
       ),
       actions: [
-        IconButton(
-          onPressed: () => Get.to(() => const SettingScreen()),
-          icon: const Icon(
-            Iconsax.user,
-            color: ZColor.white,
+        Container(
+          decoration: BoxDecoration(
+            color: ZColor.lightGrey.withOpacity(0.3),
+            shape: BoxShape.circle,
+          ),
+          child: IconButton(
+            onPressed: () => Get.to(() => const SettingScreen()),
+            icon: const Icon(
+              Iconsax.user,
+              color: ZColor.white,
+            ),
           ),
         ),
       ],

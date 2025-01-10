@@ -85,7 +85,7 @@ class GymPool extends StatelessWidget {
         child: const Icon(Iconsax.airdrop),
         onPressed: () {
           ZLogger.info('gyms ${controller.gyms.length}');
-          controller.showButtomSheet(context);
+          controller.showBottomSheet(context);
         },
       ),
     );

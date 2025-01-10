@@ -50,8 +50,8 @@ class GymAttendanceController extends GetxController {
           .toList()
           .reversed
           .toList();
-      print(userGYMAttendance.value.toString());
-      print(userGYMAttendance.value.length);
+      ZLogger.info(userGYMAttendance.value.toString());
+      ZLogger.info(userGYMAttendance.value.length.toString());
       ZLogger.info('UserData: ${userGYMAttendance.value}');
       await Future.delayed(const Duration(seconds: 1));
       isLoading.value = false;

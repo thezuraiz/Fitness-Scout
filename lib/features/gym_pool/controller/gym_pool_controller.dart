@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:fitness_scout/data/repositories/gym_pool/gym_pool_repository.dart';
 import 'package:fitness_scout/features/gym_pool/controller/gym_scanner_controller.dart';
-import 'package:fitness_scout/features/gym_pool/screen/gymProfilePage.dart';
+import 'package:fitness_scout/features/gym_pool/screen/gymProfileScreen.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,11 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:iconsax/iconsax.dart';
 import 'dart:ui' as ui;
-import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
 import '../../personalization/controller/user_controller.dart';
 import '../model/gym_model.dart';
@@ -31,7 +31,7 @@ class GymPoolController extends GetxController {
     await fetchCurrentLocation();
   }
 
-  static RxBool isAllowedToCheckIn = true.obs;
+  static RxBool canCheckedOut = false.obs;
   BitmapDescriptor? customMarkerIcon;
   RxBool isDarkMode = ZHelperFunction.isDarkMode(Get.context!).obs;
   Rx<LatLng> userLocation = const LatLng(31.5204, 74.3587).obs;
@@ -39,6 +39,31 @@ class GymPoolController extends GetxController {
   RxList<GymOwnerModel> gyms = <GymOwnerModel>[].obs;
   final gymRepository = Get.put(GymPoolRepository());
   GoogleMapController? googleMapController;
+  var lastCheckedInDate = ''.obs;
+
+  /// This function will be called to load the last checked-in date from GetStorage
+  void loadLastCheckedInDate() {
+    final storage = GetStorage();
+    lastCheckedInDate.value = storage.read('lastCheckedInDate') ?? '';
+  }
+
+  /// This function will be used to check if the user can mark attendance
+  bool canCheckIn() {
+    ZLogger.info('Checking Last Checked IN');
+    final today = DateTime.now().toString().split(' ')[0];
+    final result = lastCheckedInDate.value == today;
+    ZLogger.info(result.toString());
+    return result;
+  }
+
+  /// This function will save the current date as the last checked-in date
+  void saveLastCheckedInDate() {
+    final storage = GetStorage();
+    final today = DateTime.now().toString().split(' ')[0];
+    storage.write('lastCheckedInDate', today);
+    lastCheckedInDate.value = today;
+    Get.reload();
+  }
 
   Rx<CustomInfoWindowController> customInfoWindowController =
       CustomInfoWindowController().obs;
@@ -415,16 +440,16 @@ class GymPoolController extends GetxController {
   //       });
   // }
 
-  scheduleDailyReset() {
-    isAllowedToCheckIn.value = false;
-    final now = DateTime.now();
-    final nextMidnight = DateTime(now.year, now.month, now.day + 1);
-    final durationUntilMidnight = nextMidnight.difference(now);
-
-    Timer(durationUntilMidnight, () {
-      isAllowedToCheckIn.value = true;
-    });
-  }
+  // scheduleDailyReset() {
+  //   isAllowedToCheckIn.value = false;
+  //   final now = DateTime.now();
+  //   final nextMidnight = DateTime(now.year, now.month, now.day + 1);
+  //   final durationUntilMidnight = nextMidnight.difference(now);
+  //
+  //   Timer(durationUntilMidnight, () {
+  //     isAllowedToCheckIn.value = true;
+  //   });
+  // }
 
   void checkOutFromGym(
       BuildContext context, String gymId, int oldRating, int oldVisits) {

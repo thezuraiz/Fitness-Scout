@@ -17,6 +17,7 @@ import 'package:iconsax/iconsax.dart';
 import 'dart:ui' as ui;
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
+import '../../personalization/controller/user_controller.dart';
 import '../model/gym_model.dart';
 import '../screen/gymBottomScreen.dart';
 
@@ -48,9 +49,10 @@ class GymPoolController extends GetxController {
   );
 
   void _addSurroundingMarkers() {
+    final userPackage = UserController.instance.user.value.currentPackage;
     ZLogger.info('Adding ${gyms.length} gym markers.');
     gyms.forEach((gym) async {
-      if (gym.location != null) {
+      if (gym.location != null && gym.gymType.name == userPackage) {
         final Uint8List iconMarker = await _loadCustomMarkerIcon();
 
         markers.add(

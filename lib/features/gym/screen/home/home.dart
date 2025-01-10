@@ -14,7 +14,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:get/get.dart';
 
 import '../../../../utils/navigation_menu.dart';
-import '../../../gym_pool/controller/gym_pool_controller.dart';
 import '../../controller/bmi/bmi_controller.dart';
 import '../../controller/diet_plan/diet_plan_controller.dart';
 import '../../controller/upcoming_events/upcoming_event.dart';
@@ -40,11 +39,10 @@ class HomePage extends StatelessWidget {
                 children: [
                   // -- Heading
                   ZSectionHeading(
-                    title: "Features",
+                    title: "Discover",
                     onPressed: () {},
                     showActionButton: false,
                   ),
-                  const SizedBox(height: ZSizes.spaceBtwItems * 0.5),
                   ZExercisesGrid(
                     children: [
                       GridCustomWidget(
@@ -88,7 +86,7 @@ class HomePage extends StatelessWidget {
                   const SizedBox(height: ZSizes.spaceBtwItems),
                   ZSettingsMenueTitle(
                     icon: Iconsax.weight,
-                    title: "Over Weight",
+                    title: "Overweight",
                     subTitle: "Check your Diet Plain Again",
                     onPressed: () => Get.to(() => const BlankScreen()),
                   ),

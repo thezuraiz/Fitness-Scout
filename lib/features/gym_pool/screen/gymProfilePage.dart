@@ -82,8 +82,8 @@ class GymDetailScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     ReadMoreText(
-                      '${gym.description}  ' * 20 ?? "No description provided.",
-                      trimLines: 3,
+                      gym.description ?? "No description provided.",
+                      trimLines: 2,
                       trimMode: TrimMode.Line,
                       trimCollapsedText: "Show More",
                       trimExpandedText: "Show Less",
@@ -146,14 +146,15 @@ class GymDetailScreen extends StatelessWidget {
             () => GymPoolController.isAllowedToCheckIn.value
                 ? ElevatedButton(
                     onPressed: () => Get.to(GymScanner(
-                          gymId: gym.id,
-                          gymName: gym.gymName.toString(),
-                          gymPhoneNo: gym.contactNumber.toString(),
-                          gymAddress: gym.address.toString(),
-                          gymRatings: gym.ratings,
-                          gymType: gym.gymType,
-                        )),
-                    child: const Text('Check In'))
+                      gymId: gym.id,
+                      gymName: gym.gymName.toString(),
+                      gymPhoneNo: gym.contactNumber.toString(),
+                      gymAddress: gym.address.toString(),
+                      gymRatings: gym.ratings,
+                      gymType: gym.gymType,
+                    )),
+                    child: const Text('Check In'),
+                  )
                 : ElevatedButton(
                     onPressed: () => GymPoolController.instance.checkOutFromGym(
                         context,

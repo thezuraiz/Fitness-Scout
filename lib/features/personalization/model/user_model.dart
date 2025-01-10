@@ -12,7 +12,8 @@ class UserModel {
   double weight;
   double bmi;
   List<GymUserAttendance> userAttendance;
-  final int totalVisits;
+  String currentPackage;
+  List<PackageHistory> packageHistory;
 
   String get fullName => '$firstName $lastName';
 
@@ -27,8 +28,9 @@ class UserModel {
     this.height = 0.0,
     this.weight = 0.0,
     this.bmi = 0.0,
-    this.totalVisits = 0,
     this.userAttendance = const [],
+    this.currentPackage = '',
+    this.packageHistory = const [],
   });
 
   // Factory method to create an empty UserModel
@@ -44,8 +46,9 @@ class UserModel {
       height: 0.0,
       weight: 0.0,
       bmi: 0.0,
-      totalVisits: 0,
       userAttendance: [],
+      currentPackage: '',
+      packageHistory: [],
     );
   }
 
@@ -62,10 +65,14 @@ class UserModel {
       height: (json['height'] as num).toDouble(),
       weight: (json['weight'] as num).toDouble(),
       bmi: (json['bmi'] as num).toDouble(),
-      totalVisits: json['totalVisits'] ?? 0,
       userAttendance: (json['userAttendance'] as List<dynamic>?)
-          ?.map((item) => GymUserAttendance.fromMap(item))
-          .toList() ??
+              ?.map((item) => GymUserAttendance.fromMap(item))
+              .toList() ??
+          [],
+      currentPackage: json['currentPackage'] ?? '',
+      packageHistory: (json['packageHistory'] as List<dynamic>?)
+              ?.map((item) => PackageHistory.fromJson(item))
+              .toList() ??
           [],
     );
   }
@@ -85,10 +92,14 @@ class UserModel {
       height: (data['height'] ?? 0.0).toDouble(),
       weight: (data['weight'] ?? 0.0).toDouble(),
       bmi: (data['bmi'] ?? 0.0).toDouble(),
-      totalVisits: data['totalVisits'] ?? 0,
       userAttendance: (data['userAttendance'] as List<dynamic>?)
-          ?.map((item) => GymUserAttendance.fromMap(item))
-          .toList() ??
+              ?.map((item) => GymUserAttendance.fromMap(item))
+              .toList() ??
+          [],
+      currentPackage: data['currentPackage'] ?? '',
+      packageHistory: (data['packageHistory'] as List<dynamic>?)
+              ?.map((item) => PackageHistory.fromJson(item))
+              .toList() ??
           [],
     );
   }
@@ -106,8 +117,9 @@ class UserModel {
       'height': height,
       'weight': weight,
       'bmi': bmi,
-      'totalVisits': totalVisits,
       'userAttendance': userAttendance.map((item) => item.toMap()).toList(),
+      'currentPackage': currentPackage,
+      'packageHistory': packageHistory.map((item) => item.toJson()).toList(),
     };
   }
 
@@ -123,8 +135,9 @@ class UserModel {
     double? height,
     double? weight,
     double? bmi,
-    int? totalVisits,
+    String? currentPackage,
     List<GymUserAttendance>? userAttendance,
+    List<PackageHistory>? packageHistory,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -137,14 +150,15 @@ class UserModel {
       height: height ?? this.height,
       weight: weight ?? this.weight,
       bmi: bmi ?? this.bmi,
-      totalVisits: totalVisits ?? this.totalVisits,
+      currentPackage: currentPackage ?? this.currentPackage,
       userAttendance: userAttendance ?? this.userAttendance,
+      packageHistory: packageHistory ?? this.packageHistory,
     );
   }
 
   @override
   String toString() {
-    return 'UserModel(id: $id, firstName: $firstName, lastName: $lastName, userName: $userName, email: $email, phoneNumber: $phoneNumber, profilePicture: $profilePicture, height: $height, weight: $weight, bmi: $bmi, totalVisits: $totalVisits, userAttendance: $userAttendance)';
+    return 'UserModel(id: $id, firstName: $firstName, lastName: $lastName, userName: $userName, email: $email, phoneNumber: $phoneNumber, profilePicture: $profilePicture, height: $height, weight: $weight, bmi: $bmi, currentPackage: $currentPackage, userAttendance: $userAttendance, packageHistory: $packageHistory)';
   }
 
   @override
@@ -162,24 +176,26 @@ class UserModel {
         other.height == height &&
         other.weight == weight &&
         other.bmi == bmi &&
-        other.totalVisits == totalVisits &&
-        other.userAttendance == userAttendance;
+        other.currentPackage == currentPackage &&
+        other.userAttendance == userAttendance &&
+        other.packageHistory == packageHistory;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-    firstName.hashCode ^
-    lastName.hashCode ^
-    userName.hashCode ^
-    email.hashCode ^
-    phoneNumber.hashCode ^
-    profilePicture.hashCode ^
-    height.hashCode ^
-    weight.hashCode ^
-    bmi.hashCode ^
-    totalVisits.hashCode ^
-    userAttendance.hashCode;
+        firstName.hashCode ^
+        lastName.hashCode ^
+        userName.hashCode ^
+        email.hashCode ^
+        phoneNumber.hashCode ^
+        profilePicture.hashCode ^
+        height.hashCode ^
+        weight.hashCode ^
+        bmi.hashCode ^
+        currentPackage.hashCode ^
+        userAttendance.hashCode ^
+        packageHistory.hashCode;
   }
 }
 
@@ -234,5 +250,35 @@ class GymUserAttendance {
   @override
   String toString() {
     return 'GymUserAttendance(id: $id, name: $name, checkInTime: $checkInTime, checkOutTime: $checkOutTime)';
+  }
+}
+
+class PackageHistory {
+  final String packageName;
+  final String dateTime; // Using String for date/time
+  final String stripeTransactionId;
+
+  PackageHistory({
+    required this.packageName,
+    required this.dateTime,
+    required this.stripeTransactionId,
+  });
+
+  // Factory constructor for creating a new instance from a map
+  factory PackageHistory.fromJson(Map<String, dynamic> json) {
+    return PackageHistory(
+      packageName: json['packageName'],
+      dateTime: json['dateTime'], // Assuming dateTime is already a string
+      stripeTransactionId: json['stripeTransactionId'],
+    );
+  }
+
+  // Method to convert an instance to a map
+  Map<String, dynamic> toJson() {
+    return {
+      'packageName': packageName,
+      'dateTime': dateTime,
+      'stripeTransactionId': stripeTransactionId,
+    };
   }
 }

@@ -1,3 +1,5 @@
+import 'package:fitness_scout/features/personalization/controller/user_controller.dart';
+import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:iconsax/iconsax.dart';
@@ -31,10 +33,13 @@ class _GymBottomSheetState extends State<GymBottomSheet> {
   @override
   void initState() {
     super.initState();
-    _filterGymsByDistance(selectedDistance);
+    _filterGymsByDistanceAndPackageType(selectedDistance);
   }
 
-  void _filterGymsByDistance(int distanceKM) {
+  void _filterGymsByDistanceAndPackageType(int distanceKM) {
+    final userPackage = UserController.instance.user.value.currentPackage;
+    ZLogger.info('User Package: ${userPackage}');
+
     setState(() {
       filteredGyms = widget.gyms.where((gym) {
         if (gym.location == null) return false;
@@ -44,7 +49,9 @@ class _GymBottomSheetState extends State<GymBottomSheet> {
           gym.location!.latitude,
           gym.location!.longitude,
         );
-        return distanceInMeters <= distanceKM * (selectedDistance * 1000);
+        ZLogger.info('Gym Type: ${gym.gymType.name}');
+        return distanceInMeters <= distanceKM * (selectedDistance * 1000) &&
+            gym.gymType.name == userPackage;
       }).toList();
     });
   }
@@ -83,7 +90,7 @@ class _GymBottomSheetState extends State<GymBottomSheet> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Distance: ',
+                        'Distance:',
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
                       DropdownButton<int>(
@@ -99,7 +106,8 @@ class _GymBottomSheetState extends State<GymBottomSheet> {
                         onChanged: (int? newValue) {
                           setState(() {
                             selectedDistance = newValue!;
-                            _filterGymsByDistance(selectedDistance);
+                            _filterGymsByDistanceAndPackageType(
+                                selectedDistance);
                           });
                         },
                         items: distanceOptions

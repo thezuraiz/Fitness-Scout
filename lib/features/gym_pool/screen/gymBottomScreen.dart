@@ -38,7 +38,7 @@ class _GymBottomSheetState extends State<GymBottomSheet> {
 
   void _filterGymsByDistanceAndPackageType(int distanceKM) {
     final userPackage = UserController.instance.user.value.currentPackage;
-    ZLogger.info('User Package: ${userPackage}');
+    ZLogger.info('User Package: $userPackage');
 
     setState(() {
       filteredGyms = widget.gyms.where((gym) {

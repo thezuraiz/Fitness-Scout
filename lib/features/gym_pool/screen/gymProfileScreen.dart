@@ -19,6 +19,7 @@ class GymDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GymPoolController.instance.canCheckIn();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -26,7 +27,7 @@ class GymDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 240, // Increased height to accommodate CircleAvatar
+                height: 240,
                 width: double.infinity,
                 child: Image.network(
                   gym.images?.isNotEmpty == true
@@ -139,30 +140,46 @@ class GymDetailScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(12.0),
         child: SizedBox(
           width: double.infinity,
           child: Obx(
-            () => GymPoolController.isAllowedToCheckIn.value
+            () => GymPoolController.canCheckedOut.value
                 ? ElevatedButton(
-                    onPressed: () => Get.to(GymScanner(
-                      gymId: gym.id,
-                      gymName: gym.gymName.toString(),
-                      gymPhoneNo: gym.contactNumber.toString(),
-                      gymAddress: gym.address.toString(),
-                      gymRatings: gym.ratings,
-                      gymType: gym.gymType,
-                    )),
-                    child: const Text('Check In'),
-                  )
-                : ElevatedButton(
                     onPressed: () => GymPoolController.instance.checkOutFromGym(
                         context,
                         gym.id.toString(),
                         gym.ratings,
                         gym.visitors!.length),
                     child: const Text('Check Out'),
-                  ),
+                  )
+                : GymPoolController.instance.canCheckIn()
+                    ? ElevatedButton(
+                        onPressed: () => Get.to(GymScanner(
+                          gymId: gym.id,
+                          gymName: gym.gymName.toString(),
+                          gymPhoneNo: gym.contactNumber.toString(),
+                          gymAddress: gym.address.toString(),
+                          gymRatings: gym.ratings,
+                          gymType: gym.gymType,
+                        )),
+                        child: const Text('Check In'),
+                      )
+                    : ElevatedButton(
+                        onPressed: () {
+                          ZLoaders.errorSnackBar(
+                            title: 'Already Checked In',
+                            message: 'You have already checked in today.',
+                          );
+                        },
+                        child: Text(
+                          'Already Checked In Today',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(color: Colors.white),
+                        ),
+                      ),
           ),
         ),
       ),

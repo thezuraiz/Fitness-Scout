@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final BMIx = Get.put(BmiController());
+    final BMI = Get.put(BmiController());
     Get.put(DietPlanController());
     Get.put(UpcomingEventsController());
     return Scaffold(
@@ -91,16 +91,10 @@ class HomePage extends StatelessWidget {
                     onPressed: () => Get.to(() => const BlankScreen()),
                   ),
                   ZSettingsMenueTitle(
-                    icon: Iconsax.cup,
-                    title: "Achievements",
-                    subTitle: "See Your Achievements",
-                    onPressed: () => Get.to(() => const BlankScreen()),
-                  ),
-                  ZSettingsMenueTitle(
                     icon: Iconsax.warning_2,
                     title: "Package",
                     subTitle: "Package Expire Soon",
-                    onPressed: () => Get.to(() => const BlankScreen()),
+                    onPressed: () {},
                   ),
                 ],
               ),

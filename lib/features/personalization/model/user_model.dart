@@ -255,21 +255,24 @@ class GymUserAttendance {
 
 class PackageHistory {
   final String packageName;
-  final String dateTime; // Using String for date/time
-  final String stripeTransactionId;
+  final String amount;
+  final String currency;
+  final String timestamp;
 
   PackageHistory({
     required this.packageName,
-    required this.dateTime,
-    required this.stripeTransactionId,
+    required this.amount,
+    required this.currency,
+    required this.timestamp,
   });
 
   // Factory constructor for creating a new instance from a map
   factory PackageHistory.fromJson(Map<String, dynamic> json) {
     return PackageHistory(
-      packageName: json['packageName'],
-      dateTime: json['dateTime'], // Assuming dateTime is already a string
-      stripeTransactionId: json['stripeTransactionId'],
+      packageName: json['packageName'] ?? '',
+      amount: json['amount'] ?? '',
+      currency: json['currency'] ?? '',
+      timestamp: json['timestamp'] ?? '',
     );
   }
 
@@ -277,8 +280,9 @@ class PackageHistory {
   Map<String, dynamic> toJson() {
     return {
       'packageName': packageName,
-      'dateTime': dateTime,
-      'stripeTransactionId': stripeTransactionId,
+      'amount': amount,
+      'currency': currency,
+      'timestamp': timestamp,
     };
   }
 }

@@ -1,18 +1,32 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_scout/common/widgets/success_screen/successScreens.dart';
+import 'package:fitness_scout/utils/constants/image_string.dart';
+import 'package:fitness_scout/utils/helpers/loaders.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-
+import 'package:get/get.dart';
 import '../../../../const.dart';
+import '../../../../utils/helpers/network_manager.dart';
+import '../../../../utils/navigation_menu.dart';
+import '../../../../utils/popups/full_screen_loader.dart';
 
 class StripeService {
   StripeService._();
 
   static final StripeService instance = StripeService._();
 
-  Future<void> makePayment() async {
+  Future<void> makePayment(int amount, String packageName) async {
+    ZLogger.info('Amount: $amount');
     try {
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        ZFullScreenLoader.stopLoading();
+        return;
+      }
       String? paymentIntentClientSecrets =
-          await _createPaymentIntent(200, 'usd');
+          await _createPaymentIntent(amount, 'PKR');
       if (paymentIntentClientSecrets == null) return;
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
@@ -20,7 +34,8 @@ class StripeService {
           merchantDisplayName: 'Zuraiz Khan',
         ),
       );
-      await _processPayment();
+      await _processPayment(
+          amount, 'PKR', paymentIntentClientSecrets, packageName);
     } catch (e) {
       ZLogger.error('Error: $e');
     }
@@ -44,6 +59,7 @@ class StripeService {
       );
       if (response.data != null) {
         ZLogger.info('Data: ${response.data}');
+
         return response.data['client_secret'];
       }
       return null;
@@ -54,9 +70,44 @@ class StripeService {
     }
   }
 
-  Future<void> _processPayment() async {
+  Future<void> _processPayment(int amount, String currency,
+      final paymentIntentClientSecret, String packageName) async {
+    ZLogger.info('In _process Payment Function!');
     try {
       await Stripe.instance.presentPaymentSheet();
+      ZLogger.info('After _process Payment Function!');
+      try {
+        /// Save the Transaction
+        final currentUser = FirebaseAuth.instance.currentUser;
+
+        DocumentReference userDoc = FirebaseFirestore.instance
+            .collection('Users')
+            .doc(currentUser?.uid);
+
+        Map<String, dynamic> newTransaction = {
+          'amount': amount.toString(),
+          'currency': currency,
+          'timestamp': DateTime.now().toString(),
+          'packageName': packageName
+        };
+
+        await userDoc.set({
+          'packageHistory': FieldValue.arrayUnion([newTransaction]),
+        }, SetOptions(merge: true));
+        await ZLoaders.successSnackBar(
+            title: 'Congratulations!', message: 'Your Transaction Successful');
+        await Get.to(
+          SuccessScreen(
+            image: ZImages.successScreenAnimation,
+            title: "Verification Check",
+            subTitle:
+                "Please wait. Our team will check your transaction and get approved you soon.",
+            onPressed: () => Get.offAll(const NavigationMenu()),
+          ),
+        );
+      } catch (e) {
+        ZLogger.error('Failed to save transaction: ${e.toString()}');
+      }
       await Stripe.instance.confirmPaymentSheetPayment();
     } catch (e) {
       ZLogger.error('Error $e');

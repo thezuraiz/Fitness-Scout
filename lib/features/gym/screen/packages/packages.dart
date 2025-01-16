@@ -15,6 +15,7 @@ class PackagesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(PackageController());
     final dark = ZHelperFunction.isDarkMode(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -52,14 +53,17 @@ class PackagesScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final package = controller.packageHistory.value[index];
                     return Card(
-                      color: ZColor.lightContainer,
+                      color:
+                          dark ? ZColor.darkContainer : ZColor.lightContainer,
                       child: ListTile(
                         title: Text(
                           package.packageName,
                           style: Theme.of(context)
                               .textTheme
                               .headlineSmall!
-                              .copyWith(fontSize: 17),
+                              .copyWith(
+                                  fontSize: 17,
+                                  color: dark ? ZColor.white : ZColor.dark),
                         ),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,6 +103,7 @@ class CustomRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = ZHelperFunction.isDarkMode(context);
     return Row(
       children: [
         Expanded(
@@ -106,15 +111,18 @@ class CustomRow extends StatelessWidget {
           child: Text(
             '$heading:',
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+                fontWeight: FontWeight.w600,
+                color: dark ? ZColor.white : ZColor.dark),
           ),
         ),
         Expanded(
           flex: 3,
           child: Text(
             value,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(color: dark ? ZColor.white : ZColor.dark),
           ),
         )
       ],

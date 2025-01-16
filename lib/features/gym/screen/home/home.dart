@@ -5,6 +5,7 @@ import 'package:fitness_scout/common/widgets/section_heading.dart';
 import 'package:fitness_scout/features/gym/screen/bmi/bmi_calculator.dart';
 import 'package:fitness_scout/features/gym/screen/home/widgets/home_grid.dart';
 import 'package:fitness_scout/features/gym/screen/home/widgets/home_header.dart';
+import 'package:fitness_scout/features/gym/screen/packages/packages.dart';
 import 'package:fitness_scout/features/gym/screen/track_attendance/attendance_screen.dart';
 import 'package:fitness_scout/features/gym/screen/upcoming_events/upcoming_event.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
@@ -73,7 +74,7 @@ class HomePage extends StatelessWidget {
                       ),
                       GridCustomWidget(
                         icon: Iconsax.wallet,
-                        onPressed: () {},
+                        onPressed: () => Get.to(() => const PackagesScreen()),
                         buttonTitle: 'My Package',
                       ),
                     ],
@@ -94,7 +95,7 @@ class HomePage extends StatelessWidget {
                     icon: Iconsax.warning_2,
                     title: "Package",
                     subTitle: "Package Expire Soon",
-                    onPressed: () {},
+                    onPressed: () => Get.to(() => const PackagesScreen()),
                   ),
                 ],
               ),

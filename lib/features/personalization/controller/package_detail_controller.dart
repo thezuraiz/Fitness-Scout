@@ -9,7 +9,7 @@ class PackageDetailController extends GetxController {
     Get.to(
       () => const PackageDetailPage(
         title: 'Basic Package',
-        price: 'Rs-/ 2,000',
+        price: '2,000',
         illustration: ZImages.basic_plain_illustration,
         description: '''
   ## Features:
@@ -32,7 +32,7 @@ class PackageDetailController extends GetxController {
     Get.to(
       () => const PackageDetailPage(
         title: 'Silver Package',
-        price: 'Rs-/ 4,000',
+        price: '4,000',
         illustration: ZImages.medium_plain_illustration,
         description: '''
   ## Features:
@@ -58,7 +58,7 @@ class PackageDetailController extends GetxController {
     Get.to(
       () => const PackageDetailPage(
         title: 'Diamond Package',
-        price: 'Rs-/ 6,000',
+        price: '6,000',
         illustration: ZImages.premium_plain_illustration,
         description: '''
   ## Features:

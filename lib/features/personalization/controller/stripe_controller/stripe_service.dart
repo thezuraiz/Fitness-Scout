@@ -94,14 +94,16 @@ class StripeService {
         await userDoc.set({
           'packageHistory': FieldValue.arrayUnion([newTransaction]),
         }, SetOptions(merge: true));
+
+        userDoc.update({'currentPackage': packageName});
         await ZLoaders.successSnackBar(
             title: 'Congratulations!', message: 'Your Transaction Successful');
         await Get.to(
           SuccessScreen(
             image: ZImages.successScreenAnimation,
-            title: "Verification Check",
+            title: "Verification Complete",
             subTitle:
-                "Please wait. Our team will check your transaction and get approved you soon.",
+                "Transaction successful! You are now part of our family. Enjoy all the features of the Fitness Scout.",
             onPressed: () => Get.offAll(const NavigationMenu()),
           ),
         );

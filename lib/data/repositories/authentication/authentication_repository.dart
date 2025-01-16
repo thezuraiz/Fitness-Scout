@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_scout/features/authentication/screen/login_screen/login_screen.dart';
 import 'package:fitness_scout/features/authentication/screen/onboard_screen/onboarding_screen.dart';
@@ -8,12 +9,14 @@ import 'package:fitness_scout/utils/exceptions/firebase_exception.dart';
 import 'package:fitness_scout/utils/exceptions/format_exception.dart';
 import 'package:fitness_scout/utils/exceptions/plaform_exception.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
+import 'package:fitness_scout/utils/navigation_menu.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../../features/personalization/model/user_model.dart';
 import '../user/user_repository.dart';
 
 class AuthenticationRepository extends GetxController {
@@ -39,8 +42,10 @@ class AuthenticationRepository extends GetxController {
 
     if (_auth.currentUser != null) {
       if (_auth.currentUser!.emailVerified) {
-        // Get.offAll(() => const NavigationMenu());
-        Get.offAll(() => const LandingPackageScreen());
+        bool isValid = await isPackageValid(); // Await the result here
+        isValid
+            ? Get.offAll(() => const NavigationMenu())
+            : Get.offAll(() => const LandingPackageScreen());
       } else {
         Get.offAll(() => VerifyScreen(
               email: _auth.currentUser?.email,
@@ -54,6 +59,43 @@ class AuthenticationRepository extends GetxController {
       deviceStorage.read('isFirstTime') != true
           ? Get.offAll(const LoginScreen())
           : Get.offAll(const OnBoardingScreen());
+    }
+  }
+
+  Future<bool> isPackageValid() async {
+    try {
+      final documentSnapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
+
+      if (documentSnapshot.exists) {
+        final data = documentSnapshot.data() as Map<String, dynamic>;
+
+        if (data.containsKey('packageHistory')) {
+          List packageHistoryList = data['packageHistory'];
+
+          final packageList = packageHistoryList.map((item) {
+            return PackageHistory.fromJson(item as Map<String, dynamic>);
+          }).toList();
+
+          final time = packageList.last.timestamp;
+          final timestamp = DateTime.parse(time);
+          final oneMonthAgo = DateTime.now().subtract(const Duration(days: 30));
+
+          bool isWithinOneMonth = timestamp.isAfter(oneMonthAgo);
+          return isWithinOneMonth;
+        } else {
+          ZLogger.error('Package history not found in the document');
+          return false;
+        }
+      } else {
+        ZLogger.error('Document not found');
+        return false;
+      }
+    } catch (e) {
+      ZLogger.error('Error: $e');
+      return false;
     }
   }
 

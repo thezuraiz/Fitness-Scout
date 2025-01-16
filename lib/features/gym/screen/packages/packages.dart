@@ -66,8 +66,7 @@ class PackagesScreen extends StatelessWidget {
                           children: [
                             CustomRow(
                                 heading: 'Amount',
-                                value:
-                                    '${package.currency}. ${package.amount}'),
+                                value: '${package.currency} ${package.amount}'),
                             CustomRow(
                               heading: 'Date',
                               value: DateFormat('yyyy-MM-dd')
@@ -112,7 +111,7 @@ class CustomRow extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 4,
+          flex: 3,
           child: Text(
             value,
             style: Theme.of(context).textTheme.bodyMedium,

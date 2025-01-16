@@ -8,6 +8,7 @@ import 'package:fitness_scout/features/gym/screen/home/widgets/home_header.dart'
 import 'package:fitness_scout/features/gym/screen/packages/packages.dart';
 import 'package:fitness_scout/features/gym/screen/track_attendance/attendance_screen.dart';
 import 'package:fitness_scout/features/gym/screen/upcoming_events/upcoming_event.dart';
+import 'package:fitness_scout/features/personalization/controller/user_controller.dart';
 import 'package:fitness_scout/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -91,11 +92,15 @@ class HomePage extends StatelessWidget {
                     subTitle: "Check your Diet Plain Again",
                     onPressed: () => Get.to(() => const BlankScreen()),
                   ),
-                  ZSettingsMenueTitle(
-                    icon: Iconsax.warning_2,
-                    title: "Package",
-                    subTitle: "Package Expire Soon",
-                    onPressed: () => Get.to(() => const PackagesScreen()),
+                  Obx(
+                    () => ZSettingsMenueTitle(
+                      icon: Iconsax.warning_2,
+                      title:
+                          "${UserController.instance.user.value.currentPackage}" ??
+                              'Package',
+                      subTitle: "Package Expire Soon",
+                      onPressed: () => Get.to(() => const PackagesScreen()),
+                    ),
                   ),
                 ],
               ),

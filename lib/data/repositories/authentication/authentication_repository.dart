@@ -42,7 +42,7 @@ class AuthenticationRepository extends GetxController {
 
     if (_auth.currentUser != null) {
       if (_auth.currentUser!.emailVerified) {
-        bool isValid = await isPackageValid(); // Await the result here
+        bool isValid = await isPackageValid();
         isValid
             ? Get.offAll(() => const NavigationMenu())
             : Get.offAll(() => const LandingPackageScreen());
@@ -80,10 +80,14 @@ class AuthenticationRepository extends GetxController {
           }).toList();
 
           final time = packageList.last.timestamp;
+          ZLogger.info('Last subscription date: $time');
           final timestamp = DateTime.parse(time);
-          final oneMonthAgo = DateTime.now().subtract(const Duration(days: 30));
+          final oneMonthAgo = DateTime.now().add(const Duration(days: 30));
 
-          bool isWithinOneMonth = timestamp.isAfter(oneMonthAgo);
+          ZLogger.info('One Month ago: $oneMonthAgo');
+
+          bool isWithinOneMonth = timestamp.isBefore(oneMonthAgo);
+          ZLogger.info('Is Package is Valid: $isWithinOneMonth');
           return isWithinOneMonth;
         } else {
           ZLogger.error('Package history not found in the document');

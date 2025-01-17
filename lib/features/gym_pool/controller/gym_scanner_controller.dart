@@ -68,6 +68,7 @@ class GymScannerController extends GetxController {
 
       // Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
+
       if (!isConnected) {
         // Remove Loader
         ZFullScreenLoader.stopLoading();
@@ -78,6 +79,10 @@ class GymScannerController extends GetxController {
         return;
       }
 
+      /// make Flag true for checkout button
+      GymPoolController.canCheckedOut.value = true;
+
+      /// Attendance Procedure
       await GymPoolRepository.instance.payToGym(gymID, gymType);
       await GymPoolRepository.instance.takeGYMAttendance(gymID);
       await GymPoolRepository.instance

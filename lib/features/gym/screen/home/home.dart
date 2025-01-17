@@ -90,7 +90,7 @@ class HomePage extends StatelessWidget {
                     icon: Iconsax.weight,
                     title: "Overweight",
                     subTitle: "Check your Diet Plain Again",
-                    onPressed: () => Get.to(() => const BlankScreen()),
+                    onPressed: () {},
                   ),
                   Obx(
                     () => ZSettingsMenueTitle(

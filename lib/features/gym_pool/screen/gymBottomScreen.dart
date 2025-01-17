@@ -1,3 +1,4 @@
+import 'package:fitness_scout/features/gym_pool/controller/gym_pool_controller.dart';
 import 'package:fitness_scout/features/personalization/controller/user_controller.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,9 @@ class _GymBottomSheetState extends State<GymBottomSheet> {
 
   @override
   void initState() {
+    ZLogger.info('Bottom Sheet Opened');
     super.initState();
+    GymPoolController.instance.loadGYMS();
     _filterGymsByDistanceAndPackageType(selectedDistance);
   }
 
@@ -59,25 +62,67 @@ class _GymBottomSheetState extends State<GymBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return filteredGyms.isEmpty
-        ? SizedBox(
-            height: 170,
-            child: Center(
-              child: Column(
-                children: [
-                  const Icon(
-                    Iconsax.info_circle,
-                    size: 80,
+        ? Column(
+            children: [
+              SizedBox(
+                height: 170,
+                child: Center(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: ZSizes.defaultSpace),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Distance:',
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            DropdownButton<int>(
+                              elevation: 10,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(12),
+                              ),
+                              icon: const Icon(
+                                Iconsax.direct_left,
+                                size: 18,
+                              ),
+                              value: selectedDistance,
+                              onChanged: (int? newValue) {
+                                setState(() {
+                                  selectedDistance = newValue!;
+                                  _filterGymsByDistanceAndPackageType(
+                                      selectedDistance);
+                                });
+                              },
+                              items: distanceOptions
+                                  .map<DropdownMenuItem<int>>((int value) {
+                                return DropdownMenuItem<int>(
+                                  value: value,
+                                  child: Text('$value KM'),
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Icon(
+                        Iconsax.info_circle,
+                        size: 80,
+                      ),
+                      const SizedBox(
+                        height: ZSizes.spaceBtwItems,
+                      ),
+                      Text(
+                        'No Nearby Location',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    height: ZSizes.spaceBtwItems,
-                  ),
-                  Text(
-                    'No Nearby Location',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ],
+                ),
               ),
-            ),
+            ],
           )
         : SizedBox(
             height: MediaQuery.of(context).size.height / 2.7,

@@ -25,8 +25,8 @@ class GymPoolController extends GetxController {
   static GymPoolController get instance => Get.find();
 
   @override
-  void onInit() async {
-    super.onInit();
+  void onReady() async {
+    super.onReady();
     await loadGYMS();
     await fetchCurrentLocation();
   }
@@ -49,9 +49,9 @@ class GymPoolController extends GetxController {
 
   /// This function will be used to check if the user can mark attendance
   bool canCheckIn() {
-    ZLogger.info('Checking Last Checked IN');
+    ZLogger.info('Checking Last Checked In');
     final today = DateTime.now().toString().split(' ')[0];
-    final result = lastCheckedInDate.value == today;
+    final result = lastCheckedInDate.value != today;
     ZLogger.info(result.toString());
     return result;
   }
@@ -73,10 +73,12 @@ class GymPoolController extends GetxController {
     zoom: 14.4746,
   );
 
-  void _addSurroundingMarkers() {
+  void _addSurroundingMarkers() async {
     final userPackage = UserController.instance.user.value.currentPackage;
     ZLogger.info('Adding ${gyms.length} gym markers.');
     gyms.forEach((gym) async {
+      ZLogger.info(
+          'GYMS Validation: ${gym.location != null && gym.gymType.name == userPackage}');
       if (gym.location != null && gym.gymType.name == userPackage) {
         final Uint8List iconMarker = await _loadCustomMarkerIcon();
 
@@ -528,7 +530,7 @@ class GymPoolController extends GetxController {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).pop(); // Close the dialog
+                        Navigator.of(context).pop();
                       },
                       child: Text(
                         'Cancel',
@@ -540,13 +542,17 @@ class GymPoolController extends GetxController {
                       width: 150,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).pop(); // Close the dialog
+                          // Close the dialog
+                          Navigator.of(context).pop();
+
                           // Perform the checkout action here
                           ZLogger.info('Checked out from gym: $gymId');
                           int newRatings =
                               oldRating + newRating.toInt() ~/ oldVisits;
-                          GymScannerController.checkOut(gymId, newRatings);
                           // markCheckOut
+                          GymScannerController.checkOut(gymId, newRatings);
+                          GymPoolController.canCheckedOut.value = false;
+                          Get.reload();
                         },
                         child: const Text('Check Out'),
                       ),

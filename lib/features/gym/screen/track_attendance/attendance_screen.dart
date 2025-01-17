@@ -4,6 +4,7 @@ import 'package:fitness_scout/utils/helpers/helper_functions.dart';
 import 'package:fitness_scout/utils/loaders/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import '../../../../common/widgets/custom_card.dart';
 import '../../controller/gym_attendance_controller/gym_attendance_controller.dart';
@@ -32,8 +33,23 @@ class TrackAttendance extends StatelessWidget {
             padding: const EdgeInsets.all(ZSizes.defaultSpace),
             child: controller.userGYMAttendance == null ||
                     controller.userGYMAttendance.isEmpty
-                ? const Column(
-                    children: [Icon(Icons.dangerous)],
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Iconsax.trash,
+                          size: 75,
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Text(
+                          'No Attendance Marked Yet!',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        )
+                      ],
+                    ),
                   )
                 : controller.isLoading.value
                     ? ListView.builder(

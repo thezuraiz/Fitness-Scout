@@ -279,10 +279,10 @@ class PackageHistory {
   // Method to convert an instance to a map
   Map<String, dynamic> toJson() {
     return {
-      'packageName': packageName,
-      'amount': amount,
-      'currency': currency,
-      'timestamp': timestamp,
+      'packageName': packageName ?? '',
+      'amount': amount ?? '',
+      'currency': currency ?? '',
+      'timestamp': timestamp ?? '',
     };
   }
 }

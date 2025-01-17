@@ -1,4 +1,3 @@
-import 'package:fitness_scout/common/widgets/blank_screen.dart';
 import 'package:fitness_scout/common/widgets/custom_appbar.dart';
 import 'package:fitness_scout/common/widgets/custom_shapes/primary_header_container.dart';
 import 'package:fitness_scout/common/widgets/list_tiles/settings_menue_title.dart';
@@ -61,12 +60,6 @@ class ProfileScreen extends StatelessWidget {
                     height: ZSizes.spaceBtwItems,
                   ),
                   ZSettingsMenueTitle(
-                    icon: Iconsax.bank,
-                    title: "Bank Account",
-                    subTitle: "Buy Package through Bank",
-                    onPressed: () => Get.to(() => const BlankScreen()),
-                  ),
-                  ZSettingsMenueTitle(
                     icon: Iconsax.notification,
                     title: "Notifications",
                     subTitle: "See any kind of notification message",
@@ -93,6 +86,14 @@ class ProfileScreen extends StatelessWidget {
                     onPressed: () => Get.to(const BmiScreen()),
                   ),
 
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  const Divider(),
+                  const SizedBox(
+                    height: 8,
+                  ),
+
                   /// --- App Settings
                   const SizedBox(
                     height: ZSizes.spaceBtwSections,
@@ -115,19 +116,6 @@ class ProfileScreen extends StatelessWidget {
                         value: controller.geoLocation.value,
                         onChanged: (value) =>
                             controller.geoLocation.value = value,
-                      ),
-                    ),
-                  ),
-                  Obx(
-                    () => ZSettingsMenueTitle(
-                      icon: Iconsax.security_user,
-                      title: "Safe Mode",
-                      subTitle: "Search result is safe for all Ages",
-                      onPressed: () => controller.safeMode.value =
-                          !controller.safeMode.value,
-                      trailing: Switch(
-                        value: controller.safeMode.value,
-                        onChanged: (value) => controller.safeMode.value = value,
                       ),
                     ),
                   ),

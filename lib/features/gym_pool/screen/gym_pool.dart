@@ -23,6 +23,10 @@ class GymPool extends StatelessWidget {
         final infoWindowController =
             controller.customInfoWindowController.value;
 
+        if (controller.markers.isEmpty) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
         return SafeArea(
           child: Stack(
             children: [

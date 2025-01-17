@@ -2,7 +2,7 @@ class ZImages {
   ZImages._();
 
   // --- APP LOGO
-  static const String darkAppLogo = "assets/logo/splash_logo_dark.png";
+  static const String darkAppLogo = "assets/logo/fitness_scout_logo_dark.png";
   static const String lightAppLogo = "assets/logo/fitness_scout_logo.png";
 
   // --- SOCIAL LOGO

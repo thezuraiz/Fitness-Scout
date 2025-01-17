@@ -48,6 +48,12 @@ dev_dependencies:
   flutter_native_splash: ^2.4.3
   flutter_launcher_icons: ^0.13.1
   logger: any
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/fitness_scout_icon.png"
+
 flutter:
   uses-material-design: true
   assets:

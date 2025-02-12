@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:fitness_scout/features/gym_pool/controller/gym_pool_controller.dart';
+import 'package:fitness_scout/features/gym_pool/screen/gymBottomScreen.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iconsax/iconsax.dart';
@@ -23,8 +25,10 @@ class GymPool extends StatelessWidget {
         final infoWindowController =
             controller.customInfoWindowController.value;
 
-        if (controller.markers.isEmpty) {
-          return const Center(child: CircularProgressIndicator());
+        if (controller.isLoading.value) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
 
         return SafeArea(
@@ -83,15 +87,48 @@ class GymPool extends StatelessWidget {
         );
       }),
       floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        backgroundColor: Colors.white,
-        foregroundColor: ZColor.dark,
-        child: const Icon(Iconsax.airdrop),
-        onPressed: () {
-          ZLogger.info('gyms ${controller.gyms.length}');
-          controller.showBottomSheet(context);
-        },
-      ),
+          shape: const CircleBorder(),
+          backgroundColor: Colors.white,
+          foregroundColor: ZColor.dark,
+          child: const Icon(Iconsax.airdrop),
+          onPressed: () {
+            ZLogger.info('Gyms before ${controller.gyms.length}');
+            showModalBottomSheet(
+              context: context,
+              enableDrag: true,
+              showDragHandle: true,
+              builder: (BuildContext context) {
+                ZLogger.info(
+                    'Gyms in ButtonSheet ${controller.gyms.first.name}');
+                return GymBottomSheet(
+                  gyms: controller.gyms,
+                  userLocation: Position(
+                    longitude: controller.userLocation.value.longitude,
+                    latitude: controller.userLocation.value.latitude,
+                    timestamp: DateTime.now(),
+                    accuracy: 0.0,
+                    altitude: 0.0,
+                    heading: 0.0,
+                    speed: 0.0,
+                    speedAccuracy: 0.0,
+                    altitudeAccuracy: 0.0,
+                    headingAccuracy: 0.0,
+                  ),
+                  onGymSelected: (latitude, longitude) {
+                    Get.back();
+                    controller.googleMapController?.animateCamera(
+                      CameraUpdate.newCameraPosition(
+                        CameraPosition(
+                          target: LatLng(latitude, longitude),
+                          zoom: 15.0,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            );
+          }),
     );
   }
 }

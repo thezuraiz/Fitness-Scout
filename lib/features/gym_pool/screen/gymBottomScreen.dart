@@ -3,6 +3,7 @@ import 'package:fitness_scout/features/personalization/controller/user_controlle
 import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../utils/constants/colors.dart';
@@ -10,122 +11,26 @@ import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
 import '../model/gym_model.dart';
 
-class GymBottomSheet extends StatefulWidget {
+class GymBottomSheet extends StatelessWidget {
+  const GymBottomSheet(
+      {super.key,
+      required this.gyms,
+      required this.userLocation,
+      required this.onGymSelected});
+
   final List<GymOwnerModel> gyms;
   final Position userLocation;
   final Function(double latitude, double longitude) onGymSelected;
 
-  const GymBottomSheet({
-    Key? key,
-    required this.gyms,
-    required this.userLocation,
-    required this.onGymSelected,
-  }) : super(key: key);
-
-  @override
-  _GymBottomSheetState createState() => _GymBottomSheetState();
-}
-
-class _GymBottomSheetState extends State<GymBottomSheet> {
-  final List<int> distanceOptions = [1, 2, 3, 4, 5];
-  int selectedDistance = 1;
-  late List<GymOwnerModel> filteredGyms;
-
-  @override
-  void initState() {
-    ZLogger.info('Bottom Sheet Opened');
-    super.initState();
-    GymPoolController.instance.loadGYMS();
-    _filterGymsByDistanceAndPackageType(selectedDistance);
-  }
-
-  void _filterGymsByDistanceAndPackageType(int distanceKM) {
-    final userPackage = UserController.instance.user.value.currentPackage;
-    ZLogger.info('User Package: $userPackage');
-
-    setState(() {
-      filteredGyms = widget.gyms.where((gym) {
-        if (gym.location == null) return false;
-        double distanceInMeters = Geolocator.distanceBetween(
-          widget.userLocation.latitude,
-          widget.userLocation.longitude,
-          gym.location!.latitude,
-          gym.location!.longitude,
-        );
-        ZLogger.info('Gym Type: ${gym.gymType.name}');
-        return distanceInMeters <= distanceKM * (selectedDistance * 1000) &&
-            gym.gymType.name == userPackage;
-      }).toList();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return filteredGyms.isEmpty
-        ? Column(
-            children: [
-              SizedBox(
-                height: 170,
-                child: Center(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: ZSizes.defaultSpace),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Distance:',
-                              style: Theme.of(context).textTheme.headlineSmall,
-                            ),
-                            DropdownButton<int>(
-                              elevation: 10,
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(12),
-                              ),
-                              icon: const Icon(
-                                Iconsax.direct_left,
-                                size: 18,
-                              ),
-                              value: selectedDistance,
-                              onChanged: (int? newValue) {
-                                setState(() {
-                                  selectedDistance = newValue!;
-                                  _filterGymsByDistanceAndPackageType(
-                                      selectedDistance);
-                                });
-                              },
-                              items: distanceOptions
-                                  .map<DropdownMenuItem<int>>((int value) {
-                                return DropdownMenuItem<int>(
-                                  value: value,
-                                  child: Text('$value KM'),
-                                );
-                              }).toList(),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Icon(
-                        Iconsax.info_circle,
-                        size: 80,
-                      ),
-                      const SizedBox(
-                        height: ZSizes.spaceBtwItems,
-                      ),
-                      Text(
-                        'No Nearby Location',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          )
-        : SizedBox(
-            height: MediaQuery.of(context).size.height / 2.7,
+    ZLogger.info('GYMS in Bottom Sheet: ${gyms.length}');
+    final controller = Get.put(GymBottomSheetController());
+    return Column(
+      children: [
+        SizedBox(
+          height: 170,
+          child: Center(
             child: Column(
               children: [
                 Padding(
@@ -147,15 +52,14 @@ class _GymBottomSheetState extends State<GymBottomSheet> {
                           Iconsax.direct_left,
                           size: 18,
                         ),
-                        value: selectedDistance,
+                        value: controller.selectedDistance,
                         onChanged: (int? newValue) {
-                          setState(() {
-                            selectedDistance = newValue!;
-                            _filterGymsByDistanceAndPackageType(
-                                selectedDistance);
-                          });
+                          controller.selectedDistance = newValue!;
+                          controller.filterGymsByDistanceAndPackageType(
+                              controller.selectedDistance);
+                          Get.back();
                         },
-                        items: distanceOptions
+                        items: controller.distanceOptions
                             .map<DropdownMenuItem<int>>((int value) {
                           return DropdownMenuItem<int>(
                             value: value,
@@ -166,67 +70,167 @@ class _GymBottomSheetState extends State<GymBottomSheet> {
                     ],
                   ),
                 ),
-                Expanded(
-                  child: ListView.separated(
-                    separatorBuilder: (_, __) => const SizedBox(
-                      height: ZSizes.spaceBtwItems,
-                    ),
-                    itemCount: filteredGyms.length,
-                    itemBuilder: (context, index) {
-                      final gym = filteredGyms[index];
-                      return Card(
-                        margin:
-                            const EdgeInsets.symmetric(horizontal: ZSizes.sm),
-                        color: ZHelperFunction.isDarkMode(context)
-                            ? ZColor.dark
-                            : ZColor.lightContainer,
-                        child: ListTile(
-                          onTap: () {
-                            widget.onGymSelected(
-                              gym.location!.latitude,
-                              gym.location!.longitude,
-                            );
-                          },
-                          title: Text(gym.gymName.toString()),
-                          subtitle: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(gym.address.toString()),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Icon(
-                                    Iconsax.star5,
-                                    color: Colors.amber,
-                                    size: 24,
-                                  ),
-                                  const SizedBox(
-                                    width: ZSizes.spaceBtwItems / 2,
-                                  ),
-                                  Text.rich(
-                                    TextSpan(
+                controller.filteredGyms.value.isEmpty
+                    ? Column(
+                        children: [
+                          const Icon(
+                            Iconsax.info_circle,
+                            size: 80,
+                          ),
+                          const SizedBox(
+                            height: ZSizes.spaceBtwItems,
+                          ),
+                          Text(
+                            'No Nearby Location ${gyms.length}',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          )
+                        ],
+                      )
+                    : Obx(
+                        () => Expanded(
+                          child: ListView.builder(
+                              itemCount: controller.filteredGyms.length,
+                              itemBuilder: (context, index) {
+                                final list = controller.filteredGyms[index];
+                                ZLogger.info('List ->');
+                                return Card(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: ZSizes.sm),
+                                  color: ZHelperFunction.isDarkMode(context)
+                                      ? ZColor.dark
+                                      : ZColor.lightContainer,
+                                  child: ListTile(
+                                    onTap: () {
+                                      onGymSelected(
+                                        list.location!.latitude,
+                                        list.location!.longitude,
+                                      );
+                                    },
+                                    title: Text(list.gymName.toString()),
+                                    subtitle: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        TextSpan(
-                                            text: gym.ratings.toString(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge),
-                                        TextSpan(
-                                            text: ' (${gym.visitors!.length})')
+                                        Text(list.address.toString()),
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const Icon(
+                                              Iconsax.star5,
+                                              color: Colors.amber,
+                                              size: 24,
+                                            ),
+                                            const SizedBox(
+                                              width: ZSizes.spaceBtwItems / 2,
+                                            ),
+                                            Text.rich(
+                                              TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                      text: list.ratings
+                                                          .toString(),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyLarge),
+                                                  TextSpan(
+                                                      text:
+                                                          ' (${list.visitors!.length})')
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ],
                                     ),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                );
+                              }),
                         ),
-                      );
-                    },
-                  ),
-                )
+                      )
               ],
             ),
-          );
+          ),
+        ),
+      ],
+    );
   }
+}
+
+class GymBottomSheetController extends GetxController {
+  final List<int> distanceOptions = [1, 2, 3, 4, 5, 100];
+  int selectedDistance = 1;
+  RxList filteredGyms = [].obs; // Reactive list
+  RxList<GymOwnerModel> gyms = GymPoolController.instance.gyms;
+  late Position userLocation;
+  late Function(double latitude, double longitude) onGymSelected;
+
+  @override
+  void onReady() {
+    super.onReady();
+    ZLogger.info('Bottom Sheet Opened');
+    _getUserLocation();
+    GymPoolController.instance.loadGYMS();
+  }
+
+  // Fetch user location
+  Future<void> _getUserLocation() async {
+    try {
+      userLocation = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      filterGymsByDistanceAndPackageType(selectedDistance);
+    } catch (e) {
+      ZLogger.error("Error getting user location: $e");
+    }
+  }
+
+  /// Filter gyms based on distance and user's package type
+  void filterGymsByDistanceAndPackageType(int distanceKM) {
+    final String userPackage =
+        UserController.instance.user.value.currentPackage;
+
+    ZLogger.info(
+        'Filtering gyms within $distanceKM km for package: $userPackage');
+
+    // Filter gyms based on distance and package type
+    filteredGyms.value = gyms.value.where((gym) {
+      if (gym.isApproved == 'No-Approved') return false;
+
+      final double distanceInMeters = Geolocator.distanceBetween(
+        userLocation.latitude,
+        userLocation.longitude,
+        gym.location!.latitude,
+        gym.location!.longitude,
+      );
+
+      return distanceInMeters <= distanceKM * 1000;
+    }).toList();
+
+    ZLogger.info('filteredGyms: ${filteredGyms.length}');
+  }
+
+// void filterGymsByDistanceAndPackageType(int distanceKM) {
+//   final userPackage = UserController.instance.user.value.currentPackage;
+//   ZLogger.info('Calculating Nearby GYMs within $distanceKM');
+//   ZLogger.info('User Package: $userPackage');
+//   ZLogger.info('Gyms length: ${gyms.value.length}');
+//
+//   filteredGyms.value = gyms.value.map((e) {
+//     ZLogger.info('Name: ${e.name}, Approved: ${e.isApproved}');
+//     return {
+//       'name': e.name,
+//       'ratings': e.ratings,
+//       'address': e.address,
+//       'visitors': e.visitors?.length ?? 0,
+//       'latitude': e.location!.latitude,
+//       'longitude': e.location!.longitude
+//     };
+//   }).toList();
+//
+//   filteredGyms.value.map((e) {
+//     return distanceInMeters <= distanceKM * 1000 &&
+//         e.gymType.name == userPackage;
+//   });
+//
+//   ZLogger.info('data: ${filteredGyms}');
+// }
 }

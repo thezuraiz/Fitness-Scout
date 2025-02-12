@@ -25,10 +25,14 @@ class GymPoolController extends GetxController {
   static GymPoolController get instance => Get.find();
 
   @override
-  void onReady() {
+  void onReady() async {
     super.onReady();
-    loadGYMS();
-    fetchCurrentLocation();
+    ZLogger.info('Loader Active');
+    isLoading.value = true;
+    await loadGYMS();
+    await fetchCurrentLocation();
+    isLoading.value = false;
+    ZLogger.info('Loader Removed');
   }
 
   static RxBool canCheckedOut = false.obs;
@@ -40,6 +44,7 @@ class GymPoolController extends GetxController {
   final gymRepository = Get.put(GymPoolRepository());
   GoogleMapController? googleMapController;
   var lastCheckedInDate = ''.obs;
+  RxBool isLoading = false.obs;
 
   /// This function will be called to load the last checked-in date from GetStorage
   void loadLastCheckedInDate() {
@@ -75,11 +80,11 @@ class GymPoolController extends GetxController {
 
   void _addSurroundingMarkers() async {
     final userPackage = UserController.instance.user.value.currentPackage;
-    ZLogger.info('Adding ${gyms.length} gym markers.');
-    gyms.forEach((gym) async {
+    ZLogger.info('Adding ${gyms.value.length} gym markers.');
+    gyms.value.forEach((gym) async {
       ZLogger.info(
           'GYMS Validation: ${gym.location != null && gym.gymType.name == userPackage}');
-      if (gym.location != null && gym.gymType.name == userPackage) {
+      if (gym.location != null) {
         final Uint8List iconMarker = await _loadCustomMarkerIcon();
 
         markers.add(
@@ -123,7 +128,7 @@ class GymPoolController extends GetxController {
   Future<void> loadGYMS() async {
     gyms.value = await gymRepository.fetchGYMS();
     _addSurroundingMarkers();
-    // ZLogger.info('GYMs POOL : ${gyms.first.toJson()}');
+    ZLogger.info('GYMs POOL : ${gyms.value.first.toJson()}');
   }
 
   Future<Uint8List> _loadCustomMarkerIcon() async {
@@ -132,6 +137,7 @@ class GymPoolController extends GetxController {
     ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
         targetHeight: 150);
     ui.FrameInfo frameInfo = await codec.getNextFrame();
+
     return (await frameInfo.image.toByteData(format: ui.ImageByteFormat.png))!
         .buffer
         .asUint8List();
@@ -165,42 +171,11 @@ class GymPoolController extends GetxController {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     userLocation.value = await LatLng(position.latitude, position.longitude);
-  }
 
-  void showBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      enableDrag: true,
-      showDragHandle: true,
-      builder: (BuildContext context) {
-        return GymBottomSheet(
-          gyms: gyms,
-          userLocation: Position(
-            longitude: userLocation.value.longitude,
-            latitude: userLocation.value.latitude,
-            timestamp: DateTime.now(),
-            accuracy: 0.0,
-            altitude: 0.0,
-            heading: 0.0,
-            speed: 0.0,
-            speedAccuracy: 0.0,
-            altitudeAccuracy: 0.0,
-            headingAccuracy: 0.0,
-          ),
-          onGymSelected: (latitude, longitude) {
-            Get.back();
-            googleMapController?.animateCamera(
-              CameraUpdate.newCameraPosition(
-                CameraPosition(
-                  target: LatLng(latitude, longitude),
-                  zoom: 15.0,
-                ),
-              ),
-            );
-          },
-        );
-      },
-    );
+    /// Remove the Loader
+    isLoading.value = false;
+    Get.reload();
+    ZLogger.warning('Is Loading: ${isLoading.value}');
   }
 
   void checkOutFromGym(

@@ -34,7 +34,7 @@ class UpcomingEventsScreen extends StatelessWidget {
           /// Todo: Is After Krna hn!
           final isValidEvent = UpcomingEventsController.instance.gymEvents.value
               .where((event) =>
-                  DateTime.parse(event.startTime).isBefore(DateTime.now()))
+                  DateTime.parse(event.startTime).isAfter(DateTime.now()))
               .toList();
 
           if (UpcomingEventsController.instance.isEventsLoading.value) {
@@ -86,12 +86,12 @@ class UpcomingEventsScreen extends StatelessWidget {
             );
           } else {
             return ListView.separated(
-              separatorBuilder: (_, __) => Container(
-                height: ZSizes.spaceBtwItems,
+              separatorBuilder: (_, __) => const SizedBox(
+                height: ZSizes.sm / 4,
                 width: 20,
-                color: Colors.red,
               ),
               shrinkWrap: true,
+              padding: const EdgeInsets.only(bottom: ZSizes.md),
               itemCount: isValidEvent.length,
               itemBuilder: (_, index) {
                 final event = isValidEvent[index];
@@ -242,19 +242,21 @@ class UpcomingEventsScreen extends StatelessWidget {
                             height: ZSizes.spaceBtwItems,
                           ),
                           SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                  onPressed: () async {
-                                    try {
-                                      await launchUrl(Uri.parse(
-                                        event.eventLink.toString(),
-                                      ));
-                                    } catch (e) {
-                                      ZLoaders.errorSnackBar(
-                                          title: 'Invalid Link $e');
-                                    }
-                                  },
-                                  child: const Text('Register Now')))
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                try {
+                                  await launchUrl(Uri.parse(
+                                    event.eventLink.toString(),
+                                  ));
+                                } catch (e) {
+                                  ZLoaders.errorSnackBar(
+                                      title: 'Invalid Link $e');
+                                }
+                              },
+                              child: const Text('Register Now'),
+                            ),
+                          )
                         ]
                       ],
                     ),

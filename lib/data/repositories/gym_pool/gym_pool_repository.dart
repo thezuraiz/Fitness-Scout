@@ -63,7 +63,7 @@ class GymPoolRepository extends GetxController {
     }
   }
 
-  Future<void> payToGym(String gymID, GymType gymType) async {
+  Future<void> payToGym(String gymID, String gymType) async {
     try {
       // Define charges based on GymType enum
       final int perPersonalCharge = _getChargeByGymType(gymType);
@@ -85,15 +85,15 @@ class GymPoolRepository extends GetxController {
   }
 
 // Helper function to get charge based on GymType enum
-  int _getChargeByGymType(GymType gymType) {
-    ZLogger.info('GYM Type: ${gymType.name}');
+  int _getChargeByGymType(String gymType) {
+    ZLogger.info('GYM Type: ${gymType}');
     switch (gymType) {
-      case GymType.Basic:
-        return 200;
-      case GymType.Silver:
-        return 400;
-      case GymType.Diamond:
-        return 500;
+      case 'Basic':
+        return 20;
+      case 'Silver':
+        return 50;
+      case 'Diamond':
+        return 100;
       default:
         return 0; // Not Approved or unknown types
     }

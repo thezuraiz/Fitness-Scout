@@ -1,6 +1,7 @@
 import 'package:fitness_scout/features/gym_pool/controller/gym_scanner_controller.dart';
 import 'package:fitness_scout/utils/constants/colors.dart';
 import 'package:fitness_scout/utils/helpers/loaders.dart';
+import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:get/get.dart';
@@ -8,13 +9,14 @@ import 'package:get/get.dart';
 import '../model/gym_model.dart';
 
 class GymScanner extends StatelessWidget {
-  const GymScanner({super.key,
-    required this.gymId,
-    required this.gymName,
-    required this.gymPhoneNo,
-    required this.gymAddress,
-    required this.gymRatings,
-    required this.gymType});
+  const GymScanner(
+      {super.key,
+      required this.gymId,
+      required this.gymName,
+      required this.gymPhoneNo,
+      required this.gymAddress,
+      required this.gymRatings,
+      required this.gymType});
 
   final String gymId;
   final String gymName, gymPhoneNo, gymAddress;
@@ -27,10 +29,7 @@ class GymScanner extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Scan QR for $gymName GYM',
-            style: Theme
-                .of(context)
-                .textTheme
-                .headlineSmall),
+            style: Theme.of(context).textTheme.headlineSmall),
         // backgroundColor: ZColor.primary,
         centerTitle: true,
       ),
@@ -48,8 +47,9 @@ class GymScanner extends StatelessWidget {
                 if (barcodes.isNotEmpty) {
                   final String scannedData =
                       barcodes.first.rawValue ?? 'Unknown';
-                  controller.markAttendance(
-                      scannedData, gymName, gymPhoneNo, gymType, gymAddress);
+                  ZLogger.info('GYM TYPE: ${gymType.name}');
+                  controller.markAttendance(scannedData, gymName, gymPhoneNo,
+                      gymType.name, gymAddress);
                 }
               },
               onDetectError: (_, __) {

@@ -184,7 +184,7 @@ class GymBottomSheetController extends GetxController {
   }
 
   /// Filter gyms based on distance and user's package type
-  void filterGymsByDistanceAndPackageType(int distanceKM) {
+  void filterGymsByDistanceAndPackageType(int distanceKM) async {
     final String userPackage =
         UserController.instance.user.value.currentPackage;
 
@@ -192,7 +192,7 @@ class GymBottomSheetController extends GetxController {
         'Filtering gyms within $distanceKM km for package: $userPackage');
 
     // Filter gyms based on distance and package type
-    filteredGyms.value = gyms.value.where((gym) {
+    filteredGyms.value = await gyms.value.where((gym) {
       if (gym.isApproved == 'No-Approved') return false;
 
       final double distanceInMeters = Geolocator.distanceBetween(

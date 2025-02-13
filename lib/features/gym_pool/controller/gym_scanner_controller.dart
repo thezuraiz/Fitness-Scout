@@ -48,7 +48,7 @@ class GymScannerController extends GetxController {
   }
 
   Future<void> markAttendance(String gymID, String gymName, String gymPhoneNo,
-      GymType gymType, String gymLocation) async {
+      String gymType, String gymLocation) async {
     try {
       final GymPoolController controller = Get.find();
       controller.loadLastCheckedInDate(); // Load the last checked-in date
@@ -90,8 +90,9 @@ class GymScannerController extends GetxController {
 
       ZDeviceUtils.playSound('sounds/success_notification.mp3');
 
+      /// Todo:
       // Save today's date to prevent further check-ins today
-      controller.saveLastCheckedInDate();
+      // controller.saveLastCheckedInDate();
       await ZLoaders.successSnackBar(
           title: 'Attendance Confirmed!',
           message:

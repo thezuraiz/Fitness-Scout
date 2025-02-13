@@ -4,6 +4,7 @@ import 'package:fitness_scout/utils/helpers/logger.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import '../../../const.dart';
 import '../../../features/gym_pool/model/gym_model.dart';
 import '../../../features/personalization/controller/user_controller.dart';
 import '../../../features/personalization/model/user_model.dart';
@@ -89,11 +90,11 @@ class GymPoolRepository extends GetxController {
     ZLogger.info('GYM Type: ${gymType}');
     switch (gymType) {
       case 'Basic':
-        return 20;
+        return BasicPackagePerCharge;
       case 'Silver':
-        return 50;
+        return SilverPackagePerCharge;
       case 'Diamond':
-        return 100;
+        return DiamondPackagePerCharge;
       default:
         return 0; // Not Approved or unknown types
     }

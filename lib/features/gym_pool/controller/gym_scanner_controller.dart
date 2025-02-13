@@ -1,5 +1,6 @@
 import 'package:fitness_scout/data/repositories/gym_pool/gym_pool_repository.dart';
 import 'package:fitness_scout/features/gym_pool/controller/gym_pool_controller.dart';
+import 'package:fitness_scout/features/personalization/controller/user_controller.dart';
 
 import 'package:fitness_scout/utils/helpers/loaders.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
@@ -51,7 +52,7 @@ class GymScannerController extends GetxController {
       String gymType, String gymLocation) async {
     try {
       final GymPoolController controller = Get.find();
-      controller.loadLastCheckedInDate(); // Load the last checked-in date
+      controller.loadLastCheckedInDate();
 
       if (!controller.canCheckIn()) {
         ZLoaders.errorSnackBar(
@@ -76,6 +77,18 @@ class GymScannerController extends GetxController {
             title: 'Internet Connection Failed',
             message:
                 'Error while connecting internet. Please check and try again!');
+        return;
+      }
+
+      final userPackage = UserController.instance.user.value.currentPackage;
+
+      if (userPackage != gymType) {
+        ZFullScreenLoader.stopLoading();
+        ZLoaders.errorSnackBar(
+          title: 'Oops!',
+          message:
+              'This gym is for ${gymType} users. Please search for gyms that support your package: ${userPackage}.',
+        );
         return;
       }
 

@@ -107,7 +107,7 @@ class GymScannerController extends GetxController {
 
       /// Todo:
       // Save today's date to prevent further check-ins today
-      // controller.saveLastCheckedInDate();
+      controller.saveLastCheckedInDate();
       await ZLoaders.successSnackBar(
           title: 'Attendance Confirmed!',
           message:

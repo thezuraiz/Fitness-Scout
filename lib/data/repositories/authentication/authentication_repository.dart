@@ -63,6 +63,7 @@ class AuthenticationRepository extends GetxController {
   }
 
   Future<bool> isPackageValid() async {
+    ZLogger.info('Checking Package is Active!');
     try {
       final documentSnapshot = await FirebaseFirestore.instance
           .collection('Users')
@@ -82,11 +83,13 @@ class AuthenticationRepository extends GetxController {
           final time = packageList.last.timestamp;
           ZLogger.info('Last subscription date: $time');
           final timestamp = DateTime.parse(time);
-          final oneMonthAgo = DateTime.now().add(const Duration(days: 30));
+          final oneMonthAgo = DateTime.now().subtract(const Duration(days: 30));
 
-          ZLogger.info('One Month ago: $oneMonthAgo');
+          ZLogger.info('Now: ${DateTime.now()}');
+          ZLogger.info('30 Days Ago: $oneMonthAgo');
 
-          bool isWithinOneMonth = timestamp.isBefore(oneMonthAgo);
+          /// Todo: is After lazmi krna hy
+          bool isWithinOneMonth = timestamp.isAfter(oneMonthAgo);
           ZLogger.info('Is Package is Valid: $isWithinOneMonth');
           return isWithinOneMonth;
         } else {

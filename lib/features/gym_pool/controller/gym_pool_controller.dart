@@ -267,17 +267,21 @@ class GymPoolController extends GetxController {
                       width: 150,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Close the dialog
-                          Navigator.of(context).pop();
+                          try {
+                            // Close the dialog
+                            Navigator.of(context).pop();
 
-                          // Perform the checkout action here
-                          ZLogger.info('Checked out from gym: $gymId');
-                          int newRatings =
-                              oldRating + newRating.toInt() ~/ oldVisits;
-                          // markCheckOut
-                          GymScannerController.checkOut(gymId, newRatings);
-                          GymPoolController.canCheckedOut.value = false;
-                          Get.reload();
+                            // Perform the checkout action here
+                            ZLogger.info('Checked out from gym: $gymId');
+                            int newRatings = oldRating +
+                                newRating.toInt() ~/ (oldVisits + 1);
+                            // markCheckOut
+                            GymScannerController.checkOut(gymId, newRatings);
+                            GymPoolController.canCheckedOut.value = false;
+                            Get.reload();
+                          } catch (e) {
+                            ZLogger.error('Error: ${e}');
+                          }
                         },
                         child: const Text('Check Out'),
                       ),

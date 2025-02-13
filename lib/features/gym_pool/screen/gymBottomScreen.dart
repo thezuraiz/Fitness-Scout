@@ -98,7 +98,6 @@ class GymBottomSheet extends StatelessWidget {
                               itemCount: controller.filteredGyms.length,
                               itemBuilder: (context, index) {
                                 final list = controller.filteredGyms[index];
-                                ZLogger.info('List ->');
                                 return Card(
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: ZSizes.sm),

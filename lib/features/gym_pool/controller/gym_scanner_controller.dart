@@ -80,7 +80,9 @@ class GymScannerController extends GetxController {
         return;
       }
 
-      final userPackage = UserController.instance.user.value.currentPackage;
+      final userPackage =
+          UserController.instance.user.value.currentPackage.split(' ')[0];
+      ZLogger.info('user Package: ${userPackage}');
 
       if (userPackage != gymType) {
         ZFullScreenLoader.stopLoading();

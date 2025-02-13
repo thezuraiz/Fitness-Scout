@@ -1,3 +1,4 @@
+import 'package:fitness_scout/data/repositories/user/user_repository.dart';
 import 'package:fitness_scout/features/gym_pool/controller/gym_pool_controller.dart';
 import 'package:fitness_scout/features/personalization/controller/user_controller.dart';
 import 'package:fitness_scout/utils/helpers/logger.dart';
@@ -29,7 +30,7 @@ class GymBottomSheet extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: 170,
+          height: 190,
           child: Center(
             child: Column(
               children: [
@@ -72,6 +73,7 @@ class GymBottomSheet extends StatelessWidget {
                 ),
                 controller.filteredGyms.value.isEmpty
                     ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Icon(
                             Iconsax.info_circle,
@@ -81,9 +83,13 @@ class GymBottomSheet extends StatelessWidget {
                             height: ZSizes.spaceBtwItems,
                           ),
                           Text(
-                            'No Nearby Location ${gyms.length}',
+                            'No Nearby Location!',
                             style: Theme.of(context).textTheme.titleMedium,
-                          )
+                          ),
+                          Text(
+                            'Total Number of active GYMS: ${gyms.length}',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
                         ],
                       )
                     : Obx(
@@ -190,10 +196,12 @@ class GymBottomSheetController extends GetxController {
 
     ZLogger.info(
         'Filtering gyms within $distanceKM km for package: $userPackage');
+    ZLogger.info(
+        'Gyms: ${gyms.value.map((e) => e.name + ' ' + e.gymType.name)}');
 
     // Filter gyms based on distance and package type
     filteredGyms.value = await gyms.value.where((gym) {
-      if (gym.isApproved == 'No-Approved') return false;
+      if (gym.isApproved != 'Approved') return false;
 
       final double distanceInMeters = Geolocator.distanceBetween(
         userLocation.latitude,
@@ -201,11 +209,19 @@ class GymBottomSheetController extends GetxController {
         gym.location!.latitude,
         gym.location!.longitude,
       );
+      final userPackage =
+          UserController.instance.user.value.currentPackage.split(' ')[0];
+
+      ZLogger.info('gym.gymType.name: ${gym.gymType.name}');
+      ZLogger.info('userPackage: ${userPackage}');
+
+      // Check if the gym type matches the user's package
+      if (gym.gymType.name != userPackage) return false;
 
       return distanceInMeters <= distanceKM * 1000;
     }).toList();
 
-    ZLogger.info('filteredGyms: ${filteredGyms.length}');
+    ZLogger.info('filteredGyms: ${filteredGyms}');
   }
 
 // void filterGymsByDistanceAndPackageType(int distanceKM) {

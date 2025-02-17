@@ -64,8 +64,8 @@ class ChangeNameController extends GetxController {
 
       // Update First & Last Name in Fire store
       Map<String, dynamic> name = {
-        'FirstName': firstName.text.trim(),
-        'LastName': lastName.text.trim()
+        'firstName': firstName.text.trim(),
+        'lastName': lastName.text.trim()
       };
       await UserRepository.instance.updateSingleField(name);
 

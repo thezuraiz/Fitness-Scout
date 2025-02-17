@@ -33,15 +33,15 @@ class SignupController extends GetxController {
 
   final nameValidator = MultiValidator([
     RequiredValidator(errorText: "Required"),
-    MinLengthValidator(3, errorText: "Minimum 3 Words"),
-    MaxLengthValidator(7, errorText: "Maximum 6 Words"),
+    MinLengthValidator(3, errorText: "Minimum 3 Digits"),
+    MaxLengthValidator(7, errorText: "Maximum 6 Digits"),
     AlphabeticValidator(errorText: "Only alphabets are allowed"),
   ]);
 
   final usernameValidator = MultiValidator([
     RequiredValidator(errorText: "Required"),
-    MinLengthValidator(5, errorText: "Minimum 5 Words"),
-    MaxLengthValidator(12, errorText: "Maximum 10 Words")
+    MinLengthValidator(5, errorText: "Minimum 5 Digits"),
+    MaxLengthValidator(12, errorText: "Maximum 10 Digits")
   ]);
 
   final emailValidator = MultiValidator([
@@ -77,7 +77,7 @@ class SignupController extends GetxController {
     RequiredValidator(errorText: 'password is required'),
     MinLengthValidator(8, errorText: 'password must be at least 8 digits long'),
     PatternValidator(r'(?=.*?[#?!@$%^&*-])',
-        errorText: 'passwords must have at least one special character')
+        errorText: 'passDigits must have at least one special character')
   ]);
 
   /// --- SIGNUP

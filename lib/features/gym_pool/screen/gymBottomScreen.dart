@@ -30,7 +30,7 @@ class GymBottomSheet extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: 190,
+          height: 430,
           child: Center(
             child: Column(
               children: [
@@ -100,7 +100,8 @@ class GymBottomSheet extends StatelessWidget {
                                 final list = controller.filteredGyms[index];
                                 return Card(
                                   margin: const EdgeInsets.symmetric(
-                                      horizontal: ZSizes.sm),
+                                      horizontal: ZSizes.sm,
+                                      vertical: ZSizes.sm / 2),
                                   color: ZHelperFunction.isDarkMode(context)
                                       ? ZColor.dark
                                       : ZColor.lightContainer,

@@ -202,17 +202,17 @@ class GymPoolController extends GetxController {
                     itemBuilder: (context, index) {
                       switch (index) {
                         case 0:
-                          return Icon(
+                          return const Icon(
                             Icons.sentiment_very_dissatisfied,
                             color: Colors.red,
                           );
                         case 1:
-                          return Icon(
+                          return const Icon(
                             Icons.sentiment_dissatisfied,
                             color: Colors.redAccent,
                           );
                         case 2:
-                          return Icon(
+                          return const Icon(
                             Icons.sentiment_neutral,
                             color: Colors.amber,
                           );
@@ -222,12 +222,12 @@ class GymPoolController extends GetxController {
                             color: ZColor.primary.withOpacity(0.9),
                           );
                         case 4:
-                          return Icon(
+                          return const Icon(
                             Icons.sentiment_very_satisfied,
                             color: ZColor.primary,
                           );
                         default:
-                          return Icon(Iconsax.airdrop);
+                          return const Icon(Iconsax.airdrop);
                       }
                     },
                     onRatingUpdate: (rating) {

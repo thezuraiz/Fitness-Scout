@@ -43,3 +43,4 @@ app.*.map.json
 /android/app/release
 lib/constants.dart
 lib/const.dart
+lib/firebase_options.dart
